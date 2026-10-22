@@ -1,0 +1,251 @@
+@use "./variables.scss" as *;
+
+// =============================================================================
+//  ECE 364 — site-specific styles
+//  (same look as the ECE 329 / 374 sites)
+// =============================================================================
+
+// ---- Custom callouts used throughout the notes ------------------------------
+//   > [!definition]  a formal definition (DFA, NFA, grammar, Turing machine, ...)
+//   > [!key]         a theorem or lemma, numbered as in the book (Lemma 3.6, ...)
+//   > [!template]    proof boilerplate to copy onto the exam, word for word
+//   > [!recipe]      a construction or algorithm, step by step
+//   > [!trap]        a common mistake and how to avoid it
+//   > [!exam]        how the idea shows up on exams, and how it is graded
+//   > [!intuition]   the picture / analogy behind the formalism
+//   > [!proof]-      a proof, folded by default via "-"
+//   > [!derivation]- a longer calculation, folded by default
+.callout {
+  --callout-icon-definition: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>');
+  --callout-icon-key: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3L22 7l-3-3"></path></svg>');
+  --callout-icon-template: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg>');
+  --callout-icon-recipe: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>');
+  --callout-icon-trap: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>');
+  --callout-icon-exam: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 15l2 2 4-4"></path></svg>');
+  --callout-icon-intuition: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path></svg>');
+  --callout-icon-proof: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10"></path><path d="M4 11h16"></path><path d="M4 16h8"></path><rect x="15" y="14" width="5" height="5" fill="currentColor"></rect></svg>');
+  --callout-icon-derivation: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16"></path><path d="M4 20h16"></path><path d="M6 4l6 8-6 8"></path></svg>');
+
+  &[data-callout="definition"] {
+    --color: #3949ab;
+    --border: #3949ab55;
+    --bg: #3949ab10;
+    --callout-icon: var(--callout-icon-definition);
+  }
+  &[data-callout="key"] {
+    --color: #1f5f8b;
+    --border: #1f5f8b55;
+    --bg: #1f5f8b12;
+    --callout-icon: var(--callout-icon-key);
+  }
+  &[data-callout="template"] {
+    --color: #4d7c0f;
+    --border: #4d7c0f55;
+    --bg: #4d7c0f10;
+    --callout-icon: var(--callout-icon-template);
+  }
+  &[data-callout="recipe"] {
+    --color: #2e7d4f;
+    --border: #2e7d4f55;
+    --bg: #2e7d4f12;
+    --callout-icon: var(--callout-icon-recipe);
+  }
+  &[data-callout="trap"] {
+    --color: #b3402b;
+    --border: #b3402b55;
+    --bg: #b3402b12;
+    --callout-icon: var(--callout-icon-trap);
+  }
+  &[data-callout="exam"] {
+    --color: #8a5a00;
+    --border: #8a5a0055;
+    --bg: #8a5a0012;
+    --callout-icon: var(--callout-icon-exam);
+  }
+  &[data-callout="intuition"] {
+    --color: #6a4fa3;
+    --border: #6a4fa355;
+    --bg: #6a4fa312;
+    --callout-icon: var(--callout-icon-intuition);
+  }
+  &[data-callout="proof"] {
+    --color: #55606c;
+    --border: #55606c55;
+    --bg: #55606c10;
+    --callout-icon: var(--callout-icon-proof);
+  }
+  &[data-callout="derivation"] {
+    --color: #55606c;
+    --border: #55606c55;
+    --bg: #55606c10;
+    --callout-icon: var(--callout-icon-derivation);
+  }
+}
+
+:root[saved-theme="dark"] .callout {
+  &[data-callout="definition"] { --color: #9fa8da; --border: #9fa8da55; --bg: #9fa8da12; }
+  &[data-callout="key"] { --color: #7fb3d9; --border: #7fb3d955; --bg: #7fb3d914; }
+  &[data-callout="template"] { --color: #a3d977; --border: #a3d97755; --bg: #a3d97712; }
+  &[data-callout="recipe"] { --color: #7fcaa8; --border: #7fcaa855; --bg: #7fcaa814; }
+  &[data-callout="trap"] { --color: #f0907c; --border: #f0907c55; --bg: #f0907c14; }
+  &[data-callout="exam"] { --color: #e6b85c; --border: #e6b85c55; --bg: #e6b85c14; }
+  &[data-callout="intuition"] { --color: #b9a5e6; --border: #b9a5e655; --bg: #b9a5e614; }
+  &[data-callout="proof"] { --color: #aab4be; --border: #aab4be55; --bg: #aab4be12; }
+  &[data-callout="derivation"] { --color: #aab4be; --border: #aab4be55; --bg: #aab4be12; }
+}
+
+// A template is text to copy: keep its line breaks and give it a little more air.
+.callout[data-callout="template"] .callout-content {
+  line-height: 1.6;
+}
+
+// ---- Figures (inline SVG, theme-aware via currentColor / CSS variables) -----
+//   Automata, parse trees, tapes and diagrams. Strokes and text use
+//   currentColor; accents use the variables below so dark mode just works.
+figure.cs-fig {
+  margin: 1.5rem auto;
+  max-width: 100%;
+  text-align: center;
+
+  svg {
+    max-width: 100%;
+    height: auto;
+    color: var(--darkgray);        // strokes/text use currentColor
+    --accent: var(--secondary);     // accepting states, highlighted edges
+    --accent2: var(--tertiary);     // second highlight (e.g. the other machine in a product)
+    --muted: var(--gray);
+    --paper: var(--light);          // label halos = page background
+    --hi: #d1495b;                  // "hot" accent (a run, a counterexample) — readable on both themes
+  }
+
+  figcaption {
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-top: 0.4rem;
+    text-align: left;
+    line-height: 1.4;
+
+    strong { color: var(--darkgray); }
+  }
+}
+
+// ---- Embedded interactive demos ------------------------------------------------
+.cs-demo {
+  margin: 1.25rem 0;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--light);
+
+  iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+}
+
+// ---- Page "meta line" under chapter titles ----------------------------------
+.cs-meta {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin: -0.5rem 0 1.25rem 0;
+  border-left: 3px solid var(--lightgray);
+  padding-left: 0.75rem;
+}
+
+// ---- Compact reference tables (transition tables, closure tables) ----------
+table.cs-ref {
+  font-size: 0.92rem;
+  th, td { padding: 0.3rem 0.6rem; }
+}
+
+// ---- Theorem statements: KaTeX display inside a "key" callout gets breathing room
+.callout[data-callout="key"] .katex-display,
+.callout[data-callout="definition"] .katex-display {
+  margin: 0.6rem 0;
+}
+
+// ---- "Status" chip used on the home page and section indexes ---------------------
+.cs-chip {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--lightgray);
+  color: var(--gray);
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+.cs-chip.done { color: var(--tertiary); border-color: var(--tertiary); }
+
+
+// ---- Practice problems: difficulty "tags" + folded hint / solution ------------------
+//   > [!easy] Easy · topic · topic      (one bar)
+//   > [!medium] Medium · topic          (two bars)
+//   > [!hard] Hard · topic              (three bars)
+//   > [!hint]- Hint                     (folded)
+//   > [!solution]- Solution             (folded)
+.callout {
+  --callout-icon-easy: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 20v-4"></path><path d="M12 20v-9" stroke-opacity="0.28"></path><path d="M18 20V5" stroke-opacity="0.28"></path></svg>');
+  --callout-icon-medium: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 20v-4"></path><path d="M12 20v-9"></path><path d="M18 20V5" stroke-opacity="0.28"></path></svg>');
+  --callout-icon-hard: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 20v-4"></path><path d="M12 20v-9"></path><path d="M18 20V5"></path></svg>');
+  --callout-icon-hint: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>');
+  --callout-icon-solution: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>');
+
+  &[data-callout="easy"] { --color: #2f855a; --border: #2f855a55; --bg: #2f855a10; --callout-icon: var(--callout-icon-easy); }
+  &[data-callout="medium"] { --color: #b7791f; --border: #b7791f55; --bg: #b7791f10; --callout-icon: var(--callout-icon-medium); }
+  &[data-callout="hard"] { --color: #c53030; --border: #c5303055; --bg: #c5303010; --callout-icon: var(--callout-icon-hard); }
+  &[data-callout="hint"] { --color: #0e7490; --border: #0e749055; --bg: #0e74900c; --callout-icon: var(--callout-icon-hint); }
+  &[data-callout="solution"] { --color: #4a5568; --border: #4a556855; --bg: #4a55680c; --callout-icon: var(--callout-icon-solution); }
+}
+
+:root[saved-theme="dark"] .callout {
+  &[data-callout="easy"] { --color: #68d391; --border: #68d39155; --bg: #68d39112; }
+  &[data-callout="medium"] { --color: #f2c063; --border: #f2c06355; --bg: #f2c06312; }
+  &[data-callout="hard"] { --color: #fc8181; --border: #fc818155; --bg: #fc818112; }
+  &[data-callout="hint"] { --color: #67c6dd; --border: #67c6dd55; --bg: #67c6dd10; }
+  &[data-callout="solution"] { --color: #b8c2cf; --border: #b8c2cf55; --bg: #b8c2cf0e; }
+}
+
+// Difficulty chips used in the practice index tables ( <span class="diff easy">easy</span> )
+.diff {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  vertical-align: middle;
+  &.easy { color: #2f855a; }
+  &.medium { color: #b7791f; }
+  &.hard { color: #c53030; }
+}
+:root[saved-theme="dark"] .diff {
+  &.easy { color: #68d391; }
+  &.medium { color: #f2c063; }
+  &.hard { color: #fc8181; }
+}
+
+// ---- Lecture images (white-background PNGs) ---------------------------------
+//   Keep them readable in dark mode: a light card behind each one.
+article img {
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+  border-radius: 6px;
+}
+:root[saved-theme="dark"] article img {
+  background: #f4f4f2;
+  padding: 6px;
+}
+.cs-src {
+  font-size: 0.85rem;
+  color: var(--gray);
+  text-align: center;
+  margin-top: -0.6rem;
+}

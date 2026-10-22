@@ -1,0 +1,307 @@
+# yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
+#
+# ECE 364 · Programming Methods for Machine Learning — Quartz 5 site configuration
+# ------------------------------------------------------------
+# Build:   npm ci && npx quartz plugin install && npx quartz build --serve
+# Deploy:  copy public/ to your web server (see HOWTO-ece364.md for the
+#          one rewrite rule your server needs for extensionless URLs).
+#
+configuration:
+  pageTitle: "ECE 364 · Programming Methods for ML"
+  pageTitleSuffix: ""
+  enableSPA: true
+  enablePopovers: true
+  analytics: null
+  locale: en-US
+  # CHANGE ME: host (and optional sub-path) where the site will live, no protocol,
+  # no trailing slash — e.g. "notes.example.com" or "example.com/ece364".
+  # Only used for the sitemap, RSS and social-preview URLs.
+  baseUrl: "quartz-364.vops.ch"
+  ignorePatterns:
+    - private
+    - templates
+    - .obsidian
+    - "**/_drafts"
+  theme:
+    fontOrigin: googleFonts
+    cdnCaching: true
+    typography:
+      header: "Source Serif 4"
+      body: "Source Sans 3"
+      code: "JetBrains Mono"
+    colors:
+      lightMode:
+        light: "#fbfaf7"
+        lightgray: "#e8e5de"
+        gray: "#b2ada3"
+        darkgray: "#4a4640"
+        dark: "#23211d"
+        secondary: "#1f5f8b"
+        tertiary: "#3c8c6a"
+        highlight: "rgba(31, 95, 139, 0.10)"
+        textHighlight: "#ffe86688"
+      darkMode:
+        light: "#161719"
+        lightgray: "#2a2c30"
+        gray: "#6b6f78"
+        darkgray: "#d6d8dc"
+        dark: "#eceef1"
+        secondary: "#7fb3d9"
+        tertiary: "#7fcaa8"
+        highlight: "rgba(127, 179, 217, 0.14)"
+        textHighlight: "#b3aa0288"
+
+plugins:
+  # ---- transformers (run in `order`) ---------------------------------------
+  - source: "@quartz-community/note-properties"
+    enabled: true
+    options:
+      includeAll: false
+      includedProperties: []          # we render our own header lines; hide the panel
+      excludedProperties: []
+      hidePropertiesView: true
+      delimiters: ---
+      language: yaml
+    order: 5
+    layout:
+      position: beforeBody
+      priority: 15
+      display: all
+  - source: "@quartz-community/created-modified-date"
+    enabled: true
+    options:
+      defaultDateType: modified
+      priority:
+        - frontmatter
+        - git
+        - filesystem
+    order: 10
+  - source: "@quartz-community/syntax-highlighting"
+    enabled: true
+    options:
+      theme:
+        light: github-light
+        dark: github-dark
+      keepBackground: false
+    order: 20
+  - source: "@quartz-community/spacer"
+    enabled: true
+    options: {}
+    order: 25
+    layout:
+      position: left
+      priority: 25
+      display: mobile-only
+  - source: "@quartz-community/obsidian-flavored-markdown"
+    enabled: true
+    options:
+      enableInHtmlEmbed: false
+      enableCheckbox: true
+    order: 30
+  - source: "@quartz-community/github-flavored-markdown"
+    enabled: true
+    order: 40
+  - source: "@quartz-community/unlisted-pages"
+    enabled: true
+    options: {}
+    order: 45
+  - source: "@quartz-community/table-of-contents"
+    enabled: true
+    options:
+      maxDepth: 3
+      minEntries: 2
+      showByDefault: true
+      collapseByDefault: false
+    order: 50
+    layout:
+      position: right
+      priority: 30
+      display: desktop-only
+  - source: "@quartz-community/crawl-links"
+    enabled: true
+    options:
+      markdownLinkResolution: shortest
+      prettyLinks: true
+      openLinksInNewTab: false
+      lazyLoad: true
+      externalLinkIcon: true
+    order: 60
+  - source: "@quartz-community/description"
+    enabled: true
+    order: 70
+  - source: "@quartz-community/latex"
+    enabled: true
+    options:
+      renderEngine: katex
+      customMacros: {}               # keep content macro-free so the vault also renders in Obsidian
+    order: 80
+
+  # ---- filters ---------------------------------------------------------------
+  - source: "@quartz-community/remove-draft"
+    enabled: true
+
+  # ---- emitters --------------------------------------------------------------
+  - source: "@quartz-community/alias-redirects"
+    enabled: true
+  - source: "@quartz-community/content-index"
+    enabled: true
+    options:
+      enableSiteMap: true
+      enableRSS: false
+  - source: "@quartz-community/favicon"
+    enabled: true
+  - source: "@quartz-community/quartz-fonts"
+    enabled: true
+  - source: "@quartz-community/og-image"
+    enabled: false
+  - source: "@quartz-community/cname"
+    enabled: false
+
+  # ---- page types ------------------------------------------------------------
+  - source: "@quartz-community/content-page"
+    enabled: true
+  - source: "@quartz-community/folder-page"
+    enabled: true
+  - source: "@quartz-community/tag-page"
+    enabled: true
+
+  # ---- components ------------------------------------------------------------
+  - source: "@quartz-community/page-title"
+    enabled: true
+    layout:
+      position: left
+      priority: 10
+  - source: "@quartz-community/search"
+    enabled: true
+    options:
+      enablePreview: true
+    layout:
+      position: left
+      priority: 20
+      group: toolbar
+      groupOptions:
+        grow: true
+  - source: "@quartz-community/darkmode"
+    enabled: true
+    layout:
+      position: left
+      priority: 30
+      group: toolbar
+  - source: "@quartz-community/reader-mode"
+    enabled: true
+    layout:
+      position: left
+      priority: 35
+      group: toolbar
+  - source: "@quartz-community/explorer"
+    enabled: true
+    options:
+      title: "Course map"
+      folderClickBehavior: collapse
+      folderDefaultState: open
+      useSavedState: true
+    layout:
+      position: left
+      priority: 50
+  - source: "@quartz-community/breadcrumbs"
+    enabled: true
+    options:
+      spacerSymbol: "›"
+      rootName: "ECE 364"
+      resolveFrontmatterTitle: true
+      showCurrentPage: true
+    layout:
+      position: beforeBody
+      priority: 5
+      condition: not-index
+  - source: "@quartz-community/article-title"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 10
+  - source: "@quartz-community/content-meta"
+    enabled: true
+    options:
+      showReadingTime: true
+      showComma: true
+    layout:
+      position: beforeBody
+      priority: 20
+  - source: "@quartz-community/tag-list"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 30
+  - source: "@quartz-community/graph"
+    enabled: true
+    options:
+      localGraph:
+        drag: true
+        zoom: true
+        depth: 1
+        scale: 1.1
+        repelForce: 0.5
+        centerForce: 0.3
+        linkDistance: 30
+        fontSize: 0.6
+        opacityScale: 1
+        removeTags: ["topic", "unit", "exam"]
+        showTags: true
+        focusOnHover: false
+        enableRadial: false
+      globalGraph:
+        drag: true
+        zoom: true
+        depth: -1
+        scale: 0.9
+        repelForce: 0.5
+        centerForce: 0.3
+        linkDistance: 30
+        fontSize: 0.6
+        opacityScale: 1
+        removeTags: ["topic", "unit", "exam"]
+        showTags: true
+        focusOnHover: true
+        enableRadial: true
+    layout:
+      position: right
+      priority: 10
+  - source: "@quartz-community/backlinks"
+    enabled: true
+    options:
+      hideWhenEmpty: true
+    layout:
+      position: right
+      priority: 50
+  - source: "@quartz-community/footer"
+    enabled: true
+    options:
+      links:
+        Built with Quartz: "https://quartz.jzhao.xyz"
+    layout:
+      position: footer
+      priority: 50
+
+layout:
+  groups:
+    toolbar:
+      priority: 35
+      direction: row
+      gap: 0.5rem
+  byPageType:
+    "404":
+      positions:
+        beforeBody: []
+        left: []
+        right: []
+    content: {}
+    folder:
+      exclude:
+        - reader-mode
+      positions:
+        right: []
+    tag:
+      exclude:
+        - reader-mode
+      positions:
+        right: []

@@ -1,0 +1,108 @@
+# ECE 364 notes site — self-hosted Quartz for Docker standalone / Portainer.
+#
+#   builder  clones the GitHub repo into the `repo` volume, checks it every
+#            SYNC_INTERVAL seconds and, whenever the branch has moved, rebuilds
+#            the site into the `site` volume. The build goes to a staging dir
+#            and is renamed into place, so the previous site keeps serving
+#            during the build and is kept if the build fails.
+#   web      nginx serving the `site` volume with Quartz's extensionless URLs.
+#
+# Deploy: Portainer › Stacks › Add stack › Web editor (paste this file), or
+# `docker compose up -d`. Point the reverse proxy for quartz-364.vops.ch at
+# port 8364. Publishing: `git push` — the site follows within SYNC_INTERVAL.
+# Needs Docker Compose ≥ 2.23.1 (inline `configs.content`).
+
+services:
+  builder:
+    image: node:22-bookworm # Node 22 + git; Quartz needs Node ≥ 22
+    restart: unless-stopped
+    init: true # so `docker stop` ends the sync loop promptly
+    environment:
+      REPO_URL: https://github.com/akakrabz/quartz-364.git
+      BRANCH: master
+      SYNC_INTERVAL: "300" # seconds between checks for new commits
+    volumes:
+      - repo:/repo # clone + node_modules, kept between restarts
+      - site:/site # /site/html is what nginx serves
+    command:
+      - sh
+      - -c
+      # Compose interpolates $VAR, so shell variables are written $$VAR here.
+      - |
+        log() { echo "[sync $$(date '+%F %T')] $$*"; }
+
+        if [ ! -d /repo/.git ]; then
+          log "cloning $$REPO_URL"
+          git clone --quiet "$$REPO_URL" /repo || { log "clone failed"; exit 1; }
+        fi
+        cd /repo
+
+        # Check out $$want, install deps if they changed, build into /site/next,
+        # then swap it in (nginx resolves /site/html on every request).
+        build() {
+          git reset --hard --quiet "$$want" || return 1
+          if [ ! -d node_modules ] || ! git diff --quiet "$$built" "$$want" -- package.json package-lock.json 2>/dev/null; then
+            log "installing dependencies (npm ci)"
+            npm ci --no-audit --no-fund || return 1
+          fi
+          npm run --silent install-plugins || return 1   # regenerates .quartz/plugins/index.ts (offline)
+          npx quartz build -o /site/next || return 1
+          rm -rf /site/prev
+          [ ! -d /site/html ] || mv /site/html /site/prev
+          mv /site/next /site/html
+          rm -rf /site/prev
+          echo "$$want" > /site/.built
+        }
+
+        failed=
+        while :; do
+          if git fetch --quiet origin; then
+            want=$$(git rev-parse "origin/$$BRANCH")
+            built=$$(cat /site/.built 2>/dev/null || true)
+            if [ "$$want" != "$$built" ] && [ "$$want" != "$$failed" ]; then
+              log "new commit $$want (site has $${built:-nothing}); building"
+              if build; then
+                log "site updated to $$want"
+              else
+                failed=$$want
+                log "BUILD FAILED for $$want; previous site left in place, will retry after the next push"
+              fi
+            fi
+          else
+            log "git fetch failed; retrying in $${SYNC_INTERVAL}s"
+          fi
+          sleep "$$SYNC_INTERVAL"
+        done
+
+  web:
+    image: nginx:1-alpine
+    restart: unless-stopped
+    ports:
+      - "8364:80"
+    volumes:
+      - site:/site:ro
+    configs:
+      - source: nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+
+configs:
+  nginx.conf:
+    content: |
+      server {
+          listen 80;
+          root /site/html;
+          charset utf-8;
+
+          # Quartz links pages without ".html" and folders with a trailing slash.
+          location / {
+              try_files $$uri $$uri.html $$uri/ =404;
+          }
+          error_page 404 /404.html;
+
+          gzip on;
+          gzip_types text/css application/javascript text/javascript application/json image/svg+xml application/xml text/xml;
+      }
+
+volumes:
+  repo:
+  site:
