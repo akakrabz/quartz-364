@@ -2,7 +2,7 @@
 title: "Pooling and CNN heads"
 description: "Max and mean pooling, local and global; why pooling has no parameters and how gradients pass through it; the head that turns feature maps into class scores (flatten + linear vs global average pooling + linear); and Lecture 15's shift experiment, which separates translation equivariance from invariance."
 tags: [topic, deep-nets]
-aliases: ["pooling", "max pooling", "max pool", "average pooling", "mean pooling", "global average pooling", "GAP", "global max pooling", "MaxPool2d", "AvgPool2d", "AdaptiveAvgPool2d", "translation invariance", "invariance", "CNN head", "classifier head"]
+aliases: ["max pooling", "max pool", "average pooling", "mean pooling", "global average pooling", "GAP", "global max pooling", "MaxPool2d", "AvgPool2d", "AdaptiveAvgPool2d", "translation invariance", "invariance", "CNN head", "classifier head"]
 ---
 
 *Lecture 15 · [[5-deep-networks/index|Deep networks]] · builds on [[5-deep-networks/convolution|convolution]] and [[5-deep-networks/convolutional-layers|convolutional layers]]*

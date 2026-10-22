@@ -2,7 +2,7 @@
 title: "Ridge regression (L2 regularization)"
 description: "Adding λ‖w‖² to least squares: why X^T X can be singular, the gradient and closed form (XᵀX + λI)⁻¹Xᵀy, how the ½ and 1/N scalings change the formula, outliers and overfitted polynomials from Lecture 8, and reading λ off a plot."
 tags: [topic, linear-models, midterm-1]
-aliases: ["ridge regression", "L2 regularization", "regularization", "Tikhonov regularization", "lambda", "overfitting", "underfitting"]
+aliases: ["L2 regularization", "regularization", "Tikhonov regularization", "lambda", "overfitting", "underfitting"]
 ---
 
 *Lecture 8 · [[3-linear-models/index|Linear models]] · builds on [[3-linear-models/multiple-linear-regression|multiple linear regression]] and [[3-linear-models/basis-function-regression|basis-function regression]]*

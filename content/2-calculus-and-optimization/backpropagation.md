@@ -2,7 +2,7 @@
 title: "Backpropagation"
 description: "Reverse-mode automatic differentiation on a computational graph: the adjoint z̄ᵢ = ∂f/∂zᵢ, the rule that sums one term per successor, a complete worked example with numbers, exam-style graphs, vanishing gradients through stacked sigmoids, and how backpropagation compares with numeric and symbolic differentiation."
 tags: [topic, calculus, midterm-1]
-aliases: ["backpropagation", "backprop", "backward pass", "adjoint", "adjoints", "reverse-mode automatic differentiation", "reverse accumulation", "automatic differentiation", "vanishing gradient", "vanishing gradients"]
+aliases: ["backprop", "backward pass", "adjoint", "adjoints", "reverse-mode automatic differentiation", "reverse accumulation", "automatic differentiation", "vanishing gradient", "vanishing gradients"]
 ---
 
 *Lectures 4–5 · Homework 2 Q2–Q3 · [[2-calculus-and-optimization/index|Calculus and optimization]] · builds on [[2-calculus-and-optimization/computational-graphs|computational graphs]] · implemented by [[2-calculus-and-optimization/autograd|autograd]]*

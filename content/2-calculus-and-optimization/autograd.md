@@ -2,7 +2,7 @@
 title: "Autograd"
 description: "PyTorch's automatic differentiation engine in practice: requires_grad and leaf tensors, backward() and where gradients land, why .grad accumulates and must be cleared, retain_grad, torch.no_grad for updates, detach/item/numpy, and the classic bugs in a hand-written gradient-descent loop."
 tags: [topic, calculus, midterm-1]
-aliases: ["autograd", "torch.autograd", "requires_grad", "backward", "loss.backward()", "no_grad", "torch.no_grad", "detach", "retain_grad", "gradient accumulation", "leaf tensor"]
+aliases: ["torch.autograd", "requires_grad", "backward", "loss.backward()", "no_grad", "torch.no_grad", "detach", "retain_grad", "gradient accumulation", "leaf tensor"]
 ---
 
 *Lectures 3, 5, 6 · [[2-calculus-and-optimization/index|Calculus and optimization]] · builds on [[2-calculus-and-optimization/backpropagation|backpropagation]] · used by every training loop from [[2-calculus-and-optimization/fitting-models-with-gradient-descent|Lecture 6]] on*

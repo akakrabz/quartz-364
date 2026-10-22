@@ -2,7 +2,7 @@
 title: "Gradient descent"
 description: "The gradient descent update x ← x − α∇f(x), two iterations by hand in one and several variables, how the step size decides between slow convergence, zig-zagging, oscillation and divergence, local minima on non-convex functions, and the NumPy loop from Lecture 4."
 tags: [topic, calculus, midterm-1]
-aliases: ["gradient descent", "GD", "step size", "learning rate", "gradient ascent", "steepest descent"]
+aliases: ["GD", "step size", "learning rate", "gradient ascent", "steepest descent"]
 ---
 
 *Lecture 4 · Homework 2 Q1 · [[2-calculus-and-optimization/index|Calculus and optimization]] · builds on [[2-calculus-and-optimization/gradients-and-partial-derivatives|gradients]] and [[2-calculus-and-optimization/primal-optimization|primal optimization]]*

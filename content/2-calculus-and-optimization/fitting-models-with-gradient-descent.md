@@ -2,7 +2,7 @@
 title: "Fitting models with gradient descent"
 description: "The first learning problem: pose an objective (mean squared error) over a dataset, treat the loss as the seed of backpropagation, and run gradient descent on the parameters θ — first with hand-derived gradients in NumPy, then with PyTorch autograd, for quadratic and sigmoid curve fitting (Lecture 6)."
 tags: [topic, calculus, midterm-1]
-aliases: ["objective function", "loss function", "cost function", "mean squared error", "MSE", "curve fitting", "quadratic regression", "parameters theta", "function approximation"]
+aliases: ["loss function", "cost function", "mean squared error", "MSE", "curve fitting", "quadratic regression", "parameters theta", "function approximation"]
 ---
 
 *Lecture 6 · [[2-calculus-and-optimization/index|Calculus and optimization]] · combines [[2-calculus-and-optimization/gradient-descent|gradient descent]] and [[2-calculus-and-optimization/autograd|autograd]] · next: [[3-linear-models/linear-regression|linear regression]]*

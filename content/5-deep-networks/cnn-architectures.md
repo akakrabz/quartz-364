@@ -2,7 +2,7 @@
 title: "CNN architectures: LeNet to ResNet"
 description: "The landmark image-classification CNNs and the one idea each contributed: LeNet-5 (1998), ImageNet and the ILSVRC challenge, AlexNet (2012: depth, ReLU, GPUs), VGG (2014: stacks of 3×3 kernels), GoogLeNet/Inception (2014: parallel branches and 1×1 bottlenecks) and ResNet (2015: residual connections), with layer-by-layer shapes and parameter counts worked by hand."
 tags: [topic, deep-nets]
-aliases: ["CNN history", "LeNet", "LeNet-5", "AlexNet", "VGG", "VGG-16", "VGG-19", "GoogLeNet", "Inception", "ResNet", "ResNet-18", "ResNet-34", "ImageNet", "ILSVRC", "top-5 error"]
+aliases: ["CNN history", "LeNet", "LeNet-5", "AlexNet", "VGG", "VGG-16", "VGG-19", "GoogLeNet", "ResNet-18", "ResNet-34", "ImageNet", "ILSVRC", "top-5 error"]
 ---
 
 *Lectures 16–17 · [[5-deep-networks/index|Deep networks]] · builds on [[5-deep-networks/convolutional-layers|convolutional layers]] and [[5-deep-networks/pooling|pooling]] · details in [[5-deep-networks/branching-and-inception|branching and Inception]] and [[5-deep-networks/residual-connections|residual connections]]*

@@ -2,7 +2,7 @@
 title: "Typos and slips in the sources"
 description: "Known errors in the official Midterm 1 solutions and lecture notebooks, so they don't trip you up: local partials written as full derivatives (Spring 2025 Q8, Spring 2026 Q9), a wrong entry in the Fall 2025 score table, a mask that admits 0, a sign error in the multi-class objective, the L∞ norm, and several smaller slips — each with the correct version."
 tags: [exam, midterm-1]
-aliases: ["errata", "typos in the solutions"]
+aliases: ["typos in the solutions"]
 ---
 
 *Midterm 1 · checked against the official solution PDFs and the lecture notebooks · back to [[6-midterm-1/index|Midterm 1]]*

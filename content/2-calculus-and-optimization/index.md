@@ -2,7 +2,7 @@
 title: "Calculus and optimization"
 description: "Unit 2 (Lectures 3–6): gradients and Jacobians, optimization problems and convexity, gradient descent, computational graphs, backpropagation, PyTorch autograd, and fitting a model by gradient descent."
 tags: [unit, calculus, midterm-1]
-aliases: ["unit 2", "calculus", "automatic differentiation", "autodiff"]
+aliases: ["unit 2", "calculus", "autodiff"]
 ---
 
 *Lectures 3–6 · Homework 1 Q5 and Homework 2 · on Midterm 1 · after [[1-foundations/index|Foundations]], before [[3-linear-models/index|Linear models]]*

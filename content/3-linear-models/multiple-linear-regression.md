@@ -2,7 +2,7 @@
 title: "Multiple linear regression"
 description: "Linear regression with d input features: the N×(d+1) design matrix, the unchanged gradient and normal equations, when the solution is unique, the diabetes and California-housing examples from Lecture 7, and weighted least squares (Fall 2024 Q5)."
 tags: [topic, linear-models, midterm-1]
-aliases: ["multiple linear regression", "multivariate linear regression", "normal equations", "design matrix", "plane of best fit", "weighted least squares"]
+aliases: ["multivariate linear regression", "normal equations", "design matrix", "plane of best fit", "weighted least squares"]
 ---
 
 *Lecture 7 · [[3-linear-models/index|Linear models]] · builds on [[3-linear-models/linear-regression|linear regression]] and [[1-foundations/linear-algebra-in-pytorch|linear algebra in PyTorch]]*

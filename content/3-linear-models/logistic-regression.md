@@ -2,7 +2,7 @@
 title: "Logistic regression"
 description: "Binary classification with σ(wᵀx) = Pr{y = +1 | x}: why least squares fails on class labels, the sigmoid, the sign test for predictions, maximum likelihood and the negative log-likelihood with its gradient, margins (Fall 2025 Q6), and training in NumPy and PyTorch."
 tags: [topic, linear-models, midterm-1]
-aliases: ["logistic regression", "binary classification", "sigmoid", "logistic function", "negative log likelihood", "NLL", "maximum likelihood", "decision boundary", "classification"]
+aliases: ["binary classification", "sigmoid", "logistic function", "negative log likelihood", "NLL", "maximum likelihood", "decision boundary", "classification"]
 ---
 
 *Lectures 8–9 · [[3-linear-models/index|Linear models]] · builds on [[3-linear-models/linear-regression|linear regression]] and [[2-calculus-and-optimization/gradient-descent|gradient descent]]*

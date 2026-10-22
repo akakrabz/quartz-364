@@ -2,7 +2,7 @@
 title: "Broadcasting"
 description: "How PyTorch combines tensors of different shapes elementwise: align shapes from the right, each pair of sizes must be equal or 1 or missing, the size-1 side is stretched without copying; the Lecture 2 examples, the result-shape algorithm, uses in ML (bias, centering, normalizing), the (N,) vs (N, 1) bug, and the Spring 2025/2026 exam problems."
 tags: [topic, foundations, midterm-1]
-aliases: ["broadcasting", "broadcastable", "broadcast rules", "broadcasting rules"]
+aliases: ["broadcastable", "broadcast rules", "broadcasting rules"]
 ---
 
 *Lecture 2 · [[1-foundations/index|Foundations]] · builds on [[1-foundations/tensors|tensors]]*

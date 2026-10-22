@@ -2,7 +2,7 @@
 title: "Binary cross-entropy"
 description: "The loss that trains logistic regression: BCE with 0/1 and ±1 labels, the proof that it equals the negative log-likelihood, its gradient σ(z) − y, why MSE on a sigmoid is a bad idea, and nn.BCELoss vs nn.BCEWithLogitsLoss."
 tags: [topic, linear-models, midterm-1]
-aliases: ["binary cross-entropy", "BCE", "BCELoss", "BCEWithLogitsLoss", "log loss", "empirical risk minimization", "ERM"]
+aliases: ["BCE", "BCELoss", "BCEWithLogitsLoss", "log loss", "empirical risk minimization", "ERM"]
 ---
 
 *Lecture 9 · [[3-linear-models/index|Linear models]] · builds on [[3-linear-models/logistic-regression|logistic regression]]*

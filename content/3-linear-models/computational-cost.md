@@ -2,7 +2,7 @@
 title: "Computational cost: closed form vs gradient descent"
 description: "Counting the operations in w* = (XᵀX)⁻¹Xᵀy, O(Nd² + d³), against O(Nd) per gradient-descent step: which method is cheaper for which N, d and number of iterations, and the Fall 2025 true/false trap."
 tags: [topic, linear-models, midterm-1]
-aliases: ["computational cost", "computational complexity", "closed form vs gradient descent", "cost of the normal equations"]
+aliases: ["computational complexity", "closed form vs gradient descent", "cost of the normal equations"]
 ---
 
 *Lecture 8 · [[3-linear-models/index|Linear models]] · builds on [[3-linear-models/multiple-linear-regression|multiple linear regression]] and [[2-calculus-and-optimization/gradient-descent|gradient descent]]*

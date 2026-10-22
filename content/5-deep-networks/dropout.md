@@ -2,7 +2,7 @@
 title: "Dropout"
 description: "Inverted dropout: zero each activation with probability p during training and scale the survivors by 1/(1-p), do nothing at evaluation; nn.Dropout vs F.dropout (the eval-mode bug), nn.Dropout2d for feature maps, and Lecture 16's experiments showing dropout matters when a big model can memorize noisy labels."
 tags: [topic, deep-nets]
-aliases: ["dropout", "inverted dropout", "nn.Dropout", "Dropout2d", "F.dropout", "spatial dropout"]
+aliases: ["inverted dropout", "nn.Dropout", "Dropout2d", "F.dropout", "spatial dropout"]
 ---
 
 *Lecture 16 · [[5-deep-networks/index|Deep networks]] · builds on [[5-deep-networks/multilayer-perceptrons|multilayer perceptrons]] and [[4-pytorch-training/experimental-setup|experimental setup]]*

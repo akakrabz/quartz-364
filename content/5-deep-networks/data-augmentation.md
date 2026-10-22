@@ -2,7 +2,7 @@
 title: "Data augmentation"
 description: "Random label-preserving transformations of the training images with torchvision transforms.v2: pipelines, where they go in a Dataset, augmenting images and masks together, Lecture 16's four experiments on when augmentation helps and when it hurts, and adversarial examples (FGSM) as augmentation turned against the model."
 tags: [topic, deep-nets]
-aliases: ["augmentation", "image augmentation", "data augmentation", "transforms.v2", "torchvision transforms", "tv_tensors", "adversarial examples", "FGSM", "fast gradient sign method", "adversarial training"]
+aliases: ["augmentation", "image augmentation", "transforms.v2", "torchvision transforms", "tv_tensors", "adversarial examples", "FGSM", "fast gradient sign method", "adversarial training"]
 ---
 
 *Lecture 16 · [[5-deep-networks/index|Deep networks]] · builds on [[4-pytorch-training/datasets-and-dataloaders|datasets and dataloaders]] and [[4-pytorch-training/experimental-setup|experimental setup]]*

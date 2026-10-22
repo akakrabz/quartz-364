@@ -2,7 +2,7 @@
 title: "Spring-only topics: SVMs, logic tables, nn.Module and DataLoader"
 description: "The material that appeared only on the Spring 2025 and Spring 2026 Midterm 1s (30–37 pts there), outside the Fall section's Lectures 2–9 scope: SVM margins and support vectors, linear classifiers for logic tables, nn.Module / Dataset / DataLoader code, the training-loop order, and gradient accumulation."
 tags: [exam, midterm-1]
-aliases: ["Spring-only topics", "SVM exam review"]
+aliases: ["SVM exam review"]
 ---
 
 *Midterm 1 · only on [[6-midterm-1/spring-2025|Spring 2025]] (30 pts) and [[6-midterm-1/spring-2026|Spring 2026]] (37 pts) · back to [[6-midterm-1/index|Midterm 1]]*

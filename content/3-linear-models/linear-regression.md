@@ -2,7 +2,7 @@
 title: "Linear regression"
 description: "Fitting a line y ≈ mx + b by minimizing the mean squared error: the objective, the three ways to solve it (partial derivatives set to zero, gradient descent, the normal equations), a fit worked by hand, and the code in NumPy and PyTorch."
 tags: [topic, linear-models, midterm-1]
-aliases: ["linear regression", "line of best fit", "least squares", "mean squared error", "MSE", "ordinary least squares"]
+aliases: ["line of best fit", "least squares", "mean squared error", "MSE", "ordinary least squares"]
 ---
 
 *Lecture 7 · [[3-linear-models/index|Linear models]] · builds on [[2-calculus-and-optimization/gradients-and-partial-derivatives|partial derivatives]], [[2-calculus-and-optimization/gradient-descent|gradient descent]] and [[2-calculus-and-optimization/matrix-calculus|matrix calculus]]*

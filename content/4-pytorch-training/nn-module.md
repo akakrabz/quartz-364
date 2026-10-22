@@ -2,7 +2,7 @@
 title: "nn.Module: models as classes"
 description: "How to write a PyTorch model: subclass torch.nn.Module, call super().__init__(), register learnable parameters with nn.Parameter or nn.Linear, implement forward, and let model.parameters() collect everything for the optimizer — with the lecture's polynomial, logistic-regression and multi-class models."
 tags: [topic, training]
-aliases: ["nn.Module", "torch.nn.Module", "nn.Parameter", "nn.Linear", "nn.Sequential", "nn.ModuleList", "forward method", "model.parameters()"]
+aliases: ["torch.nn.Module", "nn.Parameter", "nn.Linear", "nn.Sequential", "nn.ModuleList", "forward method", "model.parameters()"]
 ---
 
 *Lecture 10 (and nn.Linear in Lecture 11) · [[4-pytorch-training/index|PyTorch training]] · builds on [[2-calculus-and-optimization/autograd|autograd]] and [[2-calculus-and-optimization/fitting-models-with-gradient-descent|fitting models by hand]]*

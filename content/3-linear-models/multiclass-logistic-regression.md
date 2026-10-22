@@ -2,7 +2,7 @@
 title: "Multi-class logistic regression (softmax)"
 description: "Classifying into K classes: one-vs-one vs one-vs-all, the score vector z = Wx + b, softmax and its properties, cross-entropy loss and its gradient softmax(z) − onehot(y), worked exam problems (Fall 2025 Q6b, HW3 Q5), and nn.Linear with nn.CrossEntropyLoss on logits."
 tags: [topic, linear-models, midterm-1]
-aliases: ["multi-class logistic regression", "multiclass logistic regression", "softmax regression", "softmax", "cross-entropy", "cross-entropy loss", "CrossEntropyLoss", "logits", "one vs all", "one vs rest", "one vs one"]
+aliases: ["multi-class logistic regression", "softmax regression", "softmax", "cross-entropy", "cross-entropy loss", "CrossEntropyLoss", "logits", "one vs all", "one vs rest", "one vs one"]
 ---
 
 *Lectures 9 and 11 · [[3-linear-models/index|Linear models]] · builds on [[3-linear-models/logistic-regression|logistic regression]] and [[3-linear-models/binary-cross-entropy|binary cross-entropy]]*

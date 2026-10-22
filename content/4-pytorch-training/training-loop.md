@@ -2,7 +2,7 @@
 title: "The PyTorch training loop"
 description: "The five-step cycle every PyTorch model is trained with (zero_grad, forward, loss, backward, step), the epoch/batch structure with DataLoaders, logging loss and accuracy, evaluating under torch.no_grad with model.eval, gradient accumulation (Spring 2025 Q7), and the bugs that break a loop."
 tags: [topic, training]
-aliases: ["training loop", "train loop", "epoch", "iteration", "gradient accumulation", "model.eval", "torch.no_grad", "validation loop", "accuracy"]
+aliases: ["train loop", "epoch", "iteration", "gradient accumulation", "model.eval", "torch.no_grad", "validation loop", "accuracy"]
 ---
 
 *Lectures 10–11 (and 14 for devices) · [[4-pytorch-training/index|PyTorch training]] · uses [[4-pytorch-training/nn-module|nn.Module]], [[4-pytorch-training/loss-functions|losses]], [[4-pytorch-training/optimizers|optimizers]] and [[4-pytorch-training/datasets-and-dataloaders|DataLoaders]]*

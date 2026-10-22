@@ -2,7 +2,7 @@
 title: "Midterm 1 formula sheet"
 description: "Everything Midterm 1 expects you to know without looking, on one page: tensor views vs copies, masks and byte sizes; matrix-calculus identities; the gradient-descent update and step-size rule; the backprop sum and local partials; normal equations, ridge and weighted least squares with costs; logistic regression, BCE, softmax, cross-entropy and the multi-class schemes."
 tags: [exam, midterm-1]
-aliases: ["formula sheet", "cheat sheet", "Midterm 1 cheat sheet"]
+aliases: ["cheat sheet", "Midterm 1 cheat sheet"]
 ---
 
 *Midterm 1 · the Fall exams had no formula sheet (the Spring ones stapled one to the back), so know this cold · back to [[6-midterm-1/index|Midterm 1]]*

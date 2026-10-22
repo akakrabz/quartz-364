@@ -2,7 +2,7 @@
 title: "Lectures → topics"
 description: "Every ECE 364 lecture notebook so far (Lectures 1–17), its title, and the topic pages that cover it."
 tags: [unit]
-aliases: ["lecture map", "lectures"]
+aliases: ["lecture map"]
 ---
 
 The site is organized by topic. This table goes the other way: from a lecture notebook to the pages that cover it. Lecture numbers are the folder numbers in `py-complete/` (some notebooks carry a different number in their own header).

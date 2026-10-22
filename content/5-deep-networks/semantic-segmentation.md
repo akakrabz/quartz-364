@@ -2,7 +2,7 @@
 title: "Semantic segmentation and IoU"
 description: "Labelling every pixel: the output and target shapes, Lecture 16's Find-the-clothes dataset, pixel-wise binary cross-entropy, thresholding logits, and intersection over union (IoU), worked by hand and in code, including why per-pixel accuracy misleads."
 tags: [topic, deep-nets]
-aliases: ["semantic segmentation", "segmentation", "IoU", "intersection over union", "Jaccard index", "segmentation mask", "pixel-wise classification"]
+aliases: ["segmentation", "IoU", "intersection over union", "Jaccard index", "segmentation mask", "pixel-wise classification"]
 ---
 
 *Lecture 16 · [[5-deep-networks/index|Deep networks]] · model: [[5-deep-networks/fully-convolutional-networks|fully convolutional networks and U-Net]]*

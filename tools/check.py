@@ -60,6 +60,7 @@ for root, _, files in os.walk(ROOT):
             pages[rel.lower()] = {"path": rel, "text": text}
 
 errors, warnings = [], []
+ALIASES = {}
 
 # callout types: Quartz/Obsidian built-ins plus the site's own (quartz/styles/custom.scss)
 CALLOUTS = {
@@ -89,6 +90,17 @@ for slug, pg in pages.items():
         pg["fm"] = fm
         if "title" not in fm: errors.append(f"{slug}: frontmatter missing title")
         if "description" not in fm: warnings.append(f"{slug}: frontmatter missing description")
+        # Quartz writes a redirect page per alias at <folder>/<alias-slug>: an alias equal
+        # to an existing page's slug overwrites that page with a redirect (to itself)
+        d = os.path.dirname(slug)
+        for a in fm.get("aliases") or []:
+            a_slug = re.sub(r"[^\w\-/]+", "-", str(a).strip().lower().replace(" ", "-")).strip("-")
+            target = f"{d}/{a_slug}" if d else a_slug
+            if target in pages:
+                errors.append(f"{slug}: alias {a!r} collides with page {target} (its redirect would replace the page)")
+            alias_owner = ALIASES.setdefault(target, slug)
+            if alias_owner != slug:
+                errors.append(f"{slug}: alias {a!r} also used by {alias_owner} in the same folder")
     body = text[m.end():] if m else text
     pg["body"] = body
     # headings -> slugs (with github-slugger duplicate suffixes)

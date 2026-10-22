@@ -2,7 +2,7 @@
 title: "Convolution"
 description: "Why an MLP ignores the spatial structure of images, convolution as sliding template matching, 1-D convolution vs cross-correlation worked by hand (and what F.conv1d / nn.Conv2d really compute), 2-D convolution, locality and weight sharing, translation equivariance, and learning a filter with gradient descent."
 tags: [topic, deep-nets]
-aliases: ["convolution", "cross-correlation", "correlation", "template matching", "filter", "kernel", "weight sharing", "locality", "translation equivariance", "equivariance", "conv1d", "conv2d"]
+aliases: ["cross-correlation", "correlation", "template matching", "filter", "kernel", "weight sharing", "locality", "translation equivariance", "equivariance", "conv1d"]
 ---
 
 *Lecture 15 · [[5-deep-networks/index|Deep networks]] · builds on [[5-deep-networks/multilayer-perceptrons#what-an-mlp-cannot-see|what an MLP cannot see]] · continues in [[5-deep-networks/convolutional-layers|convolutional layers]] and [[5-deep-networks/pooling|pooling]]*
