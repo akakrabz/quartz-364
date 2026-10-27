@@ -42,3 +42,5 @@ Logistic regression draws one straight boundary; this unit stacks layers until t
 
 > [!tip] Shapes and parameter counts are the through-line
 > Almost every page here has the same two skills: trace a tensor's shape through the model, and count its learnable parameters by hand ($C_{\text{out}}C_{\text{in}}k^2 + C_{\text{out}}$ for a conv, $n_{\text{out}}n_{\text{in}} + n_{\text{out}}$ for a linear layer, $G\cdot H(d+H+2)$ for a recurrent layer). Practise them on [[5-deep-networks/convolutional-layers|convolutional layers]], [[5-deep-networks/cnn-architectures|CNN architectures]] and [[5-deep-networks/lstm-and-gru#counting-parameters-of-rnn-gru-and-lstm|recurrent layers]].
+
+Next: [[7-transformers/index|Transformers]] — Lecture 18 replaces one-hot letters with learned embeddings and moves from letters to word tokens.

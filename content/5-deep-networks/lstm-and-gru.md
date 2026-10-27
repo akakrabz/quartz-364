@@ -207,4 +207,4 @@ Worked for the surname models ($d = 52$, $H = 64$, head `nn.Linear(128, 18)` $= 
 - [`torch.sigmoid`](https://docs.pytorch.org/docs/stable/generated/torch.sigmoid.html) and [`torch.tanh`](https://docs.pytorch.org/docs/stable/generated/torch.tanh.html) — the two gate nonlinearities ([[5-deep-networks/activation-functions|activation functions]]).
 - Further reading from the lecture: [Chung et al., "Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling"](https://arxiv.org/abs/1412.3555) and [Colah's "Understanding LSTM Networks"](https://colah.github.io/posts/2015-08-Understanding-LSTMs/).
 
-Related: [[5-deep-networks/recurrent-neural-networks]] · [[5-deep-networks/bidirectional-and-stacked-rnns]] · [[5-deep-networks/residual-connections]] · [[5-deep-networks/activation-functions]]
+Related: [[5-deep-networks/recurrent-neural-networks]] · [[5-deep-networks/bidirectional-and-stacked-rnns]] · [[5-deep-networks/residual-connections]] · [[5-deep-networks/activation-functions]] · [[7-transformers/text-encodings-and-embeddings]]

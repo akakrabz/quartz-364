@@ -1,6 +1,6 @@
 ---
 title: "ECE 364 · Programming Methods for Machine Learning"
-description: "Review notes for ECE 364 (Fall 2026, Illinois), organized by topic: tensors, matrix calculus, gradient descent and backpropagation, linear and logistic regression, PyTorch training, MLPs, CNNs and RNNs — each page with the must-know summary, diagrams, code from the lecture notebooks and links to the PyTorch docs — plus a Midterm 1 section with every past exam worked."
+description: "Review notes for ECE 364 (Fall 2026, Illinois), organized by topic: tensors, matrix calculus, gradient descent and backpropagation, linear and logistic regression, PyTorch training, MLPs, CNNs and RNNs, embeddings and tokenization — each page with the must-know summary, diagrams, code from the lecture notebooks and links to the PyTorch docs — plus a Midterm 1 section with every past exam worked."
 tags: [unit]
 ---
 
@@ -31,6 +31,9 @@ The machinery every model uses: [[4-pytorch-training/nn-module|nn.Module]] · [[
 - **CNNs:** [[5-deep-networks/convolution|Convolution]] · [[5-deep-networks/convolutional-layers|Convolutional layers]] · [[5-deep-networks/pooling|Pooling]] · [[5-deep-networks/cnn-architectures|CNN architectures]] · [[5-deep-networks/branching-and-inception|Branching and Inception]] · [[5-deep-networks/residual-connections|Residual connections]]
 - **Dense prediction and training tricks:** [[5-deep-networks/fully-convolutional-networks|Fully convolutional networks]] · [[5-deep-networks/semantic-segmentation|Semantic segmentation]] · [[5-deep-networks/data-augmentation|Data augmentation]] · [[5-deep-networks/batch-normalization|Batch normalization]] · [[5-deep-networks/dropout|Dropout]]
 - **Sequences:** [[5-deep-networks/recurrent-neural-networks|Recurrent neural networks]] · [[5-deep-networks/bidirectional-and-stacked-rnns|Bidirectional and stacked RNNs]] · [[5-deep-networks/lstm-and-gru|LSTM and GRU]]
+
+### [[7-transformers/index|7 · Transformers]] — Lecture 18 onward
+How text becomes model input: [[7-transformers/text-encodings-and-embeddings|Text encodings and learned embeddings]] · [[7-transformers/tokenization|Tokenization and vocabulary]]
 
 ### [[6-midterm-1/index|6 · Midterm 1]] — past exams, worked
 Scope: Lectures 2–9 and HW 1–3.

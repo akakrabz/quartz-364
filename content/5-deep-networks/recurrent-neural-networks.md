@@ -150,7 +150,7 @@ name_to_tensor('Whitworth').shape
 torch.Size([9, 1, 52])
 ```
 
-[`torch.nn.functional.one_hot`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.one_hot.html) builds the same vectors from an index tensor. For large vocabularies (words, not letters), models usually learn a dense vector per symbol with [`nn.Embedding`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Embedding.html) instead; the lecture sticks with one-hot letters.
+[`torch.nn.functional.one_hot`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.one_hot.html) builds the same vectors from an index tensor. For large vocabularies (words, not letters), models usually learn a dense vector per symbol with [`nn.Embedding`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Embedding.html) instead; Lecture 17 sticks with one-hot letters, and Lecture 18 makes the switch: [[7-transformers/text-encodings-and-embeddings|text encodings and learned embeddings]].
 
 ## Example: which language is a surname from?
 
@@ -285,4 +285,4 @@ $$
 - [`torch.nn.CrossEntropyLoss`](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) — loss on the last step's logits.
 - Tutorial: [NLP from scratch: classifying names with a character-level RNN](https://docs.pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html) — the source of the surname task.
 
-Related: [[5-deep-networks/bidirectional-and-stacked-rnns]] · [[5-deep-networks/lstm-and-gru]] · [[5-deep-networks/multilayer-perceptrons]] · [[2-calculus-and-optimization/backpropagation]] · [[4-pytorch-training/datasets-and-dataloaders]] · [[3-linear-models/multiclass-logistic-regression]]
+Related: [[5-deep-networks/bidirectional-and-stacked-rnns]] · [[5-deep-networks/lstm-and-gru]] · [[5-deep-networks/multilayer-perceptrons]] · [[2-calculus-and-optimization/backpropagation]] · [[4-pytorch-training/datasets-and-dataloaders]] · [[3-linear-models/multiclass-logistic-regression]] · [[7-transformers/text-encodings-and-embeddings]] · [[7-transformers/tokenization]]

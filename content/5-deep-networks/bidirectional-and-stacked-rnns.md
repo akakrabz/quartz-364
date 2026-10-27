@@ -233,4 +233,4 @@ The LSTM and GRU versions of the same model multiply the RNN part by 4 and 3: [[
 - [`torch.Tensor.view`](https://docs.pytorch.org/docs/stable/generated/torch.Tensor.view.html) — reshaping `h_n` to `(num_layers, num_directions, N, H)`.
 - [`torch.nn.Linear`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Linear.html) — the task head on $D\cdot H$ features.
 
-Related: [[5-deep-networks/recurrent-neural-networks]] · [[5-deep-networks/lstm-and-gru]] · [[5-deep-networks/multilayer-perceptrons]] · [[5-deep-networks/dropout]]
+Related: [[5-deep-networks/recurrent-neural-networks]] · [[5-deep-networks/lstm-and-gru]] · [[5-deep-networks/multilayer-perceptrons]] · [[5-deep-networks/dropout]] · [[7-transformers/tokenization]]

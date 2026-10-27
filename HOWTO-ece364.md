@@ -52,17 +52,18 @@ content/4-pytorch-training/            L10-L11, L14: nn.Module, losses, optimize
 content/5-deep-networks/               L14-L17: MLPs, activations, CNNs (conv, pooling, architectures, Inception, ResNet, FCN/U-Net,
                                        segmentation, augmentation, batch norm, dropout), RNNs, LSTM/GRU
 content/6-midterm-1/                   the four past Midterm 1s worked, review by problem type, formula sheet, T/F bank, practice, errata
+content/7-transformers/                L18 onward: text encodings and learned embeddings, tokenization and vocabulary
 content/images/                        lecture figures, named lNN-<name>.png after the notebook folder they came from
 tools/                                 spec, checkers, figure generators (see §5)
 ```
 
-The site is organized by topic, not by lecture; `lectures.md` maps back. Lecture numbers are the `py-complete/LectureN` folder numbers (the CNN notebooks call themselves Lectures 17 and 18 in their headers). The Explorer order (units by folder prefix, pages in course order) is the list in `quartz.ts`: add new pages there.
+The site is organized by topic, not by lecture; `lectures.md` maps back. Lecture numbers are the `py-complete/LectureN` folder numbers (the CNN notebooks call themselves Lectures 17 and 18 in their headers). The Explorer order (topic units by folder prefix, exam folders last, pages in course order) is set in `quartz.ts`: add new pages to its list.
 
 ## 4. Writing conventions (so new pages match)
 
 `tools/SPEC.md` is the full spec every page was written to; the short version:
 
-- **Topic pages**: frontmatter `title`, `description`, `tags` (`topic`, a unit tag `foundations | calculus | linear-models | training | deep-nets`, and `midterm-1` for Lectures 2-9), `aliases`. Then an italic meta line (lectures, unit, prerequisites), `> [!abstract] In one breath`, `## What it is`, `## What you should know` (the review checklist), topic sections with math, figures and notebook code, `> [!trap]` and `> [!exam]` callouts, `## PyTorch docs`, and `Related:` as the last line.
+- **Topic pages**: frontmatter `title`, `description`, `tags` (`topic`, a unit tag `foundations | calculus | linear-models | training | deep-nets | transformers`, and `midterm-1` for Lectures 2-9), `aliases`. Then an italic meta line (lectures, unit, prerequisites), `> [!abstract] In one breath`, `## What it is`, `## What you should know` (the review checklist), topic sections with math, figures and notebook code, `> [!trap]` and `> [!exam]` callouts, `## PyTorch docs`, and `Related:` as the last line.
 - **Code** comes from the lecture notebooks (trimmed); printed output only where the notebook printed it or it can be derived by hand. Comments of 7 words or fewer.
 - **PyTorch links**: `https://docs.pytorch.org/docs/stable/generated/<full.name>.html` for APIs, `.../stable/<page>.html#<anchor>` for topic pages (e.g. `data.html#torch.utils.data.DataLoader`). Note `nn.Flatten` lives at `generated/torch.nn.modules.flatten.Flatten.html`.
 - **Math**: `$…$` inline, `$$…$$` on their own lines (prefixed with `> ` inside callouts). No macros; inside tables use `\lvert…\rvert` and `\mid`, never a bare `|`.
@@ -86,6 +87,8 @@ git clone --depth 1 --filter=blob:none --sparse -b release/0.29 https://github.c
 ```
 
 ## 6. What's here
+
+Build 2, 2026-10-25 — Lectures 1–18 and Midterm 1. (Build 2 added unit 7, Transformers: Lecture 18's embeddings and tokenization pages, 4 figures in `tools/figs_transformers.py`; the vocabulary-size table on the tokenization page was computed by running the notebook's preprocessing on `reviews.csv`.)
 
 Build 1, 2026-10-20 — Lectures 1–17 and Midterm 1.
 

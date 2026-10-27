@@ -1,6 +1,6 @@
 ---
 title: "Lectures → topics"
-description: "Every ECE 364 lecture notebook so far (Lectures 1–17), its title, and the topic pages that cover it."
+description: "Every ECE 364 lecture notebook so far (Lectures 1–18), its title, and the topic pages that cover it."
 tags: [unit]
 aliases: ["lecture map"]
 ---
@@ -26,3 +26,4 @@ The site is organized by topic. This table goes the other way: from a lecture no
 | 15 | Convolutional Neural Networks (Part 1): Seeing Patterns | [[5-deep-networks/convolution\|Convolution]] · [[5-deep-networks/convolutional-layers\|Convolutional layers]] · [[5-deep-networks/pooling\|Pooling]] |
 | 16 | Convolutional Neural Networks (Part 2): Beyond the Chain | [[5-deep-networks/branching-and-inception\|Branching and Inception]] · [[5-deep-networks/residual-connections\|Residual connections]] · [[5-deep-networks/fully-convolutional-networks\|Fully convolutional networks]] · [[5-deep-networks/semantic-segmentation\|Semantic segmentation]] · [[5-deep-networks/data-augmentation\|Data augmentation]] · [[5-deep-networks/batch-normalization\|Batch normalization]] · [[5-deep-networks/dropout\|Dropout]] |
 | 17 | Deep Nets: CNN History and Recurrent Neural Networks | [[5-deep-networks/cnn-architectures\|CNN architectures]] · [[5-deep-networks/recurrent-neural-networks\|Recurrent neural networks]] · [[5-deep-networks/bidirectional-and-stacked-rnns\|Bidirectional and stacked RNNs]] · [[5-deep-networks/lstm-and-gru\|LSTM and GRU]] |
+| 18 | Transformers I: Words, Tokenization, and Vocabulary | [[7-transformers/text-encodings-and-embeddings\|Text encodings and embeddings]] · [[7-transformers/tokenization\|Tokenization and vocabulary]] |

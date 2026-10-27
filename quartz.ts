@@ -1,8 +1,8 @@
 import { loadQuartzConfig, loadQuartzLayout } from "./quartz/plugins/loader/config-loader"
 import * as ExternalPlugin from "./.quartz/plugins"
 
-// Order the Explorer ("Course map"): folders by name (numeric prefixes fix the
-// unit order), and pages inside a unit in course order (list below), not by title.
+// Order the Explorer ("Course map"): topic folders by name (numeric prefixes fix the
+// unit order), exam folders last, and pages inside a unit in course order (list below).
 //
 // NOTE: this function is serialized with .toString() and re-run in the browser,
 // so it must stay self-contained (no imports, no outer variables).
@@ -11,7 +11,13 @@ ExternalPlugin.Explorer({
     if (a.isFolder !== b.isFolder) {
       return a.isFolder ? -1 : 1
     }
-    const order = ["what-is-machine-learning", "tensors", "storage-and-views", "indexing-and-slicing", "broadcasting", "linear-algebra-in-pytorch", "gradients-and-partial-derivatives", "matrix-calculus", "primal-optimization", "gradient-descent", "computational-graphs", "backpropagation", "autograd", "fitting-models-with-gradient-descent", "linear-regression", "multiple-linear-regression", "basis-function-regression", "computational-cost", "ridge-regression", "logistic-regression", "binary-cross-entropy", "multiclass-logistic-regression", "nn-module", "loss-functions", "optimizers", "learning-rate-schedulers", "training-loop", "datasets-and-dataloaders", "experimental-setup", "gpu-training", "multilayer-perceptrons", "activation-functions", "convolution", "convolutional-layers", "pooling", "cnn-architectures", "branching-and-inception", "residual-connections", "fully-convolutional-networks", "semantic-segmentation", "data-augmentation", "batch-normalization", "dropout", "recurrent-neural-networks", "bidirectional-and-stacked-rnns", "lstm-and-gru", "fall-2024", "spring-2025", "fall-2025", "spring-2026", "review-tensors", "review-gradient-descent", "review-computational-graphs", "review-autograd", "review-linear-regression", "review-logistic-regression", "formula-sheet", "true-false", "practice-problems", "spring-only-topics", "errata"]
+    // exam folders (6-midterm-1, …) after all topic units
+    const ea = (a.slugSegment ?? "").includes("midterm") ? 1 : 0
+    const eb = (b.slugSegment ?? "").includes("midterm") ? 1 : 0
+    if (ea !== eb) {
+      return ea - eb
+    }
+    const order = ["what-is-machine-learning", "tensors", "storage-and-views", "indexing-and-slicing", "broadcasting", "linear-algebra-in-pytorch", "gradients-and-partial-derivatives", "matrix-calculus", "primal-optimization", "gradient-descent", "computational-graphs", "backpropagation", "autograd", "fitting-models-with-gradient-descent", "linear-regression", "multiple-linear-regression", "basis-function-regression", "computational-cost", "ridge-regression", "logistic-regression", "binary-cross-entropy", "multiclass-logistic-regression", "nn-module", "loss-functions", "optimizers", "learning-rate-schedulers", "training-loop", "datasets-and-dataloaders", "experimental-setup", "gpu-training", "multilayer-perceptrons", "activation-functions", "convolution", "convolutional-layers", "pooling", "cnn-architectures", "branching-and-inception", "residual-connections", "fully-convolutional-networks", "semantic-segmentation", "data-augmentation", "batch-normalization", "dropout", "recurrent-neural-networks", "bidirectional-and-stacked-rnns", "lstm-and-gru", "text-encodings-and-embeddings", "tokenization", "fall-2024", "spring-2025", "fall-2025", "spring-2026", "review-tensors", "review-gradient-descent", "review-computational-graphs", "review-autograd", "review-linear-regression", "review-logistic-regression", "formula-sheet", "true-false", "practice-problems", "spring-only-topics", "errata"]
     const ra = order.indexOf(a.slugSegment ?? "")
     const rb = order.indexOf(b.slugSegment ?? "")
     if (ra !== rb) {

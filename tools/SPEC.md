@@ -22,6 +22,7 @@ content/
   4-pytorch-training/           L10, L11 (+ GPU from L14)
   5-deep-networks/              L14-L17
   6-midterm-1/                  past exams, worked; formula sheet; T/F bank
+  7-transformers/               L18 onward (embeddings, tokenization, then attention/transformers)
 ```
 
 Each unit folder has an `index.md` (title, one-paragraph overview, ordered list of its topic pages with a one-line hook each,
@@ -85,6 +86,10 @@ which lectures it covers).
 - bidirectional-and-stacked-rnns (L17)
 - lstm-and-gru — gates, cell state, nn.LSTM/nn.GRU, Elman RNN (L17)
 
+7-transformers/
+- text-encodings-and-embeddings — one-hot, binary, custom 2-D, nn.Embedding, embedding-dimension sweep (L18)
+- tokenization — tokens, vocabulary, token size vs vocabulary size, sentiment-analysis set-up, min_freq (L18)
+
 6-midterm-1/  (see the exam agent's brief)
 - index, fall-2024, spring-2025, fall-2025, spring-2026, formula-sheet, true-false, practice-problems (+ others as needed)
 
@@ -94,7 +99,7 @@ which lectures it covers).
 ---
 title: "Gradient descent"
 description: "One specific sentence: what the page covers (shown in previews and search)."
-tags: [topic, calculus, midterm-1]          # topic + unit tag (foundations | calculus | linear-models | training | deep-nets); midterm-1 if in Lectures 2-9 / HW 1-3
+tags: [topic, calculus, midterm-1]          # topic + unit tag (foundations | calculus | linear-models | training | deep-nets | transformers); midterm-1 if in Lectures 2-9 / HW 1-3
 aliases: ["gradient descent", "GD", "learning rate"]
 ---
 
