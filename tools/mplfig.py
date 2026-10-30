@@ -43,6 +43,44 @@ plt.rcParams.update({
 })
 
 
+def compact(s, name):
+    """Shrink matplotlib SVG: short ids, rounded coords, hoisted styles.
+
+    Scatter plots with thousands of points otherwise weigh megabytes.
+    Safe to run twice; text content is never touched.
+    """
+    import hashlib
+    tag = "f" + hashlib.md5(name.encode()).hexdigest()[:5]
+    # drop ids nobody references, shorten the rest
+    refs = set(re.findall(r'#([A-Za-z_][\w.\-]*)', s))
+    ids = re.findall(r' id="([^"]+)"', s)
+    s = re.sub(r' id="([^"]+)"', lambda m: m.group(0) if m.group(1) in refs else "", s)
+    short = {}
+    for i in ids:
+        if i in refs and i not in short and not i.startswith(tag):
+            short[i] = f"{tag}{len(short):x}"
+    for i in sorted(short, key=len, reverse=True):
+        j = short[i]
+        s = s.replace(f'id="{i}"', f'id="{j}"').replace(f"#{i})", f"#{j})").replace(f'"#{i}"', f'"#{j}"')
+
+    # round long decimals inside geometry attributes only
+    def rnd(m):
+        return m.group(1) + re.sub(r"-?\d+\.\d{3,}", lambda n: f"{float(n.group(0)):.2f}".rstrip("0").rstrip("."), m.group(2)) + '"'
+    s = re.sub(r'(\s(?:d|x|y|x1|y1|x2|y2|cx|cy|r|width|height|transform|points|viewBox)=")([^"]*)"', rnd, s)
+
+    # hoist one shared style from runs of <use> markers
+    def hoist(m):
+        uses = re.findall(r"<use [^>]*/>", m.group(2))
+        styles = {re.search(r'style="([^"]*)"', u).group(1) if 'style="' in u else "" for u in uses}
+        if len(uses) < 20 or len(styles) != 1 or "".join(uses) != m.group(2):
+            return m.group(0)
+        st = styles.pop()
+        body = re.sub(r' style="[^"]*"', "", m.group(2))
+        return f'{m.group(1)[:-1]} style="{st}">{body}</g>' if st and "style=" not in m.group(1) else m.group(0)
+    s = re.sub(r"(<g[^>]*>)((?:<use [^>]*/>)+)</g>", hoist, s)
+    return s
+
+
 def save(fig, name, caption="", alt="", width=None):
     """Write tools/figs/NAME.html; width (px) caps the displayed size."""
     plt.rcParams["svg.hashsalt"] = name
@@ -67,6 +105,7 @@ def save(fig, name, caption="", alt="", width=None):
     for i in sorted(ids, key=len, reverse=True):
         s = s.replace(f'id="{i}"', f'id="{name}-{i}"').replace(f"#{i})", f"#{name}-{i})").replace(f'"#{i}"', f'"#{name}-{i}"')
     s = re.sub(r">\s+<", "><", s).replace("\n", " ")
+    s = compact(s, name)
     out = f'<figure class="cs-fig">{s}'
     if caption:
         out += f"<figcaption>{caption}</figcaption>"

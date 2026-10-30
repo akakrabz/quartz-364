@@ -1,6 +1,6 @@
 ---
 title: "ECE 364 · Programming Methods for Machine Learning"
-description: "Review notes for ECE 364 (Fall 2026, Illinois), organized by topic: tensors, matrix calculus, gradient descent and backpropagation, linear and logistic regression, PyTorch training, MLPs, CNNs and RNNs, embeddings and tokenization — each page with the must-know summary, diagrams, code from the lecture notebooks and links to the PyTorch docs — plus a Midterm 1 section with every past exam worked."
+description: "Review notes for ECE 364 (Fall 2026, Illinois), organized by topic: tensors, matrix calculus, gradient descent and backpropagation, linear and logistic regression, PyTorch training, MLPs, CNNs and RNNs, embeddings, attention and Transformers — each page with the must-know summary, diagrams, code from the lecture notebooks and links to the PyTorch docs — plus a Midterm 1 section with every past exam worked."
 tags: [unit]
 ---
 
@@ -32,8 +32,13 @@ The machinery every model uses: [[4-pytorch-training/nn-module|nn.Module]] · [[
 - **Dense prediction and training tricks:** [[5-deep-networks/fully-convolutional-networks|Fully convolutional networks]] · [[5-deep-networks/semantic-segmentation|Semantic segmentation]] · [[5-deep-networks/data-augmentation|Data augmentation]] · [[5-deep-networks/batch-normalization|Batch normalization]] · [[5-deep-networks/dropout|Dropout]]
 - **Sequences:** [[5-deep-networks/recurrent-neural-networks|Recurrent neural networks]] · [[5-deep-networks/bidirectional-and-stacked-rnns|Bidirectional and stacked RNNs]] · [[5-deep-networks/lstm-and-gru|LSTM and GRU]]
 
-### [[7-transformers/index|7 · Transformers]] — Lecture 18 onward
-How text becomes model input: [[7-transformers/text-encodings-and-embeddings|Text encodings and learned embeddings]] · [[7-transformers/tokenization|Tokenization and vocabulary]]
+### [[7-transformers/index|7 · Transformers]] — Lectures 18–20
+- **Text as input:** [[7-transformers/text-encodings-and-embeddings|Text encodings and learned embeddings]] · [[7-transformers/tokenization|Tokenization and vocabulary]]
+- **Translation and attention:** [[7-transformers/sequence-to-sequence-rnns|Sequence-to-sequence RNNs]] · [[7-transformers/attention|Attention]]
+- **The Transformer:** [[7-transformers/transformer-architecture|Architecture]] · [[7-transformers/layer-norm-and-feed-forward|LayerNorm and FFN]] · [[7-transformers/positional-encoding|Positional encoding]] · [[7-transformers/multi-head-attention|Multi-head attention]] · [[7-transformers/attention-is-all-you-need|Paper guide: Attention Is All You Need]]
+
+### [[8-diffusion-models/index|8 · Diffusion models]] — beyond the lectures
+How image generators reverse a noising process: [[8-diffusion-models/brownian-motion-and-forward-diffusion|Forward diffusion]] · [[8-diffusion-models/reverse-time-sde-and-score-matching|Reverse-time SDE and score matching]] · [[8-diffusion-models/ddpm|DDPM]] · [[8-diffusion-models/fast-sampling-ddim-and-ode-solvers|Fast sampling]] · [[8-diffusion-models/guidance-and-latent-diffusion|Guidance and latent diffusion]] · [[8-diffusion-models/flow-matching-and-rectified-flow|Flow matching]] · [[8-diffusion-models/modern-image-generators|Modern image generators]]
 
 ### [[6-midterm-1/index|6 · Midterm 1]] — past exams, worked
 Scope: Lectures 2–9 and HW 1–3.

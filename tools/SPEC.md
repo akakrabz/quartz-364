@@ -23,6 +23,7 @@ content/
   5-deep-networks/              L14-L17
   6-midterm-1/                  past exams, worked; formula sheet; T/F bank
   7-transformers/               L18 onward (embeddings, tokenization, then attention/transformers)
+  8-diffusion-models/           beyond the lectures: diffusion / score-based image generation and newer methods
 ```
 
 Each unit folder has an `index.md` (title, one-paragraph overview, ordered list of its topic pages with a one-line hook each,
@@ -89,6 +90,22 @@ which lectures it covers).
 7-transformers/
 - text-encodings-and-embeddings — one-hot, binary, custom 2-D, nn.Embedding, embedding-dimension sweep (L18)
 - tokenization — tokens, vocabulary, token size vs vocabulary size, sentiment-analysis set-up, min_freq (L18)
+- sequence-to-sequence-rnns — sequence transduction, Eng->Fr dataset, encoder-decoder GRU, context vector, teacher forcing, greedy decoding, BLEU, the three limitations (L19)
+- attention — queries/keys/values, scaled dot-product self-attention, masked (causal) self-attention, cross-attention, shapes (L19)
+- transformer-architecture — encoder/decoder, training vs inference, Skinny -> Medium -> Full progression and results, stacking layers (L19, L20)
+- multi-head-attention — heads, per-head dimensions, concatenation and W_O, parameter cost (L20)
+- positional-encoding — permutation equivariance, sinusoidal and learned encodings, ablation (L20)
+- layer-norm-and-feed-forward — position-wise FFN, residual Add & Norm, LayerNorm vs BatchNorm (L20)
+- attention-is-all-you-need — the Vaswani et al. (2017) paper explained section by section, and how the course implementation differs
+
+8-diffusion-models/  (NOT from the lecture notebooks: sourced from the original papers via Exa; every page says so in its meta line)
+- brownian-motion-and-forward-diffusion — Brownian motion / Wiener process, the forward noising process (DDPM discrete chain, closed form q(x_t|x_0)), SDE view (VP/VE), noise schedules
+- reverse-time-sde-and-score-matching — the score function, Anderson's reverse-time SDE, Langevin dynamics, denoising score matching, the probability-flow ODE
+- ddpm — Ho et al. (2020): ε-prediction, the simple loss, training and sampling algorithms, U-Net, a minimal PyTorch implementation
+- fast-sampling-ddim-and-ode-solvers — DDIM, probability-flow ODE solvers (DPM-Solver, EDM), distillation and consistency models
+- guidance-and-latent-diffusion — classifier and classifier-free guidance, conditioning by cross-attention, latent diffusion / Stable Diffusion, the VAE latent space
+- flow-matching-and-rectified-flow — flow matching, rectified flow, the link to diffusion, why recent models use it
+- modern-image-generators — newer implementations: diffusion transformers (DiT, MMDiT), Stable Diffusion 3, FLUX and other recent systems, few-step generation (as of the research date, with sources)
 
 6-midterm-1/  (see the exam agent's brief)
 - index, fall-2024, spring-2025, fall-2025, spring-2026, formula-sheet, true-false, practice-problems (+ others as needed)
@@ -99,7 +116,7 @@ which lectures it covers).
 ---
 title: "Gradient descent"
 description: "One specific sentence: what the page covers (shown in previews and search)."
-tags: [topic, calculus, midterm-1]          # topic + unit tag (foundations | calculus | linear-models | training | deep-nets | transformers); midterm-1 if in Lectures 2-9 / HW 1-3
+tags: [topic, calculus, midterm-1]          # topic + unit tag (foundations | calculus | linear-models | training | deep-nets | transformers | diffusion); midterm-1 if in Lectures 2-9 / HW 1-3
 aliases: ["gradient descent", "GD", "learning rate"]
 ---
 

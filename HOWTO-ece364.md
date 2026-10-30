@@ -52,7 +52,8 @@ content/4-pytorch-training/            L10-L11, L14: nn.Module, losses, optimize
 content/5-deep-networks/               L14-L17: MLPs, activations, CNNs (conv, pooling, architectures, Inception, ResNet, FCN/U-Net,
                                        segmentation, augmentation, batch norm, dropout), RNNs, LSTM/GRU
 content/6-midterm-1/                   the four past Midterm 1s worked, review by problem type, formula sheet, T/F bank, practice, errata
-content/7-transformers/                L18 onward: text encodings and learned embeddings, tokenization and vocabulary
+content/7-transformers/                L18-L20: embeddings, tokenization, seq2seq RNNs, attention, the Transformer, paper guide
+content/8-diffusion-models/            beyond the lectures (on request): diffusion / score-based image generation, sourced from papers
 content/images/                        lecture figures, named lNN-<name>.png after the notebook folder they came from
 tools/                                 spec, checkers, figure generators (see §5)
 ```
@@ -87,6 +88,13 @@ git clone --depth 1 --filter=blob:none --sparse -b release/0.29 https://github.c
 ```
 
 ## 6. What's here
+
+Build 3, 2026-10-30 — Lectures 1–20, Midterm 1, and unit 8 (diffusion models, on request).
+
+- **Lectures 19–20** (unit 7): sequence-to-sequence RNNs, attention, the Transformer (Skinny → Medium → Full), LayerNorm and FFN, positional encoding, multi-head attention, and a section-by-section guide to *Attention Is All You Need* (checked against the arXiv v7 text via Exa). Results come from the saved `.npy` files; dataset statistics were recomputed on `eng-fra.txt`.
+- **Unit 8, diffusion models** (beyond the lectures): forward diffusion, reverse-time SDE and score matching, DDPM, fast sampling, guidance and latent diffusion, flow matching, modern image generators (as of October 2026). Sourced from the papers and official model cards via Exa; NumPy toys in `tools/diffusion_toy.py` and `tools/flow_toy.py` (all figures computed, not copied).
+- `tools/mplfig.py` now compacts SVGs (short ids, rounded coordinates, hoisted marker styles); scatter figures draw at most ~1,200 points per panel.
+- Totals: 87 pages (62 topic pages), 115 figures, 748 PyTorch-doc links (275 distinct, all checked), 1,597 links and 6,763 KaTeX expressions passing `check.py`. Every new page was reviewed independently.
 
 Build 2, 2026-10-25 — Lectures 1–18 and Midterm 1. (Build 2 added unit 7, Transformers: Lecture 18's embeddings and tokenization pages, 4 figures in `tools/figs_transformers.py`; the vocabulary-size table on the tokenization page was computed by running the notebook's preprocessing on `reviews.csv`.)
 

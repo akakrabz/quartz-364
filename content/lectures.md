@@ -1,6 +1,6 @@
 ---
 title: "Lectures → topics"
-description: "Every ECE 364 lecture notebook so far (Lectures 1–18), its title, and the topic pages that cover it."
+description: "Every ECE 364 lecture notebook so far (Lectures 1–20), its title, and the topic pages that cover it."
 tags: [unit]
 aliases: ["lecture map"]
 ---
@@ -27,3 +27,5 @@ The site is organized by topic. This table goes the other way: from a lecture no
 | 16 | Convolutional Neural Networks (Part 2): Beyond the Chain | [[5-deep-networks/branching-and-inception\|Branching and Inception]] · [[5-deep-networks/residual-connections\|Residual connections]] · [[5-deep-networks/fully-convolutional-networks\|Fully convolutional networks]] · [[5-deep-networks/semantic-segmentation\|Semantic segmentation]] · [[5-deep-networks/data-augmentation\|Data augmentation]] · [[5-deep-networks/batch-normalization\|Batch normalization]] · [[5-deep-networks/dropout\|Dropout]] |
 | 17 | Deep Nets: CNN History and Recurrent Neural Networks | [[5-deep-networks/cnn-architectures\|CNN architectures]] · [[5-deep-networks/recurrent-neural-networks\|Recurrent neural networks]] · [[5-deep-networks/bidirectional-and-stacked-rnns\|Bidirectional and stacked RNNs]] · [[5-deep-networks/lstm-and-gru\|LSTM and GRU]] |
 | 18 | Transformers I: Words, Tokenization, and Vocabulary | [[7-transformers/text-encodings-and-embeddings\|Text encodings and embeddings]] · [[7-transformers/tokenization\|Tokenization and vocabulary]] |
+| 19 | Transformers II: Sequence Transduction, Attention, and Basic Transformer | [[7-transformers/sequence-to-sequence-rnns\|Sequence-to-sequence RNNs]] · [[7-transformers/attention\|Attention]] · [[7-transformers/transformer-architecture\|Transformer architecture]] · [[7-transformers/attention-is-all-you-need\|Paper guide]] |
+| 20 | Transformers III: The Transformer Model | [[7-transformers/transformer-architecture\|Transformer architecture]] · [[7-transformers/layer-norm-and-feed-forward\|LayerNorm and FFN]] · [[7-transformers/positional-encoding\|Positional encoding]] · [[7-transformers/multi-head-attention\|Multi-head attention]] · [[7-transformers/attention-is-all-you-need\|Paper guide]] |
