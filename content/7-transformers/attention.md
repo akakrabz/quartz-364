@@ -37,6 +37,42 @@ The Transformer of [[7-transformers/attention-is-all-you-need|"Attention Is All 
 - Self-attention without positional information is **permutation equivariant** — shuffling the input tokens just shuffles the outputs — hence [[7-transformers/positional-encoding|positional encoding]].
 - Cost: $O(N^2)$ attention weights per head, but no sequential dependence between positions.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Attention, even self-attention, was not new in 2017: earlier translation models used self-attention **inside** sequence-to-sequence RNNs, which kept the RNN's sequential bottleneck. The paper's step was a model built **only** from attention.
+- The same embedded tokens $Z$ go through **three separate linear layers** to give $Q$, $K$ and $V$. The values stay in the model's embedding dimension; queries and keys get their own dimension $H$, which exists only inside the attention block.
+- Read $S = QK^\top$ one row at a time: row $i$ says how much token $i$ cares about every token, itself included, and the largest entry in the row is the token it cares about most.
+- Dividing by $\sqrt H$ keeps the scores in a sensible range whatever $H$ is, and in practice stabilizes training (the variance argument is in [[#why-divide-by-h]]).
+- The row-wise softmax is the same trick that turns logits into class scores in [[3-linear-models/multiclass-logistic-regression|multi-class logistic regression]]. Here the rows are read as a consistent relative weighting that sums to 1, not as probabilities of anything.
+- The output $AV$ has exactly the input's shape, $N\times d_{emb}$: an attention block outputs **modified versions of the token representations**, which is why blocks can be chained.
+- `ScaledDotProductAttention` has **no learnable parameters**; everything attention learns sits in the `nn.Linear` layers that produce $Q$, $K$ and $V$, trained by ordinary backpropagation.
+- Masked self-attention is what lets the decoder be trained on a whole sentence at once. He singled out cross-attention as where much of the Transformer's real novelty lies: explicit interactions between every decoded word and every encoded word.
+
+> [!tip] Shortcut — write the shapes first
+> Before any arithmetic, multiply the shapes out: $(N\times H)(H\times N) = N\times N$ for the scores, $(N\times N)(N\times d_{emb}) = N\times d_{emb}$ for the output. Cross-attention uses the same rule: $(d_{out}\times H)(H\times d_{in}) = d_{out}\times d_{in}$, then $(d_{out}\times d_{in})(d_{in}\times d_{emb}) = d_{out}\times d_{emb}$. In the class run (9 English tokens, 10 French positions, $d_{emb} = 32$) that gives an encoder output of $9\times32$, cross-attention weights $10\times9$, cross-attention output $10\times32$, and logits $10\times560$ over the 560-word French vocabulary.
+>
+> The shapes also settle a question he left open in class — why the values come from the encoder. The cross-attention matrix has one column per **encoder** token, so the matrix it multiplies needs one row per encoder token: keys and values come in pairs, and whatever supplies the keys supplies the values.
+
+> [!tip] Shortcut — one output entry at a time
+> Entry $k$ of output row $i$ is $o_{ik} = \sum_j a_{ij}\,v_{jk}$: the **same** row of weights $a_{i1},\dots,a_{iN}$ is used for every coordinate $k$; only the column of values changes. With the lecture's first row $a_1 = (0.6, 0.2, 0.1, 0.1)$ and values $v_1 = (1, 0)$, $v_2 = (0, 1)$, $v_3 = (1, 1)$, $v_4 = (2, -1)$:
+> $$o_1 = 0.6\,(1,0) + 0.2\,(0,1) + 0.1\,(1,1) + 0.1\,(2,-1) = (0.9,\ 0.2).$$
+
+> [!tip] Shortcut — a masked row is a shorter softmax
+> Adding $-\infty$ makes $e^{-\infty} = 0$, so masked row $i$ is just the softmax of its first $i$ scores, padded with zeros. Row 2 with scores $(1, 2, 5, 0, 3)$ becomes $\text{softmax}(1, 2) = (0.269,\ 0.731)$ followed by $0, 0, 0$; the 5 and the 3 never matter. An $n\times n$ causal mask keeps $n(n+1)/2$ entries and blocks the $n(n-1)/2$ above the diagonal: 15 and 10 for $n = 5$.
+
+> [!intuition] Analogy — queries ask, keys answer
+> The usual story: a query is a token asking "how much should I care about these other tokens", and a key is how each token presents itself; a large dot product means a good match. For unit vectors the dot product runs from $-1$ (opposite) through $0$ (unrelated) to $+1$ (aligned). He cautioned that this is an interpretation: in self-attention both are learned linear maps of the same tokens, so the names could be swapped and training would simply learn the other matrix. The roles become genuinely different in cross-attention, where the queries come from the decoder (the decoder asks "how much should I be interested in words from the encoder") and the keys and values from the encoder.
+
+> [!intuition] Analogy — the attention matrix is a mixing recipe
+> The values are each token's current meaning. Row $i$ of $A$ is the recipe for how much of each token's value to blend into token $i$'s new representation, and the recipe always adds up to 100%.
+
+> [!exam] Said in class
+> Transformers are the last new material for the homework and for Midterm 2, and self-attention is the ingredient he called the most important: every Transformer variant has it. Homework 6 gives practice interpreting attention.
+
+Recommended in class for the visuals (and consistent with the lecture): 3Blue1Brown, [Attention in transformers, step-by-step (Deep Learning, Chapter 6)](https://www.youtube.com/watch?v=eMlx5fFNoYc).
+
 ## Queries, keys and values
 
 Think of each token publishing a **key** ("what I contain") and a **value** ("what I will hand over"), and asking a **query** ("what I am looking for"). The dot product $q_i^\top k_j$ is large when token $i$'s question matches token $j$'s description, near zero when they are unrelated, and negative when they disagree. Because $W_Q$ and $W_K$ are different matrices, "what $i$ looks for" and "what $i$ offers" are decoupled: $s_{ij}\ne s_{ji}$ in general.

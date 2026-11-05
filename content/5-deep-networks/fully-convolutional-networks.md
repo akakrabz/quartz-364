@@ -27,6 +27,25 @@ For [[5-deep-networks/semantic-segmentation|semantic segmentation]] the answer i
 - Results: encoder-decoder 93,665 parameters, IoU 0.841; U-Net 105,185 parameters, IoU 0.868.
 - Loss for one class: pixel-wise [`F.binary_cross_entropy_with_logits`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.binary_cross_entropy_with_logits.html) on the $1\times H\times W$ logits.
 
+
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Classification is not the only task. For a label at every pixel there is no fully connected head: the classifier becomes a 1×1 convolution applied at every position ([[#the-11-convolution-as-a-per-pixel-linear-layer]]).
+- The encoder shrinks the image into features, so the decoder has to grow them back: either parameter-free upsampling (copy pixels, or interpolate) or a learned transposed convolution.
+- Plain upsampling gives blurry blobs. Learned upsampling plus skip connections from the encoder (the U-Net) recovers sharp object borders, which is where segmentation quality is won.
+- A transposed convolution is not the inverse of a convolution: convolving its output with the same kernel does not give back the input. It is simply an upsampling layer with learnable weights.
+
+> [!intuition] Analogy — analysis vs synthesis, and filling in the blanks
+> A convolution is an *analysis*: slide the filter and take a dot product at every position. A transposed convolution is a *synthesis*: build the output by stamping a copy of the kernel, scaled by each input value, and adding where the stamps overlap ([[#transposed-convolution-a-convolution-run-backwards]]). Plain upsampling is simpler still: doubling a feature map leaves blank spaces between the known values, filled either by holding the nearest value or by drawing a straight line between neighbours (nearest vs bilinear).
+
+> [!tip] Shortcut — the stamp, by hand
+> Upsample $\begin{bmatrix}1&2\\3&4\end{bmatrix}$ with a 2×2 kernel $K$ and stride 2: the output is four non-overlapping 2×2 tiles $1K$, $2K$, $3K$, $4K$, in the same arrangement as the input. With a kernel larger than the stride the tiles overlap and their entries are summed. Output size: $(H-1)s - 2p + k$, here $(2-1)\cdot 2 - 0 + 2 = 4$.
+
+> [!exam] Said in class
+> For transposed convolutions only the high-level idea is expected (learned upsampling: copy the kernel, scale it by the input value), not a detailed computational understanding. The lecturer added that it is a common interview question.
+
 ## Two building blocks
 
 ### The 1×1 convolution as a per-pixel linear layer

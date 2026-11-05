@@ -32,6 +32,25 @@ Every head sees the same tokens but compares them through its own learned projec
 - The causal mask is applied identically inside every head.
 - PyTorch's [`nn.MultiheadAttention`](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html) does the per-head projections with one big matrix and needs `embed_dim % num_heads == 0`.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Multi-head attention chops one attention operation into $h$ smaller ones that run in parallel, each with its own query, key and value layers. The results are concatenated (he would "staple the results together") and blended by one output linear layer.
+- The per-head size is $d_{emb}/h$, chosen deliberately so that $h$ heads cost the same as one full-width head: going from 1 to 8 heads makes each head 8 times narrower and leaves the parameter count unchanged.
+- He called it more of an engineering innovation than a new idea, and in the course's experiments it helped, but less than positional encoding.
+- The same module serves self-, masked and cross-attention: only where $Q$, $K$ and $V$ come from, and whether a mask is passed, change.
+
+> [!tip] Shortcut — the bookkeeping
+> Layers: $3h$ projection layers plus 1 output layer. For $h = 4$ that is 13 `nn.Linear` layers, held in three `ModuleList`s plus `output_linear`.
+>
+> Widths: per head $H/h$ for queries and keys and $d_{emb}/h$ for values; the concatenation is $h\cdot d_{emb}/h = d_{emb}$ wide, so $W_O$ is $d_{emb}\times d_{emb}$. Course: $d_{emb} = 128$, $H = 64$, $h = 4$ gives heads with 16-dimensional queries and keys and 32-dimensional values, concatenated back to $4\cdot32 = 128$.
+>
+> Paper: $h$ heads of width $512/h$ hold $3\cdot512^2 + 512^2 = 1{,}048{,}576$ projection weights whatever $h$ is (checked for $h = 1, 2, 4, 8$; see [[#same-cost-as-one-head]]).
+
+> [!intuition] Analogy — comparing words as nouns, then as verbs
+> One head might compare the tokens as nouns, another as verbs, another by sentiment, and the output layer fuses these views. He stressed that trained heads are rarely this clean, but that this is the idea: several different contexts in which to compare tokens, instead of one.
+
 ## In the course's Full Transformer
 
 <!-- fig:tf-b-mha-shapes -->

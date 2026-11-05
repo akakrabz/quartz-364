@@ -8,7 +8,7 @@ Notes for **ECE 364 — Programming Methods for Machine Learning** (University o
 
 > [!tip] How to use this site
 > - Start a topic from its **unit page** below, or go from a lecture to its topics with [[lectures|Lectures → topics]].
-> - Every topic page opens with **In one breath** (the whole idea) and **What you should know** (the checklist to review), and ends with the **PyTorch docs** it uses.
+> - Every topic page opens with **In one breath** (the whole idea) and **What you should know** (the checklist to review), and ends with the **PyTorch docs** it uses. Pages for Lectures 14–20 also have **From the lecture**: the lecturer's main points, calculation shortcuts, analogies and exam hints, from the class recordings.
 > - The **[[6-midterm-1/index|Midterm 1]]** section has every past Midterm 1 worked problem by problem, the formula sheet and a true/false bank.
 > - Hover a link for a preview; the graph view (top right) shows how topics connect.
 
@@ -39,6 +39,9 @@ The machinery every model uses: [[4-pytorch-training/nn-module|nn.Module]] · [[
 
 ### [[8-diffusion-models/index|8 · Diffusion models]] — beyond the lectures
 How image generators reverse a noising process: [[8-diffusion-models/brownian-motion-and-forward-diffusion|Forward diffusion]] · [[8-diffusion-models/reverse-time-sde-and-score-matching|Reverse-time SDE and score matching]] · [[8-diffusion-models/ddpm|DDPM]] · [[8-diffusion-models/fast-sampling-ddim-and-ode-solvers|Fast sampling]] · [[8-diffusion-models/guidance-and-latent-diffusion|Guidance and latent diffusion]] · [[8-diffusion-models/flow-matching-and-rectified-flow|Flow matching]] · [[8-diffusion-models/modern-image-generators|Modern image generators]]
+
+### [[9-midterm-2/index|Midterm 2]] — scope and every exam hint from class
+Transformers plus a cumulative review of the deep-network models; the model-choice table and the calculations to practise.
 
 ### [[6-midterm-1/index|6 · Midterm 1]] — past exams, worked
 Scope: Lectures 2–9 and HW 1–3.

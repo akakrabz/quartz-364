@@ -34,6 +34,32 @@ Autograd does not care about the shape of the graph: [[2-calculus-and-optimizati
 - Fixing mismatches: channels with a $1\times1$ convolution; size with the right padding, or by resizing (upsample / pool).
 - A two-head model shares a trunk and adds the losses of its heads.
 
+
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- A model is a computational graph, so once you can build blocks you can wire them however you like. There are only two ways to merge branches: concatenate or add ([[#merge-rules]]).
+- Write the model the laziest way that works: `nn.Sequential` or a reusable block for plain stacks, your own `forward` only when the graph branches. A plain Python list of layers must be wrapped (`nn.Sequential` or `nn.ModuleList`), otherwise the optimizer never sees its parameters and they never train ([[5-deep-networks/convolutional-layers|convolutional layers]]).
+- Inception's reasoning: useful patterns come in different sizes, so look at the same input with 1×1, 3×3 and 5×5 kernels side by side. The 1×1 convolutions in front of the big kernels are there for cost, not for accuracy.
+- A 1×1 convolution splits the work in two: it mixes the channels at a single pixel, while the $k\times k$ kernels mix the neighbourhood. ResNet uses the same 1×1 trick to match depths.
+- Branches can also sit at the output: one shared trunk with several heads (a garment's category and its colour, say), so a single feature extractor learns from several training signals.
+- You must know the output-size formula to design branches: shapes have to match at every merge, or the model crashes in the middle of the forward pass ([[#when-shapes-do-not-match]]).
+
+> [!tip] Shortcut — output size, parameters and receptive field in one pass
+> At stride 1 the output-size formula is just $H + 2p - k + 1$: padding adds $2p$, the kernel eats $k-1$, so "same" padding is $p = (k-1)/2$. The lecture's warm-up, `nn.Conv2d(3, 8, 5, padding=2)` then `nn.MaxPool2d(2)` on a 32×32 image:
+> - **size:** $32 + 4 - 5 + 1 = 32$, then the 2×2 pool halves it to $16$;
+> - **parameters:** $C_\text{out}C_\text{in}k^2 + C_\text{out} = 8\cdot3\cdot25 + 8 = 608$, and pooling has none;
+> - **receptive field:** start at 1; the first layer sees exactly its kernel, $5$; the pool adds $(2-1)\times\text{jump} = 1$, giving $6$, and only after the pool does the jump double to 2.
+>
+> The general rules are on [[5-deep-networks/convolutional-layers|convolutional layers]].
+
+> [!tip] Shortcut — what a 1×1 bottleneck saves
+> A $k\times k$ convolution costs $C_\text{out}C_\text{in}k^2$ weights, linear in its input channels. Halving the channels with a 1×1 convolution first halves the big kernel's cost, and the 1×1 itself adds only $C_\text{in}C_\text{mid} + C_\text{mid}$. Lecture 16's branches on a 64-channel input with 32 outputs: the 3×3 branch drops from 18,464 to $2{,}080 + 9{,}248 = 11{,}328$ parameters (61%), the 5×5 branch from 51,232 to $2{,}080 + 25{,}632 = 27{,}712$ (54%). The bigger the kernel, the more the trick saves.
+
+> [!exam] Said in class
+> The output-shape formula "probably would be on the exam". Be able to compute a layer's output shape, its number of parameters and its receptive field.
+
 ## Merge rules
 
 | merge | use it when | must match |

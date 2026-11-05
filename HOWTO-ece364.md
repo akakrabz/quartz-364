@@ -89,6 +89,8 @@ git clone --depth 1 --filter=blob:none --sparse -b release/0.29 https://github.c
 
 ## 6. What's here
 
+Build 4, 2026-11-05 — class recordings integrated: 26 topic pages (Lectures 14–20) gained a **From the lecture** section (main points, calculation shortcuts, analogies, exam hints; format in `tools/SPEC.md`), from the 8 transcripts in `transcript/`; every item traced to a transcript and every number recomputed in an independent review. New `content/9-midterm-2/` page with the announced scope and all exam hints.
+
 Build 3, 2026-10-30 — Lectures 1–20, Midterm 1, and unit 8 (diffusion models, on request).
 
 - **Lectures 19–20** (unit 7): sequence-to-sequence RNNs, attention, the Transformer (Skinny → Medium → Full), LayerNorm and FFN, positional encoding, multi-head attention, and a section-by-section guide to *Attention Is All You Need* (checked against the arXiv v7 text via Exa). Results come from the saved `.npy` files; dataset statistics were recomputed on `eng-fra.txt`.

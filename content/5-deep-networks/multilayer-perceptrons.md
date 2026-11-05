@@ -66,6 +66,31 @@ The lecture's figure is a **three-layer MLP with two hidden layers**: 4 inputs $
 - Model and data must be on the same device: `model.to(DEVICE)`, `x.to(DEVICE)` ([[4-pytorch-training/gpu-training|GPU training]]).
 - An MLP treats an image as an unordered list of pixels: it is unaffected by a fixed pixel scramble, pays one weight per pixel, and never learns weights for pixels that are always zero. This is the motivation for [[5-deep-networks/convolution|convolution]].
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Linear and logistic regression are "two sides of the same coin": both compute a score that is an affine function of the input, and logistic regression only adds the sigmoid or softmax and a classification loss. The MLP is the first step of a deliberate scaffold (MLP → CNN → RNN → Transformer), each model one change away from the last.
+- Logistic regression fails in two ways. On two moons it can only draw a straight line: about 85% training accuracy, and the loss flattens almost at once. On Homework 3's MNIST digits, added noise barely hurt it, but random shifts of up to 4 pixels dropped validation accuracy from roughly 90% to 50–60%, because each class weight vector is a template tied to fixed pixel positions. It has to take the raw pixels at face value.
+- Two weight matrices with nothing between them are still one linear map: training $W_2W_1$ only finds "some clever factorization of a matrix". A non-linearity "interrupts the linearity", and once two layers work, a hundred is just more repetitions of linear → activation.
+- The training loop does not change at all: the MLP is a drop-in replacement for logistic regression, which is why the course first standardized `nn.Module`, the loss, the optimizer and the `DataLoader` ([[4-pytorch-training/training-loop|training loop]]).
+- Width on two moons ($2\rightarrow L\rightarrow 2$): $L = 8$ already bends the boundary, $L = 4$ still works with fewer, sharper bends, $L = 2$ fails (the hidden layer has to *expand* the dimension), and $L = 1024$ gives a smooth curve. Weight decay $10^{-5}$ allows a very sharp boundary that can be confidently wrong; $10^{-1}$ underfits. His explanation for the loss bouncing at $10^{-3}$: the data term and the L2 term are fighting each other.
+- A two-layer network is a universal approximator in the limit of infinite width (an infinity with a "big asterisk"); width is capacity, and capacity brings the overfitting/underfitting trade-off back.
+- A $k$-layer MLP has $k-1$ hidden layers; the last layer maps to the number of classes (or regression targets). Say "MLP", not "FCN": that abbreviation is taken by [[5-deep-networks/fully-convolutional-networks|fully convolutional networks]].
+- On the full Fashion-MNIST training set, a four-layer ReLU MLP with three 128-wide hidden layers fits the training data almost perfectly but validates at about 75–76%. Widening the hidden layers to 1024 made training only slightly slower than with 128, about a minute on the GPU either way, so for training time the number of layers matters as much as the width ([[4-pytorch-training/gpu-training#from-the-lecture|GPU timing]]).
+
+> [!tip] Shortcut — parameters of a stack of linear layers
+> One layer $n\rightarrow m$ has $m(n+1)$: $nm$ weights plus one bias per output. Two layers $n\rightarrow L\rightarrow m$ have $L(n+1) + m(L+1)$. Two moons with $L = 8$: $8\cdot3 + 2\cdot9 = 42$ (the lecture's "16 plus number of bias parameters in each layer": $2\cdot8 = 16$ weights per layer). The Fashion-MNIST MLP above: $1024\cdot785 + 2\,(1024\cdot1025) + 10\cdot1025 = 2{,}913{,}290$, "millions"; with 128-wide layers, $134{,}794$. More cases are in [[#counting-parameters|the table]].
+
+> [!tip] Shortcut — reading a network diagram
+> Every arrow is one weight. A layer of 5 neurons feeding 3 neurons has $5\cdot3 = 15$ arrows, so 15 weights (plus 3 biases); each of the 3 receiving neurons owns one weight vector of length 5, a row of the $3\times5$ weight matrix.
+
+> [!intuition] Analogy — linear systems in series
+> From signals and systems: linear systems connected in series or in parallel are still one linear system, and stacked linear layers are the same. The price of putting a non-linearity in between is that linear-systems theory no longer describes the whole network, which is part of why deep networks are harder to explain.
+
+> [!intuition] Analogy — one hidden unit, one bend
+> His "hand-wavy" picture for a two-layer ReLU network: each hidden unit contributes one straight piece of the boundary, and the non-linearity lets the output layer join the pieces into a curve. More hidden units, more bends, a smoother boundary. The picture breaks down for deep networks, but it explains the width experiment above.
+
 ## Counting parameters
 
 `nn.Linear(n_in, n_out)` stores a weight matrix of shape $(n_\textrm{out}, n_\textrm{in})$ and a bias of length $n_\textrm{out}$. Activations, `nn.Flatten` and pooling have no parameters.

@@ -27,6 +27,19 @@ Devices are named by strings: `'cpu'`, `'cuda:0'`, `'cuda:1'`, … (one per GPU;
 - If no GPU exists, every `.to('cpu')` is a no-op, so the same code runs everywhere.
 - Mixing devices raises `RuntimeError: Expected all tensors to be on the same device ...`.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- The model and every tensor it touches must live on the same device; `.to(DEVICE)` does it, and on a machine without a GPU those lines do nothing, so the same notebook runs on a laptop.
+- `cuda:0` is the first GPU; a multi-GPU machine also has `cuda:1`, `cuda:2`, and so on.
+- The lecture's plotting helpers use matplotlib, which cannot read GPU tensors, so the model is moved back with `model.cpu()` before plotting ([[#the-pattern-in-code|the pattern]]).
+- Tiny models gain nothing from a GPU: the two-moons MLP ($2\rightarrow8\rightarrow2$) has almost no computation. The four-layer Fashion-MNIST MLP (three 128-wide hidden layers, full training set) took about a minute to train on the GPU; the same code on the CPU was on course for close to an hour and a half, roughly 90 times slower.
+- The course runs notebooks on ICRN, the university's Jupyter service with GPU slices (the A100 option is the one recommended for the class). In its plain Jupyter-Python environment, uncomment the notebooks' `!pip install` lines, which pin torch and torchvision versions that work with its drivers. A leading `!` runs that line in a shell instead of in Python.
+
+> [!intuition] Analogy — keep data close to the compute
+> From computer-engineering courses: you want data as close as possible to where the arithmetic happens, not fetched from far away. Putting model and data on the GPU together is the same rule at the scale of a whole device.
+
 ## The pattern in code
 
 From the Lecture 14 two-moons MLP:

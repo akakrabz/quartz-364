@@ -26,6 +26,34 @@ Every sequence model so far read one-hot letters: [[5-deep-networks/recurrent-ne
 - Why $d$ decouples the input size from the vocabulary size, and the trade-off in choosing $d$: too small loses information, too large costs compute and parameters for no gain (the sweep peaks around $d=64$ and dips beyond 256).
 - Nearby embeddings can be found with Euclidean distance ([`torch.cdist`](https://docs.pytorch.org/docs/stable/generated/torch.cdist.html)); after training, symbols used alike tend to sit close together.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- **Only the encoding changes.** The comparison keeps the architecture fixed (Elman RNN, $H = 128$, one layer, no bidirectionality). It uses the 8 medium-sized languages so that every run converges within 100 epochs, in under three minutes each.
+- Watch for the training accuracy **flattening out**; that is the sign a model has finished learning. Losses are often plotted on a log scale because they span orders of magnitude.
+- **Why binary lost** (the class's two answers, which he called exactly right):
+  - The code is compact, so the model has to do more work to decode which letter it sees.
+  - Letters that share 1-bits start out looking similar to the model. For example `P` (101001) and `i` (001000) share a bit.
+
+  One-hot keeps every letter distinct, so a different part of the network responds to each one. The binary runs were also noisy: another run landed in the low 40s.
+- **The 2-D code was an arbitrary choice** ("did I think very carefully in terms of this idea? No"). The model still learned from it, just badly, and the takeaway was that a model *can* learn from an arbitrary encoding.
+- **Before about 2016, people designed embeddings with built-in structure.** word2vec made distances meaningful, for example France–Paris ≈ Italy–Rome. It also learned harmful associations (man : doctor ≈ woman : nurse). The alternative is to let the model learn its own embedding freely.
+- **Backpropagation can always reach the inputs.** For image pixels there is no reason to want that gradient. For a table of symbol vectors it is the whole point: the loss gradient updates each symbol's vector.
+- **The learned vectors were not spatially meaningful.** When he projected them down to look at them they seemed arbitrary, so don't expect vowels to cluster.
+- **The learned 8-d embedding learns quickly.** It has about the size of the 6-bit binary code, but its entries are learned floats. A fixed binary code forces the model "to learn how to count in binary effectively".
+- **On the dimension sweep:** the sweet spot is around $d \approx 100$ ($64$–$128$). He suspected the training-accuracy dip at $d = 1024$ is a quirk of the three random trials; in general he expects validation accuracy to *saturate* rather than fall ([[#choosing-the-embedding-dimension]]).
+- On a GPU, training time did not depend on the embedding dimension.
+
+> [!tip] Shortcut — the smallest binary code
+> $V$ symbols need $\lceil\log_2 V\rceil$ bits. For 52 letters, $2^5 = 32 < 52 \le 64 = 2^6$, so 6 bits. That is the input size of the binary RNN, against 52 for one-hot.
+
+> [!tip] Shortcut — size the embedding table
+> `nn.Embedding(V, d)` is a $V\times d$ table, so it holds $V\cdot d$ parameters. The letter table has $52\cdot 8 = 416$. The input size per step drops from 52 (one-hot) to $d$, independent of how many symbols there are.
+
+> [!intuition] Analogy — a lookup table
+> Picture the embedding as a table with one column per symbol (52 for the letters). An index pulls out its column, and that column is the input at that step. Backpropagation then edits the columns that were used. The diagram on the [[7-transformers/tokenization#from-tokens-to-vectors|tokenization page]] draws the same table for words.
+
 ## Four encodings of the same letters
 
 The data is the surname set from Lecture 17, cut to the eight languages with 200–800 names each (Chinese, Czech, Dutch, French, German, Irish, Italian, Spanish), split 50/50 into training and validation. Letters are indexed by `string.ascii_letters`: `a`–`z` are 0–25 and `A`–`Z` are 26–51.

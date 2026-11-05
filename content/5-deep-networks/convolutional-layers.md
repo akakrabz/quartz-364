@@ -44,6 +44,33 @@ In the figure, a $6\times6\times3$ input meets two $3\times3\times3$ filters; ea
 - Build CNNs with attributes + `forward`, `nn.Sequential`, or block functions; keep sub-modules in `nn.Sequential` / `nn.ModuleList`, never a plain list.
 - Do the [[#worked-example-the-lecture-16-warm-up|warm-up]] (output shape, parameters, receptive field) without a computer.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- A filter always spans every input channel (3 for RGB). One filter gives one response map; $N$ filters give $N$ output channels, and those become the next layer's input channels.
+- The output-size formula is the one to "just remember": use it to check that a deep stack still has spatial size left before you build it ([[#output-size|output size]]).
+- Dilation ("atrous" convolution, convolution with holes) spreads the kernel's taps apart to see a larger neighborhood with the same number of weights; replace $K$ by $d(K-1)+1$ in the formula, so a $3\times3$ kernel with $d = 2$ covers $5\times5$.
+- `groups` splits the filters into independent groups; one group per channel is a **depthwise** convolution. Followed by a $1\times1$ convolution it covers space and channels separately with far fewer weights: $64\rightarrow64$ channels at $3\times3$ costs $64\cdot9 + 64\cdot64 = 4{,}672$ weights instead of $36{,}864$. The professor's view: groups are mostly a convenience, equivalent to several smaller convolutions side by side, and appear more in domain-specific work such as medical imaging.
+- Biases are often switched off in modern CNN layers: inputs are normalized and [[5-deep-networks/batch-normalization|batch norm]] usually follows, so a bias adds little (a useless one just learns values near zero).
+- The receptive field is "an extremely important topic" for designing CNNs that work. Worth knowing: one $7\times7$ layer and three $3\times3$ layers see the same $7\times7$ patch, and the single big layer needs almost twice the weights, $49$ against $3\cdot9 = 27$ per input–output channel pair ([[#counting-parameters|VGG comparison]]).
+- Three ways to build a model: layers as attributes plus `forward` (full control, but every layer is written twice), `nn.Sequential`, or a reusable block repeated in a loop. Write your own `forward` when the model branches; otherwise "sometimes it's good to be lazy". Keep generated layers in `nn.Sequential` or `nn.ModuleList`, or the optimizer never sees their parameters ([[#building-a-cnn-in-pytorch|building a CNN]]).
+
+> [!tip] Shortcut — "same" padding
+> With stride 1 and an odd kernel, padding $p = (K-1)/2$ keeps the size. The warm-up: $32 + 2\cdot2 - 5 + 1 = 32$, and the $2\times2$ pool then halves it to 16 ([[#worked-example-the-lecture-16-warm-up|warm-up]]).
+
+> [!tip] Shortcut — parameters: one filter, then multiply
+> Count one filter, $C_\textrm{in}K^2$ weights plus its bias, then multiply by the number of filters. The warm-up's `Conv2d(3, 8, 5)`: $8\cdot(3\cdot25 + 1) = 608$ (an answer of 632 came up in class; 608 is right). Pooling and activations add nothing.
+
+> [!tip] Shortcut — receptive field, layer by layer
+> Start at 1. The first layer sees exactly its kernel size. Every later layer adds $(k-1)$ times the current jump; a pooling or strided layer adds its own $k-1$ at the current jump and then multiplies the jump for every layer after it. Conv 3 → pool 2 → conv 3: $3$, then $3 + 1\cdot1 = 4$ (jump becomes 2), then $4 + 2\cdot2 = 8$. Why the second $3\times3$ layer sees 5 pixels: its outer neighbors each reach one pixel further, half a filter beyond the center's window.
+
+> [!intuition] Analogy — talking to your neighbor's neighbor
+> A normal kernel only "talks" to the pixels right next to it. Dilation is skipping a neighbor you are not on good terms with and talking to the next one: the kernel's reach grows, its number of weights does not.
+
+> [!exam] Said in class
+> Computing the output shape of a layer "probably would be on the exam": know the formula. Homework 5's pencil-and-paper exercises ask for output dimensions, trainable-parameter counts and receptive fields of given convolutional layers.
+
 ## Output size
 
 $$

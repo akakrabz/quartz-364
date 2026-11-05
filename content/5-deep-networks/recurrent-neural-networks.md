@@ -38,6 +38,45 @@ Left: the compact picture, a hidden unit with a loop back into itself. Right: th
 - `nn.RNN` shapes: input `(L, N, H_in)`, `h_0`/`h_n` `(D·num_layers, N, H_out)`, output `(L, N, D·H_out)`; `batch_first=True` only reorders input and output.
 - Per-class ("mean category") accuracy vs overall accuracy on an **imbalanced** dataset.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- MLPs and CNNs are **feed-forward**: one input in, one output out. Fed a sequence one item at a time, they treat the items independently, so shuffling the sequence would not change what they compute per item. An RNN is different because of **feedback**: with every new input it also receives its own previous hidden state.
+- The **hidden state is where the learning lives**; it is the "information currency" the model passes along. The outputs are tacked on for the task and are optional per step: the surname classifier only uses the last one, while estimating a vehicle's speed from sensor data would use every step ([[#many-to-one-and-many-to-many]]).
+- The sequence length is arbitrary. The same cell runs until the input ends, so names of any length work. That is a strength here, and it comes back later as a limitation, because everything has to squeeze through one hidden state.
+- **Unrolling is the payoff from the backpropagation lectures.** A computational graph may not contain loops, and the RNN diagram looks like a loop. Over a finite sequence, though, it unrolls into an ordinary loop-free graph, so backpropagation works ([[#backpropagation-through-time]]).
+- Start from $h_0 = 0$: there is nothing to gain from biasing or randomizing the initial state.
+- The hidden state and the output get **separate layers** because they do different jobs. $y_t$ "gets straight to the heart of the task" (for example 5 class scores), while $h_t$ is a dense general-purpose summary (for example 128 numbers). In the lecture's cell, $y_t$ is computed from $v_t = x_t\oplus h_{t-1}$, so it depends on the *previous* hidden state, not the one just computed.
+- **About 70% accuracy hid a failure.** Broken down per language, the 5-epoch model had not got a single name right in about half of the 18 languages. Per-language accuracy tracked class size (English, Russian and Arabic dominate the batches). Distinctive classes such as Chinese did better than their size suggests; overlapping ones such as Czech (versus German or Dutch) did worse. There are four ways to fix this:
+  - Train longer: once the common languages are fit, the rare ones dominate the remaining loss, and the 50-epoch model recovers many of them.
+  - Equalize class sizes by sampling only as many names per language as the rarest has. With 35 Korean and 39 Vietnamese names, that throws away most of the data.
+  - Oversample rare classes when building batches.
+  - Weight the loss more heavily on rare classes.
+
+  Which fix works best is "something we need to see in practice"; in his words, training deep nets is "a bit of an art".
+- One-hot vectors are stored as **floats** even though they hold only 0s and 1s, because PyTorch needs the input and the weights to have the same dtype.
+- A GPU buys nothing for this small RNN: the matrix–vector products are tiny, as with logistic regression. The large LSTM and GRU runs are where the GPU matters.
+
+> [!tip] Shortcut — count the cell through its concatenated input
+> Concatenate first: $v_t = x_t\oplus h_{t-1}$ has length $d + H$, so each layer that reads it is one `nn.Linear(d + H, ·)`. Concatenating does not change the parameter count, because $W_{hx}$ and $W_{hh}$ side by side hold the same numbers; it only makes the code shorter. Read the subscripts as *output ← input*: $W_{hx}$ takes $x$ and produces $h$.
+>
+> For the surname model, with $d = 52$ and $H = 64$, $v_t$ has $52 + 64 = 116$ entries. The recording says 160 at one point; it is 116. That gives `fc_h` $116\cdot 64 + 64 = 7{,}488$ parameters and `fc_y` $116\cdot 18 + 18 = 2{,}106$, the 9,594 of [[#counting-parameters]].
+
+> [!tip] Shortcut — the per-example loop is still mini-batch SGD
+> Names have different lengths, so they cannot be stacked into one tensor. The dataset's `collate_fn` simply returns the 64 examples as a list. The training loop runs them one at a time, adds up `loss / 64`, and calls `backward()` and `step()` once per batch. The gradient of a sum is the sum of the gradients, so this is *exactly* the gradient of the batch-mean loss, just computed more slowly.
+
+> [!intuition] Analogy — sensors at a traffic intersection
+> At every time step a few sensors report: an induction loop in the road (did a car pass?), a radar (how fast?), a camera (what kind of vehicle?). Those $d$ readings are $x_t$. The RNN folds each set of readings into its hidden state, and from that state you can predict something at every step (this vehicle's speed) or only at the end.
+>
+> This is **feedback** as in a circuits or controls class: the system's own previous output is one of its inputs.
+
+> [!intuition] Analogy — you have used one-hot vectors already
+> A one-hot letter is the same object as the ground-truth distribution inside [[3-linear-models/multiclass-logistic-regression|cross-entropy]]. Class 3 of 5 is $(0, 0, 1, 0, 0)$, completely certain of one class. Encoding letters one-hot gives each symbol its own slot in the same way.
+
+> [!exam] Said in class
+> Homework 6 covers RNNs and the start of Transformers. A final homework prepares for Midterm 2, which covers Transformers plus a cumulative review of the deep-network models.
+
 ## A basic RNN, built by hand
 
 The lecture's toy RNN computes, at every step,

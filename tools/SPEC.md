@@ -177,3 +177,26 @@ l17-resnet-34.png, l17-rnn-bidirectional.png, l17-rnn-unfolded.png, l17-semantic
 ## Notebook text
 Plain-text extracts (markdown + code + truncated outputs) are in `/home/claude/work/nb/*.md`
 (use `L15_Solution.md` and `L16_Solution.md`, the answer-key versions). Originals: `/mnt/user-data/uploads/ECE 364/py-complete/`.
+
+## Lecture transcripts ("From the lecture" sections)
+
+Class-recording transcripts (auto-generated, `~/Nextcloud/Notes/ECE 364/transcript/*.txt`) are integrated into the **topic pages**, not as per-lecture pages. On each topic page the lecture covered, add one section right after `## What you should know`:
+
+```markdown
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- The main points the lecturer stressed, 3–8 bullets, each a full idea (not a heading).
+
+> [!tip] Shortcut — <what it computes>
+> The quick way he does the calculation, with a worked example whose arithmetic is checked.
+
+> [!intuition] Analogy — <short name>
+> The analogy and what it clarifies.
+
+> [!exam] Said in class
+> Only explicit statements about what exams/homework will ask or emphasize.
+```
+
+Rules: include only what the transcript clearly says (auto-transcription garbles words — interpret charitably, drop what is unclear); verify every shortcut and number yourself; if the lecturer misspeaks, give the correct version; no small talk, logistics, student names or student questions' identities; quotes at most 15 words and rare; don't repeat what the page already says — link to it instead (`see [[#section]]`); a shortcut that belongs next to an existing worked computation may go there instead, referenced from the section. Omit any of the four parts that the transcript doesn't support.

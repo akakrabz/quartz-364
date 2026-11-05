@@ -52,6 +52,32 @@ With $L$ layers and $T$ steps there are $T\times L$ hidden state vectors.
 - Which positions summarize the whole sequence: forward at $t=T$, backward at $t=1$.
 - Parameter counts: double per direction; layers $\ge 2$ have input size $D\cdot H$.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Bidirectional processing is allowed whenever the whole sequence is available. It is ruled out only when data arrives in real time.
+- Bidirectional RNNs "sound fancy", but one is just "stapling" a forward RNN alongside a backward one: twice the code, twice the parameters, and the two hidden states are concatenated before the output layer.
+- **The "bark" sentences** ([[#bidirectional-context-from-the-future]]). The word that settles what "bark" means arrives four words later. Reading forward, whatever the state knows about "bark" gets diluted at every step in between.
+- **His readout.** He pairs the forward state at the last position with the backward state there, and the backward state at the first position with the forward state there. That is exactly `outputs[-1]` and `outputs[0]`. He applies the head to both and averages. Concatenating them and adding one more layer worked no better in practice, so he kept the simpler version ([[#which-output-summarizes-the-whole-sequence]]).
+- **Caution about the surname result.** Validation accuracy rose from about 46% to about 55%. He was not sure that reading names backwards is what helps: the bidirectional model has twice the parameters and neither model was trained to convergence (that would take roughly half an hour).
+- **Stacked RNNs.** There is one hidden state per layer, but still only one output per step, so the number of hidden states grows with depth while the number of outputs does not. Layer $\ell$'s input is a nonlinearity applied to layer $\ell-1$'s output.
+- **RNNs are rarely deep.** Extra layers make training slow and difficult and help less than in feed-forward networks. Most of what an RNN learns comes from carrying the state through *time*, not from depth.
+- **2-layer stacked vs bidirectional.** The stacked model reached about 53% (training and validation), the bidirectional one about 55–56%. The two have similar parameter counts, and he called this "not a sound conclusion" without longer training.
+
+> [!tip] Shortcut — "doubles our parameters", and when it does
+> Both changes roughly double the recurrent part, which is why the lecture compares them at about equal size. A bidirectional layer is exactly two copies of the cell. In `nn.RNN` a second stacked layer reads $D\cdot H$ inputs instead of $d$, so it equals the first layer only when $d \approx H$; in the from-scratch model it reads the first layer's 18 outputs, so it is smaller.
+>
+> For the from-scratch surname models (head included) the counts are:
+>
+> | Model | Parameters | Relative to basic |
+> | --- | --- | --- |
+> | Basic RNN | 9,594 | 1× |
+> | 2-layer stacked | 16,400 | 1.71× |
+> | Bidirectional | 17,298 | 1.80× |
+>
+> The exact formulas are in [[#counting-parameters]].
+
 ## Bidirectional RNN from scratch
 
 ```python

@@ -35,6 +35,31 @@ The statistics are taken over the batch **and** all pixels (dims 0, 2, 3), separ
 - Typical order: conv → BN → ReLU ([[5-deep-networks/residual-connections|ResNet]]).
 - Lecture 16: plain SGD, 3 epochs: 13.4% → 65.0% (lr 0.02) and 38.7% → 68.3% (lr 0.1) with batch norm.
 
+
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Activations drift and skew. After a ReLU everything is non-negative (a standard normal input comes out with mean $1/\sqrt{2\pi}\approx 0.40$ and standard deviation $\approx 0.58$), and nothing but training stability stops values from growing large.
+- Batch norm standardizes each channel with its own statistics: subtracting the mean centres it at 0, and dividing by the standard deviation contracts a wide distribution and stretches a narrow one. The next layer then sees a consistent range whatever activation function came before.
+- It is not guaranteed to help, but often does in practice ([[#does-batch-norm-help]]).
+- The variants (instance norm, and layer norm in the Transformer lectures) differ only in the dimensions the statistics are taken over.
+- For parameter counting: 2 learnable parameters per channel, $\gamma$ and $\beta$.
+
+> [!tip] Shortcut — which axes does each norm average over?
+> For an $N\times C\times H\times W$ activation, here $64\times16\times32\times32$:
+>
+> | norm | averages over | statistics | values per statistic |
+> | --- | --- | --- | --- |
+> | batch norm | $N, H, W$, per channel | $C = 16$ | $64\cdot32\cdot32 = 65{,}536$ |
+> | instance norm | $H, W$, per sample and channel | $NC = 1{,}024$ | $32\cdot32 = 1{,}024$ |
+> | layer norm | $C, H, W$, per sample | $N = 64$ | $16\cdot32\cdot32 = 16{,}384$ |
+>
+> Only batch norm mixes different examples, which is why it needs running statistics at evaluation and the others do not ([[7-transformers/layer-norm-and-feed-forward|layer norm]]).
+
+> [!exam] Said in class
+> The homework has a short batch-norm exercise; the fuller comparison of normalizations is saved for the Transformer lectures.
+
 ## Batch norm from scratch
 
 Lecture 16 writes its own module and checks it against [`nn.BatchNorm2d`](https://docs.pytorch.org/docs/stable/generated/torch.nn.BatchNorm2d.html) in both modes:

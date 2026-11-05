@@ -45,6 +45,23 @@ The figure is the lecture's example: $x = [2, 1, -3, 0, 4]$, $h = [1, 0, -1]$ (a
 - A filter plus global max pooling detects a pattern **anywhere**; making the kernel weights parameters lets gradient descent **learn** the filter.
 - The built-in assumption, *neighboring pixels belong together*, is what makes CNNs data-efficient; when it is false (scrambled pixels) it hurts.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- The "sensing gap": a person sees a picture, a machine sees a grid of numbers. On scrambled pixels an MLP scores the same (about 84%) as on real images, because it gives each pixel its own weight; reorder the weights and you have an identical network ([[#when-the-assumption-is-wrong-scrambled-pixels|scrambled pixels]]). It never looks at a pixel's neighbors.
+- A CNN is a pattern matcher: slide a small pattern (the lecture starts with $[-1, 1]$) over the input and see where it fits.
+- What CNN layers compute is **cross-correlation**, not convolution. Flipping the filter is extra work, and since the filter is learned anyway the flip does not matter. The professor's aside: the flip comes from the signal-processing derivation of linear time-invariant systems through the impulse response, while physics-style derivations have no flip, so the convention is somewhat arbitrary, but the standard definition flips. The distinction is a common interview question.
+- Hand-designed filters (a box or a Gaussian for blobs, a bar for bars) dominated vision until deep learning took off around 2012. Learning filters needs data, compute and working training algorithms, and those arrived only then. Hand-designed filters need no training and can be explained.
+- Learned filters are not always interpretable, and different runs find different ones (the loss is non-convex), so look at what your model actually learned ([[#learning-the-filter|learning the filter]]).
+- One filter is reused at every position: fewer parameters, and less data needed to learn them.
+
+> [!tip] Shortcut — telling convolution from correlation (the in-class question)
+> Correlating with $h$ equals convolving with the flipped $h$. If $h$ is symmetric the two outputs are identical; if it is antisymmetric (like $[-1, 1]$ or $[1, 0, -1]$) one is exactly minus the other. So the output that equals `F.conv1d` applied to the unflipped kernel is the correlation ([[#worked-example-convolution-vs-cross-correlation|worked example]]).
+
+> [!intuition] Analogy — Where's Waldo
+> Template matching is a Where's Waldo search: you know what the pattern looks like and you scan the crowded picture for the place where it fits best. A filter's strongest response marks where the pattern is.
+
 ## Worked example: convolution vs cross-correlation
 
 $x = [2, 1, -3, 0, 4]$ (indices $0..4$), $h = [1, 0, -1]$ (indices $0..2$). Full convolution, $y[n] = \sum_k x[k]\,h[n-k]$, keeping only terms where both indices exist:

@@ -33,6 +33,22 @@ Scaling during training ("inverted" dropout) is what lets evaluation do nothing 
 - Lecture 16: with clean labels, dropout changes little; with 30% wrong labels, it keeps the final test accuracy about 10 points higher (77.2% vs 67.4% for the MLP; 77.8% vs 68.8% for the CNN when placed before the fully connected layer).
 - Related regularizers: [[4-pytorch-training/optimizers|weight decay]] ([[3-linear-models/ridge-regression|ridge]]), [[5-deep-networks/data-augmentation|augmentation]], early stopping.
 
+
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Deep networks are over-parameterized. The check from linear regression: a unique solution needs at least as many examples as parameters. MLPs with millions of parameters trained on 5,000 CIFAR-10 images are badly underdetermined.
+- That freedom allows memorization: the model can dedicate individual neurons, or weight vectors, to individual training images.
+- Dropout zeros each activation with probability $p$ during training and scales the survivors up to compensate, so the model cannot rely on any single neuron.
+- It is another regularizer, like L2, aimed at the gap between training and validation accuracy, and like any regularizer it does not always help ([[#does-dropout-help]]).
+
+> [!tip] Shortcut — parameters per training example
+> Count the parameters and divide by the number of training examples. An MLP $3072\to512\to512\to10$ on CIFAR-10 has $3072\cdot512 + 512 + 512\cdot512 + 512 + 512\cdot10 + 10 = 1{,}841{,}162$ parameters; with 5,000 training images that is about 368 parameters per labelled example. Anything far above 1 means: expect overfitting, and regularize.
+
+> [!intuition] Analogy — the neuron that only knows one picture
+> Without dropout a network can route each training image through "its own" neurons, each lighting up for one exact example: memorizing instead of learning. Dropout randomly mutes neurons, so any one of them may be missing on a given pass; a feature has to be useful for many examples and represented redundantly.
+
 ## Train mode vs eval mode
 
 ```python

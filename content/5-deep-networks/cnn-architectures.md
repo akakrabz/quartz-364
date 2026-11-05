@@ -29,6 +29,25 @@ aliases: ["CNN history", "LeNet", "LeNet-5", "AlexNet", "VGG", "VGG-16", "VGG-19
 - The **degradation problem**: a deeper plain network can have higher *training* error than a shallower one, so it is an optimization failure, not overfitting. ResNet's fix: $\mathcal{H}(x) = \mathcal{F}(x) + x$.
 - Loading a pretrained model from [`torchvision.models`](https://docs.pytorch.org/vision/stable/models.html).
 
+
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- The history is a short course in five ideas: LeNet, ImageNet, AlexNet, VGG and ResNet (with Inception in between).
+- LeNet (LeCun, Bell Labs, 1998) read handwritten digits on checks and ZIP codes, which is where MNIST comes from. It was a success that stalled: without GPUs or large datasets nobody could scale it, and for about the next 14 years support vector machines, not deep networks, dominated machine learning.
+- ImageNet (2009): 1,000 classes and over a million images, an order of magnitude more than anything before, and tiny by today's billion-image standards.
+- AlexNet (Krizhevsky, Sutskever and Hinton, 2012) showed that a large CNN could be trained efficiently on GPUs. After it, interest in SVMs collapsed and deep learning took off.
+- VGG: what matters is the receptive field. Deeper stacks of small kernels reach it with fewer parameters *and* less computation, and they performed better ([[#vgg-2014-just-use-small-kernels]]).
+- ResNet matters most today: its skip connections appear in practically every current model, RNN gating and Transformers included ([[5-deep-networks/residual-connections|residual connections]]).
+- CNNs do not care about the input size: the kernel stays the same size, and only the time to sweep it over the image grows.
+
+> [!tip] Shortcut — compute follows parameters
+> A convolution's multiply–adds are its weights times its output pixels: $C_\text{out}C_\text{in}k^2\cdot H_\text{out}W_\text{out}$. So at a fixed resolution any saving in weights is the same saving in compute. On a 56×56 map with 64 channels, one 7×7 layer needs $56^2\cdot64^2\cdot49\approx 629$ M multiply–adds and three 3×3 layers $\approx 347$ M: the same $27/49\approx 55\%$ as the weights. And $n$ stacked stride-1 $k\times k$ layers see $1 + n(k-1)$ pixels: three 3×3 layers see 7, five see 11.
+
+> [!exam] Said in class
+> How much CNN detail you need is calibrated to the homeworks: what the homeworks ask about is what to be comfortable with.
+
 ## LeNet-5 (1998)
 
 The first major practical success of CNNs: Yann LeCun and colleagues at Bell Labs built LeNet-5 for handwritten digits (MNIST), and it was used to read zip codes on mail and amounts on checks.

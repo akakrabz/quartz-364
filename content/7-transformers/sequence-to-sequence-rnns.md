@@ -30,6 +30,44 @@ Every RNN task so far produced one label per sequence ([[5-deep-networks/recurre
 - BLEU: clipped $n$-gram precisions for $n = 1..4$, their geometric mean, and the brevity penalty; why short or reordered translations can score 0.
 - The lecture's conclusions from the four saved runs, and the **three limitations** of S2S RNNs, each paired with how the Transformer fixes it.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- **Sequence transduction** maps one sequence to another, much as [[5-deep-networks/semantic-segmentation|semantic segmentation]] maps an image to an image. The output length need not match the input length. English→French is an arbitrary choice; the same code translates the other way.
+- **Two languages mean two vocabularies.** At `min_freq = 50` that is about 1,400 English and 1,600 French words, so the model needs two embedding tables.
+- **`<EOS>` exists because the output length is unknown in advance.** The model must be able to say "done". The indices `<SOS>` = 0 and `<EOS>` = 1 are an arbitrary choice.
+- **Teacher forcing is "kind of a strange term" for "a pretty simple technique".** Shift the target one place to the right and put `<SOS>` in front. Early in training the decoder's own guesses are essentially random, and feeding them back would derail learning.
+- `MAX_LENGTH = 25` caps decoding, so an untrained decoder that never predicts `<EOS>` does not run on for hundreds of words.
+- **Padding the target with `<EOS>` is safe** when the prediction runs long. Each extra `<EOS>` tells the model again that it should have stopped by now ([[#teacher-forcing-and-lining-up-the-loss]]).
+- **BLEU has to handle several valid translations.** In the data file, "Stop!" has three French translations. So BLEU compares a candidate with *all* references, and it gives partial credit for chunks of words that match even when the full sentence does not. He kept the maths informal (the computation "will make your mind melt"); the page has it at [[#bleu-scoring-a-translation]].
+- **Reading the saved runs:** the bidirectional encoder is better with or without teacher forcing, because the meaning of a word can depend on words after it. Teacher forcing speeds up and stabilizes early training (less noisy gradients); for the bidirectional encoder the converged validation BLEU is about the same. Rerunning the experiments in the next lecture, he noted that it does still help the unidirectional model (validation 0.27 → 0.33 in the saved runs).
+- **History.** Before RNNs (Google Translate around 2012–2014), machine translation was mostly lookup tables plus simple grammar rules, and lost much of the context. Google's move to sequence-to-sequence RNNs around 2016 was a big jump. S2S RNNs were an essential step; their shortcomings are what motivated the Transformer.
+- **The three limitations** ([[#three-limitations]]), in his examples:
+  - Word 4 of the translation has to wait for words 1–3 even under teacher forcing, because each step needs the previous hidden state.
+  - There is no way to point to where, in the encoder's vector, "dog" and "bark" are related.
+  - The decoder keeps "watering down" the context vector as it overwrites its hidden state word by word.
+
+> [!tip] Shortcut — counting tokens
+> Count the words, then each punctuation mark separately, then one `<EOS>`; contractions stay one token.
+>
+> "You're wrong. That's not what I said." → You're · wrong · . · That's · not · what · I · said · . · `<EOS>` = **10 tokens**. Its French translation in the lecture has 13. The two sentences differ in length, which is exactly why the decoder needs `<EOS>`.
+
+> [!tip] Shortcut — reading a BLEU score (0–1 scale)
+> His rule of thumb:
+>
+> | BLEU | His reading |
+> | --- | --- |
+> | ≈ 0.3 | A reasonably good translation that a native speaker can follow |
+> | ≥ 0.4 | Verging on fluent |
+> | ≈ 0.5 | Human level |
+> | ≥ 0.6 | Beyond most bilingual people |
+>
+> This matches the guideline on [Google's BLEU page](https://cloud.google.com/translate/docs/advanced/automl-evaluate) (30–40 understandable to good, 40–50 high quality, 50–60 very high quality and fluent, above 60 often better than human). He warned that the top of the scale is hard to trust: it is judged against human references, so "better than human" is circular. By this scale the course's S2S RNNs (validation BLEU 0.27–0.37) range from gist-level (below 0.3) to understandable.
+
+> [!exam] Said in class
+> "I will never ask you to calculate the BLEU metric by hand." He walks through how BLEU is computed (the classic "the cat is on the mat" reference against a candidate with repeated and dropped words) for completeness only: know what it rewards (matching 1- to 4-word chunks against any reference, with a penalty for short outputs) and how to read a score, not the arithmetic ([[#bleu-scoring-a-translation]]).
+
 ## The English→French data
 
 The course provides `eng-fra.txt` (135,842 tab-separated sentence pairs) and an `English2FrenchDataset` class in `helpers.py`.

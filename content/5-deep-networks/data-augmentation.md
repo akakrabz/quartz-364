@@ -37,6 +37,22 @@ Each call draws new random parameters. [`v2.Compose`](https://docs.pytorch.org/v
 - Augmentation puts robustness into the **data**; a CNN with global pooling gets shift robustness from its **architecture** ([[5-deep-networks/pooling|pooling]]).
 - FGSM: $x_\text{adv} = \mathrm{clip}_{[0,1]}\big(x + \epsilon\,\mathrm{sign}(\nabla_x L)\big)$. $\epsilon = 0.05$ drops a CNN from 88.3% to 45.9%; random noise of the same size barely matters.
 
+
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Augmentation encodes a prior: the meaning of an example should not change under realistic perturbations — flips, crops, blur, contrast, hue and saturation, gamma.
+- The theory behind it: empirical risk minimization fits the loss at the scattered training points, and augmentation jitters each point into its neighbourhood, which is called **vicinal risk minimization** ([Chapelle, Weston, Bottou and Vapnik, NIPS 2000](https://proceedings.neurips.cc/paper_files/paper/2000/hash/ba9a56ce0a9bfa26e8ed9e10b2cc8f46-Abstract.html)).
+- Augment only with variation the test data will plausibly contain. Data collected and used in one fixed lab setup gains nothing and can lose; a model deployed in the open world gains a lot, especially from few samples ([[#2-data-size-and-test-time-variation]]).
+- An augmentation hurts when it changes the label: a flipped 6 is a 9. Never augment just for the sake of it.
+- Augmentation can replace an architecture change: the MLP that failed on shifted products becomes shift-robust once trained on shifted copies, because the weights away from the centre finally receive data ([[#1-position]]).
+- PyTorch applies the transform every time a sample is loaded, so each epoch sees a fresh random version of every image; you do not store augmented copies.
+- What is realistic depends on the data. Many datasets have an upright bias: rotations suit birds (any pose), suit cats somewhat, and rarely suit dogs, which are mostly photographed upright. For large models the augmentation policy is tuned like any other hyperparameter.
+
+> [!intuition] Analogy — jittering points into clouds
+> Think of each training example as a point. Plain training only cares about the loss exactly at those points. Augmentation smears each point into a small cloud of nearby, equally valid versions, so the model is trained on the neighbourhood where test points are likely to land — as long as the cloud stays inside the same class.
+
 ## Where augmentation goes
 
 ```python

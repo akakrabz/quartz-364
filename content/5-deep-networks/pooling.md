@@ -33,6 +33,19 @@ In the lecture's figure the four $2\times2$ windows $\{12, 20, 8, 12\}$, $\{30, 
 - Convolution is translation **equivariant**; a **global**-pooling head makes the prediction translation **invariant**; a **flatten** head throws that away.
 - Head parameter counts: flatten $64\times16\times16 \rightarrow 10$ costs $163{,}850$; GAP then $64\rightarrow10$ costs $650$. With a GAP head the model accepts any input size.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- A CNN has three kinds of parts: convolutional layers (the filters), non-linearities, and pooling, followed by a **head** that classifies the extracted features (linear layers, more convolutions, or anything else). Pooling shrinks the map so later filters have less to scan, and it buys some robustness to where things are.
+- The shift experiment was posed as a business problem: train on a professional photographer's centered product photos, then classify customers' photos with the product anywhere in the frame. The class predicted the MLP would fail first; it failed at the smallest shifts, while the CNNs with global pooling stayed flat ([[#the-shift-experiment|results]]).
+- Clean accuracy alone misleads. On centered test images the ranking is flatten head (90.2%), MLP (86.8%), then the global-pooling models, and under shifts it reverses. Judge a model on the conditions it will face, not just its first accuracy number.
+- Choosing a model means weighing accuracy, stability under shifts and parameter count. The $3\times3$ GAP model (23,946 parameters, 78.0%) has under half the parameters of the $5\times5$ GAP model (65,162, 80.8%) for about 3 points less accuracy: the pick under a memory budget; otherwise the $5\times5$ one.
+- Global pooling makes the input size irrelevant: customers' photos come from different devices at different resolutions, and a GAP model takes them all, while flatten and MLP heads grow with the input size and break on a new one ([[#a-bonus-of-global-pooling-any-input-size|any input size]]).
+
+> [!intuition] Analogy — folding the canvas before stamping
+> You have to stamp a pattern over a huge canvas. Fold it in half and there is half the area to stamp; fold it again and only a quarter is left. Pooling does that to the feature map before the next layer's filters slide over it.
+
 ## Worked example
 
 Lecture 15's $4\times4$ tensor:

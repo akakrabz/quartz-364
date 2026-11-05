@@ -59,6 +59,20 @@ Leaky ReLU's slope is a small positive number; PyTorch calls it `negative_slope`
 - **Hidden layers** get an activation; the **output layer** usually does not: it returns logits for [`nn.CrossEntropyLoss`](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) or [`nn.BCEWithLogitsLoss`](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html) ([[4-pytorch-training/loss-functions|loss functions]]).
 - Module form (`nn.ReLU()`, goes in `__init__` or `nn.Sequential`) vs function form (`F.relu(x)`, `torch.sigmoid(x)`, used inside `forward`). Same math, no parameters either way.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Any non-linear function can serve as an activation; what makes one good is how it behaves under backpropagation.
+- Homework 2's chain of sigmoids was already a small deep network: every sigmoid multiplies the gradient by at most $\tfrac14$, so the gradient shrinks geometrically with depth ([[#vanishing-gradients-and-dead-units|vanishing gradients]]).
+- ReLU's derivative is $0$ or $1$: it simply masks the gradient. That makes the backward pass nearly free (sigmoid and tanh need real floating-point work) and repeated factors of 1 do not decay. Its weakness is the flat half: a parameter that always receives zero gradient can "just get stuck and kind of die".
+- The choice of activation is a second-order design decision: try ReLU first; sigmoid and tanh come back inside recurrent networks ([[5-deep-networks/lstm-and-gru|LSTM and GRU]]).
+- Exotic options exist (ELU, hard sigmoid, Mish, …). Mish is $x\tanh(\textrm{softplus}(x))$, a smooth ReLU-like curve; his guess is that such smooth variants target dying units.
+- Activations without parameters can be created once as objects (`act = nn.ReLU()`) and called after every layer, just like loss objects.
+
+> [!tip] Shortcut — the ReLU backward pass
+> No derivative to evaluate: multiply the upstream gradient by the mask $[z > 0]$. For pre-activations $z = (-1.2, 0.4, 3.0)$ and upstream gradient $(5, 5, 5)$, the gradient passed back is $(0, 5, 5)$.
+
 ## Vanishing gradients and dead units
 
 In [[2-calculus-and-optimization/backpropagation|backpropagation]], the gradient that reaches layer 1 of a deep network is a product with one factor $\sigma'(z)$ per layer it passes through. With sigmoid every such factor is at most $0.25$:

@@ -35,6 +35,26 @@ The identity is now $\mathcal F(x) = 0$, which weights near zero produce easily.
 - Lecture 16's experiment: 21 conv layers, no batch norm: plain stays at chance (loss 2.303, 10.1%), residual reaches 56.9% after 2 epochs.
 - The two rules for any custom graph: matching shapes at every merge, a short gradient path to every layer.
 
+
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Each block adds a correction to its input instead of replacing it, $y = F(x) + x$. If the correction is not useful, the network can learn $F \approx 0$ and pass the data through untouched.
+- Two readings, both given in class. As **refinement**: $x$ is already a good representation and the block just tunes it — the reading that fits Transformers. And the original motivation, the **degradation problem**: a 56-layer plain network had *higher training error* than a 20-layer one ([[#what-it-is]]). In class he also described it as a gap between training and validation performance; the correct reading is that the *training* error itself is higher, so this is an optimization failure, not overfitting.
+- Why plain stacks fail: the extra layers only need to compute the identity, but an identity matrix is a very specific target that gradient descent on a non-convex, nonlinear model essentially never stumbles onto. The skip connection hard-codes the identity, so the layers only have to reach zero, which is easy.
+- The homework showed the gradient side: without the skip, the early layers' gradients vanish; with it they stay usable ([[#why-the--x-helps-the-gradient]]).
+- Skip connections are now in practically every model: gated versions in LSTMs and GRUs, a residual around every Transformer sub-layer. The idea had a gated predecessor published months before ResNet, [highway networks](https://arxiv.org/abs/1505.00387) (Srivastava, Greff and Schmidhuber, 2015). ResNet itself is [He et al.](https://arxiv.org/abs/1512.03385), December 2015 (CVPR 2016).
+
+> [!intuition] Analogy — the "do nothing" option
+> A good 20-layer network plus 36 more layers should never be worse: the new layers could simply pass the features along. In a plain stack, "passing along" means learning the identity matrix exactly — finding one specific needle in a haystack. With a skip connection it means outputting zeros, which is close to where small random weights already start.
+
+> [!tip] Shortcut — counting ResNet depth
+> The names count convolution and fully connected layers: the stem convolution, 2 per basic block (3 per bottleneck block), and the final FC layer.
+> - ResNet-18: $1 + 2\cdot(2+2+2+2) + 1 = 18$; ResNet-34: $1 + 2\cdot(3+4+6+3) + 1 = 34$.
+> - ResNet-50 uses 3-layer bottleneck blocks: $1 + 3\cdot(3+4+6+3) + 1 = 50$; block counts $(3,4,23,3)$ give 101 and $(3,8,36,3)$ give 152.
+> - The paper's CIFAR-10 networks have $6n+2$ layers ($n$ blocks in each of three stages): $n = 3$ gives 20, $n = 9$ gives 56. This is the "number of blocks times this number plus 2" rule mentioned in class.
+
 ## Why the "+ x" helps the gradient
 
 Write a deep network as blocks $x_{k+1} = x_k + F_k(x_k)$ (ignore the ReLU). By the [[2-calculus-and-optimization/backpropagation|chain rule]],

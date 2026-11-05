@@ -30,6 +30,38 @@ The surname task already used tokens: each letter was one, from a vocabulary of 
 - How to read the bidirectional head `(fc(outputs[-1]) + fc(outputs[0]))/2`.
 - Tokens are not only for text: an image can be cut into non-overlapping patches, which is where the transformer lectures are headed.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- **The key idea of tokenization:** with an embedding table, the number of symbols is decoupled from the length of each symbol's vector. So we can afford to choose bigger symbols than letters.
+- **Why not characters?**
+  - A review title becomes hundreds of characters, which is tedious to process.
+  - A single letter says almost nothing: reading *brilliant* letter by letter asks a lot of the RNN.
+  - Small changes in spelling can redirect a word's meaning.
+- **The trade-off is vocabulary size against information per token.**
+  - Lowercase characters give 26 tokens, each nearly meaningless.
+  - Whole words give tens of thousands of tokens, each very specific.
+  - Groups of letters (n-grams) sit in between.
+- In the lookup-table figure, *student* has index 8,553. Its column is a 512-entry vector of learned floats, far denser than a one-hot or binary code.
+- **Why `min_freq` exists.** Keep every word and the vocabulary has tens of thousands of entries, many seen only once or twice, which are "exceptionally difficult, in some cases impossible" to learn. In his run, `min_freq = 100` gave a vocabulary of 1,678 words (this page's seeded run: 1,673).
+- **What a larger vocabulary costs.** With `min_freq = 100`, training accuracy was about 100% and validation in the low-to-mid 80s. With `min_freq = 10`, training was still near perfect but validation dropped about 12 points. The larger vocabulary is harder to generalize from.
+- **Nearest neighbours were not meaningful.** The words closest to *yes* in the learned space included "system", "delicious" and "cats". *No* and *terrible* were no better, and only *great* landed near *laugh*. Nothing in training asks similar meanings to sit close together. And in high dimensions, vectors tend to all be far apart, which makes "close" rare.
+- **Tokens are not just text.** Images can be cut into patches that act as tokens, an idea that comes back in the transformer lectures.
+
+> [!tip] Shortcut — what a vocabulary change costs in parameters
+> The embedding holds $V\cdot d$ parameters. With the exercise's $d = 64$:
+>
+> | `min_freq` | Vocabulary $V$ | Embedding size $V\cdot 64$ |
+> | --- | --- | --- |
+> | 100 | 1,673 | 107,072 |
+> | 10 | 5,041 | 322,624 |
+>
+> Lowering `min_freq` from 100 to 10 roughly triples both. The lecture estimated that it "about quadruples" the vocabulary; the measured table above gives 3.0×. The rest of the model (the RNN and the head) stays the same size, so the vocabulary decides most of the parameter count ([[#the-sentiment-analysis-set-up]]).
+
+> [!intuition] Analogy — the token budget of a chatbot
+> The "tokens" that large language models count against your budget are these units. A prompt's token count is roughly proportional to its number of words, because the tokenizer splits text into word-sized or smaller pieces.
+
 ## Token size against vocabulary size
 
 ![[l18-tokenization-schemes.png|Character, n-gram and word tokens for "studious" and "student"]]

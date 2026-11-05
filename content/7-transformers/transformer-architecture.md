@@ -38,6 +38,31 @@ The figure from the paper is the whole model. Left, the **encoder**: input embed
 - Stacking: $N$ encoder layers feed each other; each of the $N$ decoder layers cross-attends to the **final** encoder output. The paper uses $N = 6$; the course uses one layer.
 - How to count parameters from the code (embeddings and the output layer dominate here).
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Why Skinny → Medium → Full: the paper presents the finished model without testing what each design choice buys, so the course strips it down to attention alone and adds the pieces back one or two at a time, measuring each step.
+- Most of the diagram is already familiar: "Feed Forward" is a two-layer MLP (one hidden layer), "Add" is a skip connection as in ResNet and U-Net, "Norm" is layer norm, a relative of batch norm. The genuinely new parts are positional encoding and the three kinds of attention.
+- The Skinny encoder is tiny: embed → self-attention → ReLU. The decoder adds masked self-attention, cross-attention and a final linear layer to vocabulary logits.
+- Teacher forcing is built in: shift the target right (`<SOS>` in front, the final `<EOS>` dropped from the input) and let the causal mask make every next-word prediction at once. That also makes the training loop simpler than the S2S RNN's: no aligning prediction and target lengths.
+- The three fixes, as he summarized them: (1) no hidden state to wait for, so every position is computed in parallel; (2) the attention matrix models every pair of words explicitly; (3) cross-attention gives every decoded word direct access to every encoded word at every step, so the source context is reinforced instead of watered down, and with more layers it is reinforced again.
+- Measured in class, 40 training epochs: about 7 minutes for the S2S GRU (about 10 for the bidirectional one) and about 3 minutes for the Skinny Transformer, with virtually the same number of parameters. The Skinny model still needed about twice as much training to catch the best RNN.
+- Medium vs Skinny: training BLEU roughly doubles and validation BLEU jumps — he said nearly 15 points; the saved runs give about 12–13 ([[#results]]). Full vs Medium: positional encoding is what lifts validation above 0.4, multi-head attention helps less, and trained longer the Full model passes 0.5.
+- Without positional encoding the model predicts purely from context: it can memorize the training sentences but has no notion of word order, so it generalizes worse ([[7-transformers/positional-encoding#from-the-lecture|positional encoding]]).
+
+> [!tip] Shortcut — count the parallel predictions
+> A target of $L$ tokens (counting `<EOS>`) gives exactly $L$ next-token predictions in one forward pass, one per prefix. For "The dog is cute !" the six prefixes `<SOS>`, `<SOS> The`, …, `<SOS> The dog is cute !` predict The, dog, is, cute, !, `<EOS>`. The logits are $L\times\lvert V_{dec}\rvert$: $10\times560$ for the 10-token French target in the class run. At inference an untrained model rarely predicts `<EOS>`, so it runs to `MAX_LENGTH` and returns 25 tokens.
+
+> [!tip] Shortcut — reading a BLEU number (0–1 scale)
+> His rule of thumb, from the article the notebook links: 0.2–0.3 the gist is there but easy to misread; 0.3–0.4 understandable, a good translation; 0.4–0.5 high quality, fluent; 0.5–0.6 professional-translator level; above 0.6 "better than human", which he finds hard to make sense of. He will not ask you to compute BLEU by hand ([[7-transformers/sequence-to-sequence-rnns#bleu-scoring-a-translation|BLEU]]).
+
+> [!intuition] Analogy — a summary that fades vs. a source you can reread
+> The S2S decoder gets the encoder's summary once, as its first hidden state, and rewrites it at every word, so the source context gets diluted as the translation goes on. The Transformer decoder rereads the whole encoded sentence through cross-attention at every word, so the context is, if anything, reinforced. The lecture's encoder–decoder GIF shows exactly this.
+
+> [!exam] Said in class
+> Midterm 2 is in class on the Tuesday before Thanksgiving break, after a lecture on model-training best practices and a review session. It covers the Transformer lectures plus a cumulative look at all the deep-network models, with weight on knowing which model is appropriate for a given task; Homework 7 is a summary comparison of the models meant as preparation. He described topics after the Transformers as additional material rather than something to be rigorous about.
+
 ## Training: the whole target in one pass
 
 <!-- fig:tf-b-shift-right -->

@@ -42,6 +42,25 @@ The lecture writes the FFN as $z = W_2\,\mathrm{ReLU}(W_1x)$ with column vectors
 - Layer norm computes mean and variance **over the features of one token**; batch norm over **one feature across the batch**. Layer norm keeps no running statistics and behaves identically at train and eval time. Parameters: $2d$ ($\gamma$ and $\beta$).
 - What changed from Skinny to Medium in the results: training loss 0.54 → 0.10, validation BLEU 0.34 → 0.46 after 3 million steps.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- The position-wise FFN is nothing more than the first neural network of the course after Midterm 1: Linear → ReLU → Linear, applied to each token separately; $d_{ffn}$ is usually $2\times$ or $4\times d_{emb}$.
+- He presented the FFN as the single most important addition and attributed that view to the paper. The paper does not actually make that claim — for the FFN, its Table 3 only varies $d_{ff}$ — but the course's own results point the same way: the Skinny → Medium step, which adds the FFNs together with Add & Norm, is the biggest jump in validation BLEU ([[7-transformers/transformer-architecture#results|results]]).
+- Skip connections, by ResNet's argument: learning to "do nothing" (the identity) is hard, learning a zero correction is easy, so a block outputs $x + F(x)$ and can leave a representation that is already good alone with $F(x) = 0$. For Transformers he framed it as a question each block answers: is this token's representation good enough, or does it need refining?
+- Layer norm vs batch norm: batch norm normalizes one channel across the whole batch (and, in CNNs, across height and width); layer norm normalizes inside a single example, so it does not depend on the batch. In the course code `nn.LayerNorm(embedding_dim)` normalizes each token's vector over its $d_{emb}$ features (in class he likened it to normalizing all of an example's values together, tokens playing the role of channels; the code normalizes each token separately) ([[#layer-norm-versus-batch-norm]]).
+- In the first overview of the architecture he called the "Norm" an instance norm; it is layer norm, as he said when he went through the model in detail.
+
+> [!tip] Shortcut — counting the wrappers
+> Every sub-block is wrapped as $\mathrm{LayerNorm}(x + F(x))$, so count sub-blocks: an encoder layer has 2 Add & Norms (after self-attention, after the FFN) and a decoder layer 3 (after masked self-attention, after cross-attention, after the FFN). Each LayerNorm adds $2d_{emb}$ parameters, 256 for $d_{emb} = 128$ (the paper has one per Add & Norm; the course code reuses one per encoder and one per decoder); the FFN count is in the table below.
+
+> [!intuition] Analogy — who relates to whom, then what it means
+> After an attention block every token knows which other tokens matter to it, but not yet what the relationship is. The FFN is where the model can work that out: this word is a verb and that one an adverb modifying it, or this is an adjective–noun pair.
+
+> [!intuition] Analogy — residuals as edits
+> With $x + F(x)$ each block proposes an **edit** to the token's current representation rather than rewriting it; a block with nothing to add leaves it unchanged. He recommended the [3Blue1Brown attention video](https://www.youtube.com/watch?v=eMlx5fFNoYc) for its picture of later layers adding refinements on top of earlier ones.
+
 ## The position-wise feed-forward network
 
 The course's version:

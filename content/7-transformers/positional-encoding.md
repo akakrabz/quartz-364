@@ -45,6 +45,29 @@ z = z + self.position_encoding(z)    # add p_pos to row pos
 - Learned positional embeddings: an `nn.Embedding(max_len, d)` indexed by position; similar results, but no positions beyond `max_len`.
 - The Lecture 20 ablation numbers and what they show.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Positional encoding is added **once**, to the input embeddings at the bottom of the encoder and of the decoder: $z + p$, a plain element-wise sum.
+- Why it is needed: attention only compares pairs of tokens, so shuffling the tokens just shuffles the scores ([[#attention-does-not-see-order]]). The Skinny and Medium models would score identically on sentences whose words were consistently shuffled: they understand context, not order. Positional encoding is what tells the model "this is the first word, this is the second".
+- What a good encoding needs: a distinct vector for every position, values that stay in a compact range, and smooth, predictable change from one position to the next. Plain counting (0, 1, 2, …) fails the last two: it grows without bound and steps abruptly.
+- Sinusoids are one arbitrary choice — the paper says as much — and learned position embeddings (one trained vector per position, just like word embeddings) work too. He noted that hand-crafting is fine here, unlike the hand-made letter codes of [[7-transformers/text-encodings-and-embeddings|Lecture 18]], because the rest of the model carries most of the load.
+- Asked why not just count, he suggested a Gray code as an alternative worth trying: a binary code in which consecutive positions differ in one bit, $g = n \oplus \lfloor n/2\rfloor$ (000, 001, 011, 010, 110, 111, 101, 100), padded with zeros to the embedding size. Neither the paper nor the notebook tests it.
+- In the results, positional encoding is what pushed validation BLEU above 0.4: without word order the model can still memorize training sentences but generalizes worse ([[#the-ablation]]).
+
+> [!tip] Shortcut — the shuffle test in one line
+> Permute the tokens with a permutation matrix $P$: $(PQ)(PK)^\top = P\,(QK^\top)\,P^\top$ — the same numbers, with rows and columns moved the same way, so the attention output is just the old output permuted. In class he phrased it as: circularly shift the rows of $Q$ and of $K$ and the set of values in $S$ does not change.
+
+> [!tip] Shortcut — values you can write down at once
+> Position 0 alternates $0, 1, 0, 1, \dots$ because $\sin 0 = 0$ and $\cos 0 = 1$. Along a fixed dimension $i$ the encoding is one sinusoid in the position, of period $2\pi\cdot10000^{i/d}$ positions: about 6.3 for the first dimensions, the fastest wave, and about 58,000 for the last one when $d = 128$, so across a 25-token sentence the last dimensions barely move. Fixing the position and moving across dimensions changes the frequency instead.
+
+> [!intuition] Analogy — shuffled pixels
+> Attention without positions is like the MLP from the CNN lectures: shuffle the pixels of every image the same way and the MLP performs exactly as before, because it has no notion of where a pixel is. Attention has no notion of where a word is until positional encoding adds it. RNNs get order for free by passing the hidden state one step at a time.
+
+> [!exam] Said in class
+> The positional-encoding section of the notebook is meant to help with Homework 6.
+
 ## The sinusoidal encoding
 
 > [!key] Paper (Vaswani et al., 2017, §3.5)

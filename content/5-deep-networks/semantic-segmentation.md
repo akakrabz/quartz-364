@@ -30,6 +30,19 @@ aliases: ["segmentation", "IoU", "intersection over union", "Jaccard index", "se
 - Why not accuracy: 84% of the validation pixels are background, so "no clothes anywhere" is already 84% accurate. A scene with IoU 0.52 still had 90.2% pixel accuracy.
 - Geometric augmentation must move the image and its mask together ([[5-deep-networks/data-augmentation#augmenting-images-and-masks|augmenting masks]]).
 
+
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- Every pixel gets its own label. The mask is either binary (object vs background) or holds a class index per pixel, drawn as one colour per class.
+- Learning the upsampling needs pixel-wise labels: the targets are masks, not one label per image.
+- Pixel accuracy misleads because the background dominates. If 90% of the pixels are background, predicting "background" everywhere scores 90% while finding nothing; hence intersection over union ([[#intersection-over-union]]).
+- Any geometric augmentation must be applied identically to the image and its mask, or pixels get matched to the wrong labels ([[5-deep-networks/data-augmentation|data augmentation]]).
+
+> [!tip] Shortcut — IoU without drawing the union
+> $|A\cup B| = |A| + |B| - |A\cap B|$, so $\mathrm{IoU} = \dfrac{I}{|A| + |B| - I}$: count the overlap once and use the two areas. A 6×6 prediction shifted 2 pixels sideways off a 6×6 target overlaps in $6\cdot4 = 24$ pixels, so $\mathrm{IoU} = 24/(36 + 36 - 24) = 0.5$: being a third of the width off already halves the score. The lecture's two-garment example: one garment found perfectly and an equal-sized one missed entirely gives $I = a$, $U = 2a$, $\mathrm{IoU} = 0.5$, while pixel accuracy is still high.
+
 ## The data: Find the clothes
 
 Lecture 16 pastes two FashionMNIST garments at random positions onto a $64\times64$ canvas with background noise; the mask marks every clothing pixel.

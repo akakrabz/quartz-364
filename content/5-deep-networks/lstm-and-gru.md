@@ -26,6 +26,42 @@ The building block is a **gate**: a vector $\sigma(W x_t + U h_{t-1}) \in [0,1]^
 - `nn.LSTM` takes and returns a **tuple** `(h, c)`: `output, (h_n, c_n) = lstm(x, (h0, c0))`; `nn.GRU` works like `nn.RNN`.
 - Parameter counts: per layer and direction $G\cdot H(d + H + 2)$ with $G = 1$ (RNN), $3$ (GRU), $4$ (LSTM).
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- **PyTorch's `nn.RNN` is the Elman RNN**, which is exactly the cell built by hand on the [[5-deep-networks/recurrent-neural-networks|RNN page]]. Bidirectionality and multiple layers are just arguments to it.
+- LSTM and GRU are the two standard out-of-the-box choices. They are more expensive and harder to train than the Elman RNN, but more robust.
+- **Both outputs of `nn.RNN` are hidden states.** `output` holds the top layer's state at every step and `h_n` holds the final state of each layer. You add your own head (an `nn.Linear`) to get class scores.
+- **The goal of an LSTM** is to model both short-range dependencies (neighbouring letters or words) and long-range ones (words several sentences apart).
+- He did not walk through the equations one by one. The one thing to understand is the sigmoid gates:
+  - A sigmoid pushes values toward 0 or 1, so multiplying elementwise by a gate mostly **erases** an entry (≈0) or **keeps** it (≈1). It is a soft blend, not a hard switch.
+  - Not forgetting (forget gate ≈ 1) preserves long-term information. Forgetting and writing new input models short-term changes.
+- **The candidate $g_t$ uses tanh, not sigmoid**, so the cell can be pushed *up or down* (add and subtract), not only erased and replaced. The design looks over-engineered, but the original paper motivates it biologically.
+- **There is no guarantee any of this works.** It is justified empirically, which he called "ad hoc". It also does not let you check afterwards which entries of a 256-number state connect two words 20 positions apart; that motivates Transformers.
+- **Vanishing gradients are worse in RNNs.** Even a single layer applied over a 20-word sentence chains the activation's derivative 20 times. The LSTM's additive cell path, like a skip connection, counters this. The LSTM (1997) predates ResNet (2015).
+- **The GRU is "a more efficient version of LSTMs".** It has no cell state, only update, reset and new gates. Its code is the Elman code with the class name changed.
+- On the fixed 100-epoch schedule the GRU beat the LSTM (about 61% for the LSTM) because it is faster and more efficient to train. That does not make it always better; it "very much depends".
+- **Compute cost.** The LSTM is the model that needs a GPU: five epochs on a CPU took over an hour. Even on the GPU, 100 epochs of the GRU took about 30 minutes. GPU speed-ups are more modest for RNNs than for CNNs.
+
+> [!tip] Shortcut — count one Elman cell, then multiply by the number of gate blocks
+> An LSTM has 8 weight matrices: 4 blocks ($i, f, g, o$), each with one matrix for $x_t$ and one for $h_{t-1}$. Concatenating $x_t\oplus h_{t-1}$ turns them into 4 tall matrices, so an LSTM layer is 4 Elman cells' worth of parameters, and a GRU layer 3.
+>
+> With $d = 52$ and $H = 64$, one Elman cell has $64\cdot(52+64+2) = 7{,}552$ parameters (including PyTorch's two bias vectors). That gives:
+>
+> | Cell | Parameters |
+> | --- | --- |
+> | GRU | $3\times 7{,}552 = 22{,}656$ |
+> | LSTM | $4\times 7{,}552 = 30{,}208$ |
+>
+> These match [[#counting-parameters-of-rnn-gru-and-lstm]].
+
+> [!tip] Shortcut — how fast a chain of sigmoids kills the gradient
+> The sigmoid's derivative is at most $\tfrac14$ (at 0). Backpropagating through $T$ sigmoid steps therefore multiplies the gradient by at most $4^{-T}$ (ignoring the weights): about $10^{-6}$ after 10 steps and $9\times 10^{-13}$ after 20. This is the Homework 2 chain-of-sigmoids result, applied along the time axis. With tanh the bound is 1, but saturated units still drive the product toward 0.
+
+> [!intuition] Analogy — an eraser and a pen
+> His words for the gates are erase, keep, add and subtract; the notepad picture is this site's. The cell state is a notepad carried along the sequence. The forget gate is the eraser: entries near 0 wipe a line, entries near 1 leave it alone. The input gate decides how hard to press the pen, and the tanh candidate is what gets written, which can be added or subtracted. Keep the eraser away and the notepad remembers for a long time; use it often and the notepad tracks only recent context.
+
 ## Long short-term memory (LSTM)
 
 At step $t$ the LSTM cell receives the input $x_t$, the previous hidden state $h_{t-1}$ and the previous **cell state** $c_{t-1}$, and computes four activations (the lecture drops the biases; PyTorch adds $b_{i\cdot}$ and $b_{h\cdot}$ to each line):

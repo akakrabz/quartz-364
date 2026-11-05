@@ -24,6 +24,17 @@ aliases: ["Vaswani et al. 2017", "Transformer paper", "original Transformer pape
 
 The paper's sections map onto course pages: [[7-transformers/attention|attention]], [[7-transformers/multi-head-attention|multi-head attention]], [[7-transformers/positional-encoding|positional encoding]], [[7-transformers/layer-norm-and-feed-forward|layer norm and feed-forward]], and the whole model in [[7-transformers/transformer-architecture|transformer architecture]]. The sections below follow the paper's own numbering.
 
+## From the lecture
+
+*From the class recording, paraphrased.*
+
+- The paper came out of Google Brain in 2017; he called its title unusually good — catchy and memorable, unlike most paper names.
+- The shortcomings the paper cites as motivation are exactly the three limitations of [[7-transformers/sequence-to-sequence-rnns|sequence-to-sequence RNNs]]: no parallelism, word relationships hidden inside one hidden state, and a single context vector between encoder and decoder.
+- The paper does not claim to have invented attention or self-attention — earlier work used self-attention inside RNN-based translation models. Its contribution is a model built **entirely** from attention, with the recurrence removed.
+- He treats the Transformer lectures as an unpacking of the paper: it does not always explain why each design choice matters, and he wished it had run more ablations. Skinny → Medium → Full and the positional-encoding ablation are the course's answer ([[7-transformers/transformer-architecture#from-the-lecture|architecture]]).
+- Two things to check against the paper itself: the claim he attributed to the authors, that the FFN is the most important ingredient, is not in the paper ([[7-transformers/layer-norm-and-feed-forward#from-the-lecture|details]]); and the paper's translation tasks are English→German and English→French (§5.1), so the course's English→French task is one of them.
+- On positional encoding, the lecture and the paper agree: there are many reasonable choices, learned and fixed, and the paper found learned embeddings "nearly identical" to sinusoids ([[#35--positional-encoding|§3.5]]).
+
 ## 1 · The problem and the claim
 
 Recurrent models (LSTMs, GRUs) "factor computation along the symbol positions": hidden state $h_t$ is a function of $h_{t-1}$ and input $t$. That is the bottleneck the course met with the [[7-transformers/sequence-to-sequence-rnns|sequence-to-sequence RNN]]: the steps within one sentence cannot run in parallel, and at long sequence lengths memory limits how many sentences can be batched instead. Attention mechanisms already helped such models by connecting positions "without regard to their distance", but they were used on top of a recurrent network.
