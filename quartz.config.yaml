@@ -16,7 +16,7 @@ configuration:
   # CHANGE ME: host (and optional sub-path) where the site will live, no protocol,
   # no trailing slash — e.g. "notes.example.com" or "example.com/ece364".
   # Only used for the sitemap, RSS and social-preview URLs.
-  baseUrl: "quartz-364.vops.ch"
+  baseUrl: "notes.vops.ch/364"
   ignorePatterns:
     - private
     - templates
