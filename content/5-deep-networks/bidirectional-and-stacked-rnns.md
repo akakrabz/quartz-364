@@ -251,6 +251,9 @@ The LSTM and GRU versions of the same model multiply the RNN part by 4 and 3: [[
 > [!solution]- Answer
 > Unidirectional: each decision must be made when the beat arrives, without future beats. Stacking is allowed (it adds depth at each step, not future context) and may help if one layer is not expressive enough.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2025#problem-1--true-or-false-30-pts|Fall 2025 1(j)]]: the two directions of a bidirectional layer do **not** share parameters. Drill: [[9-midterm-2/review-recurrent-networks#counting-parameters|counting RNN parameters]].
+
 ## PyTorch docs
 
 - [`torch.nn.RNN`](https://docs.pytorch.org/docs/stable/generated/torch.nn.RNN.html) — `num_layers`, `bidirectional`, `dropout`, and the `h_n` layout.

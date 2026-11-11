@@ -1,6 +1,6 @@
 ---
 title: "ECE 364 · Programming Methods for Machine Learning"
-description: "Review notes for ECE 364 (Fall 2026, Illinois), organized by topic: tensors, matrix calculus, gradient descent and backpropagation, linear and logistic regression, PyTorch training, MLPs, CNNs and RNNs, embeddings, attention and Transformers — each page with the must-know summary, diagrams, code from the lecture notebooks and links to the PyTorch docs — plus a Midterm 1 section with every past exam worked."
+description: "Review notes for ECE 364 (Fall 2026, Illinois), organized by topic: tensors, matrix calculus, gradient descent and backpropagation, linear and logistic regression, PyTorch training, MLPs, CNNs and RNNs, embeddings, attention, Transformers and Vision Transformers, and training practice — each page with the must-know summary, diagrams, code from the lecture notebooks and links to the PyTorch docs — plus Midterm 1 and Midterm 2 sections with every past exam worked."
 tags: [unit]
 ---
 
@@ -8,7 +8,8 @@ Notes for **ECE 364 — Programming Methods for Machine Learning** (University o
 
 > [!tip] How to use this site
 > - Start a topic from its **unit page** below, or go from a lecture to its topics with [[lectures|Lectures → topics]].
-> - Every topic page opens with **In one breath** (the whole idea) and **What you should know** (the checklist to review), and ends with the **PyTorch docs** it uses. Pages for Lectures 14–20 also have **From the lecture**: the lecturer's main points, calculation shortcuts, analogies and exam hints, from the class recordings.
+> - Every topic page opens with **In one breath** (the whole idea) and **What you should know** (the checklist to review), and ends with the **PyTorch docs** it uses. Pages for Lectures 14–22 also have **From the lecture**: the lecturer's main points, calculation shortcuts, analogies and exam hints, from the class recordings.
+> - The **[[9-midterm-2/index|Midterm 2]]** section (exam on Tue Nov 17, 2026) has the announced scope, the four practice exams worked problem by problem with the excluded parts marked, review pages by problem type, a true/false bank and a formula sheet.
 > - The **[[6-midterm-1/index|Midterm 1]]** section has every past Midterm 1 worked problem by problem, the formula sheet and a true/false bank.
 > - Hover a link for a preview; the graph view (top right) shows how topics connect.
 
@@ -23,8 +24,8 @@ Derivatives of vectors and matrices, and how PyTorch computes them: [[2-calculus
 ### [[3-linear-models/index|3 · Linear models]] — Lectures 7–9, 11
 Regression and classification with models linear in their weights: [[3-linear-models/linear-regression|Linear regression]] · [[3-linear-models/multiple-linear-regression|Multiple linear regression]] · [[3-linear-models/basis-function-regression|Basis-function regression]] · [[3-linear-models/computational-cost|Computational cost]] · [[3-linear-models/ridge-regression|Ridge regression]] · [[3-linear-models/logistic-regression|Logistic regression]] · [[3-linear-models/binary-cross-entropy|Binary cross-entropy]] · [[3-linear-models/multiclass-logistic-regression|Multi-class logistic regression]]
 
-### [[4-pytorch-training/index|4 · Training with PyTorch]] — Lectures 10–11, 14
-The machinery every model uses: [[4-pytorch-training/nn-module|nn.Module]] · [[4-pytorch-training/loss-functions|Loss functions]] · [[4-pytorch-training/optimizers|Optimizers]] · [[4-pytorch-training/learning-rate-schedulers|LR schedulers]] · [[4-pytorch-training/training-loop|The training loop]] · [[4-pytorch-training/datasets-and-dataloaders|Datasets and DataLoaders]] · [[4-pytorch-training/experimental-setup|Experimental setup]] · [[4-pytorch-training/gpu-training|GPU training]]
+### [[4-pytorch-training/index|4 · Training with PyTorch]] — Lectures 10–11, 14, 22
+The machinery every model uses: [[4-pytorch-training/nn-module|nn.Module]] · [[4-pytorch-training/loss-functions|Loss functions]] · [[4-pytorch-training/optimizers|Optimizers]] · [[4-pytorch-training/learning-rate-schedulers|LR schedulers]] · [[4-pytorch-training/training-loop|The training loop]] · [[4-pytorch-training/datasets-and-dataloaders|Datasets and DataLoaders]] · [[4-pytorch-training/experimental-setup|Experimental setup]] · [[4-pytorch-training/gpu-training|GPU training]] · [[4-pytorch-training/underfitting-and-overfitting|Underfitting and overfitting]] · [[4-pytorch-training/tensorboard-and-logging|TensorBoard and logging]]
 
 ### [[5-deep-networks/index|5 · Deep networks]] — Lectures 14–17
 - **MLPs:** [[5-deep-networks/multilayer-perceptrons|Multilayer perceptrons]] · [[5-deep-networks/activation-functions|Activation functions]]
@@ -32,16 +33,20 @@ The machinery every model uses: [[4-pytorch-training/nn-module|nn.Module]] · [[
 - **Dense prediction and training tricks:** [[5-deep-networks/fully-convolutional-networks|Fully convolutional networks]] · [[5-deep-networks/semantic-segmentation|Semantic segmentation]] · [[5-deep-networks/data-augmentation|Data augmentation]] · [[5-deep-networks/batch-normalization|Batch normalization]] · [[5-deep-networks/dropout|Dropout]]
 - **Sequences:** [[5-deep-networks/recurrent-neural-networks|Recurrent neural networks]] · [[5-deep-networks/bidirectional-and-stacked-rnns|Bidirectional and stacked RNNs]] · [[5-deep-networks/lstm-and-gru|LSTM and GRU]]
 
-### [[7-transformers/index|7 · Transformers]] — Lectures 18–20
+### [[7-transformers/index|7 · Transformers]] — Lectures 18–21
 - **Text as input:** [[7-transformers/text-encodings-and-embeddings|Text encodings and learned embeddings]] · [[7-transformers/tokenization|Tokenization and vocabulary]]
 - **Translation and attention:** [[7-transformers/sequence-to-sequence-rnns|Sequence-to-sequence RNNs]] · [[7-transformers/attention|Attention]]
 - **The Transformer:** [[7-transformers/transformer-architecture|Architecture]] · [[7-transformers/layer-norm-and-feed-forward|LayerNorm and FFN]] · [[7-transformers/positional-encoding|Positional encoding]] · [[7-transformers/multi-head-attention|Multi-head attention]] · [[7-transformers/attention-is-all-you-need|Paper guide: Attention Is All You Need]]
+- **Beyond translation (Lecture 21):** [[7-transformers/pytorch-transformer-layers|PyTorch's Transformer layers]] · [[7-transformers/text-classification-with-transformers|Text classification with a `<CLS>` token]] · [[7-transformers/vision-transformer|Vision Transformer]]
 
 ### [[8-diffusion-models/index|8 · Diffusion models]] — beyond the lectures
 How image generators reverse a noising process: [[8-diffusion-models/brownian-motion-and-forward-diffusion|Forward diffusion]] · [[8-diffusion-models/reverse-time-sde-and-score-matching|Reverse-time SDE and score matching]] · [[8-diffusion-models/ddpm|DDPM]] · [[8-diffusion-models/fast-sampling-ddim-and-ode-solvers|Fast sampling]] · [[8-diffusion-models/guidance-and-latent-diffusion|Guidance and latent diffusion]] · [[8-diffusion-models/flow-matching-and-rectified-flow|Flow matching]] · [[8-diffusion-models/modern-image-generators|Modern image generators]]
 
-### [[9-midterm-2/index|Midterm 2]] — scope and every exam hint from class
-Transformers plus a cumulative review of the deep-network models; the model-choice table and the calculations to practise.
+### [[9-midterm-2/index|9 · Midterm 2]] — Tue Nov 17, 2026 · practice exams, worked
+Scope: HW 4–6 and Lectures 10–11, 14–21 (MLPs, CNNs, RNNs, Transformers); a formula sheet is provided.
+- **Practice exams, worked:** [[9-midterm-2/fall-2024|Fall 2024]] · [[9-midterm-2/spring-2025|Spring 2025]] · [[9-midterm-2/fall-2025|Fall 2025]] · [[9-midterm-2/spring-2026|Spring 2026]]
+- **By problem type:** [[9-midterm-2/review-sizes-and-parameters|Sizes and parameter counts]] · [[9-midterm-2/review-pytorch-modules|Writing modules and data pipelines]] · [[9-midterm-2/review-recurrent-networks|Recurrent networks]] · [[9-midterm-2/review-attention-and-transformers|Attention and Transformers]] · [[9-midterm-2/review-training-and-activations|Training behaviour and activations]] · [[9-midterm-2/review-choosing-models|Choosing a model]]
+- **Drill:** [[9-midterm-2/formula-sheet|Formula sheet]] · [[9-midterm-2/true-false|True/false bank]] · [[9-midterm-2/practice-problems|Practice problems]] · [[9-midterm-2/skipped-topics|Skipped topics]] · [[9-midterm-2/errata|Typos in the sources]]
 
 ### [[6-midterm-1/index|6 · Midterm 1]] — past exams, worked
 Scope: Lectures 2–9 and HW 1–3.

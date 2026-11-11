@@ -247,6 +247,9 @@ On the small CNN trained on 6,000 clean images, FGSM against random $\pm\epsilon
 > - `RandomCrop(28, padding=3)` on a 28×28 image does not crop away content permanently: it pads to 34×34 and crops a random 28×28 window, i.e. a random shift of up to 3 pixels.
 > - FGSM uses `sign(grad)`, not the gradient itself, and must `clamp` to the valid pixel range.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2025#problem-2--layer-shapes-and-augmentations-17-pts|Fall 2025 Q2(b)]] (12 points): for fruit photos and for images of letters and digits, decide whether flipping, resizing and colour-channel shuffling keep the label. Drill: [[9-midterm-2/review-training-and-activations#dropout-batch-norm-augmentation|dropout, batch norm, augmentation]].
+
 ## PyTorch docs
 
 - [Transforms v2 overview](https://docs.pytorch.org/vision/stable/transforms.html) — every transform, and how v2 handles images, masks and boxes.

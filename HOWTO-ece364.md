@@ -48,12 +48,16 @@ content/lectures.md                    lecture -> topic pages table
 content/1-foundations/                 L1-L2: what ML is, tensors, storage and views, indexing, broadcasting, linear algebra
 content/2-calculus-and-optimization/   L3-L6: gradients, matrix calculus, optimization, gradient descent, graphs, backprop, autograd
 content/3-linear-models/               L7-L9, L11: linear, multiple, basis-function and ridge regression; logistic, BCE, multi-class
-content/4-pytorch-training/            L10-L11, L14: nn.Module, losses, optimizers, schedulers, training loop, data, splits, GPU
+content/4-pytorch-training/            L10-L11, L14, L22: nn.Module, losses, optimizers, schedulers, training loop, data, splits, GPU,
+                                       underfitting vs overfitting, TensorBoard logging
 content/5-deep-networks/               L14-L17: MLPs, activations, CNNs (conv, pooling, architectures, Inception, ResNet, FCN/U-Net,
                                        segmentation, augmentation, batch norm, dropout), RNNs, LSTM/GRU
 content/6-midterm-1/                   the four past Midterm 1s worked, review by problem type, formula sheet, T/F bank, practice, errata
-content/7-transformers/                L18-L20: embeddings, tokenization, seq2seq RNNs, attention, the Transformer, paper guide
+content/7-transformers/                L18-L21: embeddings, tokenization, seq2seq RNNs, attention, the Transformer, paper guide,
+                                       PyTorch's Transformer layers, text classification with <CLS>, Vision Transformer
 content/8-diffusion-models/            beyond the lectures (on request): diffusion / score-based image generation, sourced from papers
+content/9-midterm-2/                   scope and exam hints from class, the four practice Midterm 2s worked (skipped parts folded and
+                                       marked), six review-by-type pages, formula sheet, T/F bank, practice, skipped topics, errata
 content/images/                        lecture figures, named lNN-<name>.png after the notebook folder they came from
 tools/                                 spec, checkers, figure generators (see §5)
 ```
@@ -64,7 +68,7 @@ The site is organized by topic, not by lecture; `lectures.md` maps back. Lecture
 
 `tools/SPEC.md` is the full spec every page was written to; the short version:
 
-- **Topic pages**: frontmatter `title`, `description`, `tags` (`topic`, a unit tag `foundations | calculus | linear-models | training | deep-nets | transformers`, and `midterm-1` for Lectures 2-9), `aliases`. Then an italic meta line (lectures, unit, prerequisites), `> [!abstract] In one breath`, `## What it is`, `## What you should know` (the review checklist), topic sections with math, figures and notebook code, `> [!trap]` and `> [!exam]` callouts, `## PyTorch docs`, and `Related:` as the last line.
+- **Topic pages**: frontmatter `title`, `description`, `tags` (`topic`, a unit tag `foundations | calculus | linear-models | training | deep-nets | transformers`, and `midterm-1` for Lectures 2-9), `aliases`. Exam pages are tagged `exam` plus `midterm-1` or `midterm-2`. Then an italic meta line (lectures, unit, prerequisites), `> [!abstract] In one breath`, `## What it is`, `## What you should know` (the review checklist), topic sections with math, figures and notebook code, `> [!trap]` and `> [!exam]` callouts, `## PyTorch docs`, and `Related:` as the last line.
 - **Code** comes from the lecture notebooks (trimmed); printed output only where the notebook printed it or it can be derived by hand. Comments of 7 words or fewer.
 - **PyTorch links**: `https://docs.pytorch.org/docs/stable/generated/<full.name>.html` for APIs, `.../stable/<page>.html#<anchor>` for topic pages (e.g. `data.html#torch.utils.data.DataLoader`). Note `nn.Flatten` lives at `generated/torch.nn.modules.flatten.Flatten.html`.
 - **Math**: `$…$` inline, `$$…$$` on their own lines (prefixed with `> ` inside callouts). No macros; inside tables use `\lvert…\rvert` and `\mid`, never a bare `|`.
@@ -78,7 +82,11 @@ The site is organized by topic, not by lecture; `lectures.md` maps back. Lecture
 python3 tools/check.py content node_modules/katex/dist/katex.min.js   # links, anchors, embeds, KaTeX (strict), frontmatter, callouts, tables
 python3 tools/check_doclinks.py PYTORCH/docs/source VISION/docs/source # every docs.pytorch.org link vs the docs sources
 for f in tools/figs_*.py; do python3 "$f"; done; python3 tools/assemble.py   # regenerate and re-inline all figures
+python3 -B tools/verify_mt2.py                                           # recompute every Midterm 2 answer and the L21-22 numbers (numpy)
+python3 -B tools/verify_mt2_torch.py "<Notes>/ECE 364/py-complete/Lecture21/L21_Beyond_Sequence_Transduction.ipynb"   # same, run with PyTorch
 ```
+
+`verify_mt2_torch.py` needs PyTorch (`pip install torch`; written with 2.15, CPU is enough). With the notebook path it also executes the Lecture 21 class definitions as written and checks their shapes and parameter counts; nothing is trained. `tools/read_tfevents.py <logdir> <out.json>` reads TensorBoard event files without TensorFlow (it produced `tools/l22_logs.json` from `py-complete/Lecture22/logs`, which `tools/figs_training_b.py` plots).
 
 `check.py` needs PyYAML and a KaTeX copy (present after `npm ci`). `check_doclinks.py` needs sparse clones of the docs sources matching the "stable" docs:
 
@@ -88,6 +96,14 @@ git clone --depth 1 --filter=blob:none --sparse -b release/0.29 https://github.c
 ```
 
 ## 6. What's here
+
+Build 5, 2026-11-10 — Lectures 21–22 and the Midterm 2 section.
+
+- **Lecture 21** (unit 7, three new pages): PyTorch's `nn.TransformerEncoderLayer` / `nn.TransformerDecoderLayer`, text classification with a `<CLS>` token, the Vision Transformer. **Lecture 22** (unit 4, two new pages and one extended): underfitting vs overfitting, TensorBoard and logging, and the `MultiStepLR` experiment on the schedulers page. All six have a **From the lecture** section from the two new transcripts (recordings of Nov 5 and Nov 10, 2026). The Lecture 22 tables and curves are read from the notebook's TensorBoard logs (`tools/read_tfevents.py` → `tools/l22_logs.json`); Lecture 21 results are read off the notebook's saved plots.
+- **Midterm 2 section** (`content/9-midterm-2/`, 16 pages): hub with the scope and format announced on Nov 10 (HW 4–6; Lectures 10–11 and 14–21; formula sheet provided; Lecture 22 not tested), the four practice exams worked problem by problem with folded solutions, six review-by-type pages, formula sheet, 50-item T/F bank (36 real items), 10 practice problems, skipped topics, errata. Of the HW 4–6 items, only those that add something the practice exams lack are used as drills (HW5 1(a)–(c) and 2(a)–(c), HW6 2(d)), each with a full statement and a scripted check. The parts on the course staff's skip list are kept in their place on each exam page and marked **[skipped]**, with the statement, the official answer and a one-line reason; they are left out of the review pages and the T/F bank. 22 existing topic pages gained an **On the Midterm 2 practice exams** callout.
+- **Verification:** every exam answer and every number on the new pages is recomputed in `tools/verify_mt2.py` (numpy) and, where it is PyTorch behaviour, in `tools/verify_mt2_torch.py` (run with PyTorch 2.15 on CPU, including the Lecture 21 class definitions executed as written). No official final answer was found wrong; code slips in the Spring keys and two notebook quirks are on the Midterm 2 errata page. The models themselves were not retrained.
+- Totals: 108 pages (67 topic pages), 13 new figures (`tools/figs_tf_d.py`, `figs_training_b.py`, `figs_exam2.py`), 1 new lecture image, 814 PyTorch-doc links (287 distinct; the 12 new ones were checked against the 2.14 / torchvision 0.29 docs sources), 2,369 links and 8,169 KaTeX expressions passing `check.py`.
+- **Not done:** the Quartz build was not run here. The Nov 12 review lecture is not in `transcript/` yet; when it is, its exam hints belong on the Midterm 2 hub ("Everything flagged in class") and this semester's formula sheet on the formula-sheet page.
 
 Build 4, 2026-11-05 — class recordings integrated: 26 topic pages (Lectures 14–20) gained a **From the lecture** section (main points, calculation shortcuts, analogies, exam hints; format in `tools/SPEC.md`), from the 8 transcripts in `transcript/`; every item traced to a transcript and every number recomputed in an independent review. New `content/9-midterm-2/` page with the announced scope and all exam hints.
 

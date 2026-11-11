@@ -196,6 +196,9 @@ The `nn.Sequential` above has $784\cdot128+128 + 128\cdot64+64 + 64\cdot10+10 = 
 >
 > The `nn.Linear` alternative is `self.model = nn.Linear(num_features, 1)` with `return self.model(x).squeeze(-1)` — the `squeeze` turns $(B, 1)$ into the required $(B,)$.
 
+> [!exam] On the Midterm 2 practice exams
+> Every practice Midterm 2 has a write-the-module problem: [[9-midterm-2/fall-2024#problem-3--a-custom-block-20-pts|Fall 2024 Q3]] (a gated block from three equations), [[9-midterm-2/fall-2025#problem-3--a-new-recurrent-layer-15-pts|Fall 2025 Q3]] (a recurrent layer: sizes, count and a bug), [[9-midterm-2/spring-2025#problem-7--attention-is-all-you-need-15-pts|Spring 2025 Q7]] (an attention module) and [[9-midterm-2/spring-2026#problem-7--attention-is-all-you-need-15-pts|Spring 2026 Q7]] (a feed-forward layer and an encoder layer). Drill: [[9-midterm-2/review-pytorch-modules|writing modules and data pipelines]].
+
 ## PyTorch docs
 
 - [`torch.nn.Module`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html) — every method a model inherits (`parameters`, `to`, `train`, `eval`, `state_dict`, …).

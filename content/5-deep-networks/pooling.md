@@ -151,6 +151,9 @@ Nothing in a conv stack with a global-pooling head depends on $H$ and $W$, so th
 > - **Stride default.** `nn.MaxPool2d(3)` uses stride 3, not 1; write `nn.MaxPool2d(3, stride=1, padding=1)` to keep the size (as Inception's pooling branch does).
 > - **"Convolution makes CNNs shift-invariant."** It makes them equivariant; the head decides whether the prediction is invariant.
 
+> [!exam] On the Midterm 2 practice exams
+> Max pooling by hand: [[9-midterm-2/fall-2024#problem-4--a-convolutional-layer-and-a-max-pool-15-pts|Fall 2024 Q4(c)]] ($2\times2$, stride 3: gaps) and [[9-midterm-2/spring-2025#problem-3--lifes-a-pool-dive-in-10-pts|Spring 2025 Q3]] ($3\times3$, stride 2: overlap). True/false: pooling need not be non-linear ([[9-midterm-2/fall-2024#problem-1--true-or-false-30-pts|Fall 2024 1(c)]]); global average pooling gives a length-$C$ vector ([[9-midterm-2/fall-2025#problem-1--true-or-false-30-pts|Fall 2025 1(h)]]); shifts hurt MLPs and CNNs differently ([[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(c)]]). [[9-midterm-2/fall-2024#problem-5--activations-15-pts|Fall 2024 Q5(b)]]: ReLU and mean pooling do not commute. Drill: [[9-midterm-2/review-sizes-and-parameters|sizes and parameter counts]].
+
 ## PyTorch docs
 
 - [`torch.nn.MaxPool2d`](https://docs.pytorch.org/docs/stable/generated/torch.nn.MaxPool2d.html) and [`torch.nn.AvgPool2d`](https://docs.pytorch.org/docs/stable/generated/torch.nn.AvgPool2d.html): local pooling; `kernel_size`, `stride` (defaults to `kernel_size`), `padding`, `ceil_mode`.

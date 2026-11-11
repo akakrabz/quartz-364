@@ -134,6 +134,9 @@ Passing the activation in as an argument (`FourLayerMLP(..., activation_fn=nn.Ta
 > - **"ReLU is linear, so it doesn't help."** It is piecewise linear, not linear: $\textrm{ReLU}(a + b) \ne \textrm{ReLU}(a) + \textrm{ReLU}(b)$ in general (try $a = 1$, $b = -1$). That is enough to stop layers from collapsing.
 > - **Forgetting the activation in a loop over layers** (see the [[5-deep-networks/multilayer-perceptrons#writing-an-mlp-in-pytorch|MLP page]]): the model silently becomes linear.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2024#problem-5--activations-15-pts|Fall 2024 Q5(a)–(b)]]: why activations make depth possible, and whether ReLU commutes with mean pooling (no). [[9-midterm-2/spring-2025#problem-1--fact-or-cap-30-pts|Spring 2025 1(e), (f), (o)]]: sigmoid and vanishing gradients, ReLU's derivative, stacked linear layers. [[9-midterm-2/spring-2025#problem-5--layer-by-layer-a-neural-network-love-story-10-pts|Spring 2025 Q5]] and [[9-midterm-2/spring-2026#problem-5--layer-by-layer-the-kink-awakens-10-pts|Spring 2026 Q5]]: build $mx+b$ and $\lvert x\rvert$ from two ReLU units. Drill: [[9-midterm-2/review-training-and-activations|training behaviour and activations]].
+
 ## PyTorch docs
 
 - [`torch.nn.ReLU`](https://docs.pytorch.org/docs/stable/generated/torch.nn.ReLU.html) and [`torch.nn.functional.relu`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.relu.html)

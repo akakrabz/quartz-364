@@ -239,6 +239,9 @@ A second consequence: the gradient of the loss with respect to a first-layer wei
 > - **Weight shape.** `nn.Linear(784, 128).weight.shape` is `(128, 784)`, output dimension first.
 > - **Slice vs index.** The Lecture 14 exercise has `test_indices = indices[N_train+N_val]`, which picks a single index; the slice `indices[N_train+N_val:]` was meant.
 
+> [!exam] On the Midterm 2 practice exams
+> Shapes after each layer and the parameter total: [[9-midterm-2/spring-2025#problem-4--who-wants-to-be-a-parameterionaire-10-pts|Spring 2025 Q4]] (212) and [[9-midterm-2/spring-2026#problem-4--who-wants-to-be-a-parameterionaire-10-pts|Spring 2026 Q4]] (225, one bias off). An MLP's fixed input size: [[9-midterm-2/fall-2024#problem-1--true-or-false-30-pts|Fall 2024 1(b)]] and [[9-midterm-2/fall-2025#problem-5--mlp-cnn-or-vision-transformer-23-pts|Fall 2025 Q5]], where it is compared with a CNN and a Vision Transformer. Two-unit ReLU networks by hand: [[9-midterm-2/spring-2025#problem-5--layer-by-layer-a-neural-network-love-story-10-pts|Spring 2025 Q5]], [[9-midterm-2/spring-2026#problem-5--layer-by-layer-the-kink-awakens-10-pts|Spring 2026 Q5]]. Drill: [[9-midterm-2/review-sizes-and-parameters|sizes and parameter counts]] · [[9-midterm-2/review-choosing-models|choosing a model]].
+
 ## PyTorch docs
 
 - [`torch.nn.Linear`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Linear.html): the perceptron layer, its weight shape and initialization.

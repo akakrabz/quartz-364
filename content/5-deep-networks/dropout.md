@@ -162,6 +162,9 @@ Same 2,000 images and 30% wrong labels, 60 epochs:
 > - Expecting dropout to help on every problem: with clean labels and enough data it changed nothing here; it is a regularizer for overfitting.
 > - Putting `nn.Dropout` (element-wise) on conv feature maps and expecting much effect; `nn.Dropout2d` drops whole channels.
 
+> [!exam] On the Midterm 2 practice exams
+> True/false only: dropout is a technique against overfitting ([[9-midterm-2/fall-2024#problem-1--true-or-false-30-pts|Fall 2024 1(f)]]); in `model.eval()` it does nothing, while batch norm still acts ([[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(f)]]). Drill: [[9-midterm-2/true-false|T/F bank]].
+
 ## PyTorch docs
 
 - [`nn.Dropout`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Dropout.html) — element-wise, scales by $\frac{1}{1-p}$ in training.

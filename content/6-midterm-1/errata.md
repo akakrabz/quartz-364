@@ -5,7 +5,7 @@ tags: [exam, midterm-1]
 aliases: ["typos in the solutions"]
 ---
 
-*Midterm 1 · checked against the official solution PDFs and the lecture notebooks · back to [[6-midterm-1/index|Midterm 1]]*
+*Midterm 1 · checked against the official solution PDFs and the lecture notebooks · Midterm 2's list is [[9-midterm-2/errata|here]] · back to [[6-midterm-1/index|Midterm 1]]*
 
 > [!abstract] In one breath
 > The official keys are right where it counts (every final answer below still holds), but two of them write a **full derivative where a local partial is asked**, which is exactly the mistake graders take points for. Learn the corrected versions.

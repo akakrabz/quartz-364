@@ -324,6 +324,9 @@ To inspect a model layer by layer, the lecture's `summary` helper registers [for
 > - **Receptive field vs output size.** They are different quantities: stride shrinks the output and *grows* the receptive field.
 > - **Ignoring the jump** after a pool or strided layer when computing receptive fields.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2024#problem-4--a-convolutional-layer-and-a-max-pool-15-pts|Fall 2024 Q4(a)–(b)]]: a $5\times5$ convolution takes $40\times40$ to $36\times36$ and has 1,200 weights without bias. [[9-midterm-2/fall-2025#problem-2--layer-shapes-and-augmentations-17-pts|Fall 2025 Q2(a)]]: which of five layers turn $30\times30$ into $10\times10$. [[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(a)]]: "same" padding needs an odd kernel. [[9-midterm-2/fall-2025#problem-5--mlp-cnn-or-vision-transformer-23-pts|Fall 2025 Q5(d)]]: a first-layer output sees only a $K\times K$ window. Drill: [[9-midterm-2/review-sizes-and-parameters|sizes and parameter counts]].
+
 ## PyTorch docs
 
 - [`torch.nn.Conv2d`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Conv2d.html): arguments, the cross-correlation formula, and the output-shape formula with dilation.

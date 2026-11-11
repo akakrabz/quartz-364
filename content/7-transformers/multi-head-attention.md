@@ -165,6 +165,9 @@ out, weights = mha(x, x, x, attn_mask=causal)    # self-attention
 > > 2. Per head: Q and K `Linear(128, 16)` = 2,064 each, V `Linear(256, 32)` = 8,224; ×8 = 98,816; plus $W_O$ `Linear(256, 256)` = 65,792; total 164,608.
 > > 3. Each head has its **own softmax**: the output is a sum of $h$ differently weighted averages, which a single softmax over one score matrix cannot reproduce in general. The two linear maps had no nonlinearity between them.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(o)]]: several heads capture different relationships in parallel (True). The multi-head formula was printed on the [[9-midterm-2/fall-2025#the-formula-sheet-that-came-with-the-exam|Fall 2025 formula sheet]]. Drill: [[9-midterm-2/review-attention-and-transformers#multi-head-attention|multi-head review]].
+
 ## PyTorch docs
 
 - [`torch.nn.MultiheadAttention`](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html) — `embed_dim`, `num_heads`, `batch_first`, `kdim`/`vdim`, `need_weights`, `attn_mask`, `key_padding_mask`.

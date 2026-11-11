@@ -23,6 +23,7 @@ content/
   5-deep-networks/              L14-L17
   6-midterm-1/                  past exams, worked; formula sheet; T/F bank
   7-transformers/               L18 onward (embeddings, tokenization, then attention/transformers)
+  9-midterm-2/                  practice Midterm 2s, worked; review by problem type; formula sheet; T/F bank
   8-diffusion-models/           beyond the lectures: diffusion / score-based image generation and newer methods
 ```
 
@@ -63,11 +64,13 @@ which lectures it covers).
 - nn-module — subclassing, __init__/forward, parameters, nn.Linear, nn.Sequential (L10)
 - loss-functions — MSELoss, BCELoss, BCEWithLogitsLoss, CrossEntropyLoss; reduction (L10, L11)
 - optimizers — torch.optim, SGD, momentum, weight decay, Adam; zero_grad/step (L10)
-- learning-rate-schedulers — StepLR etc., lr adjustments (L10)
+- learning-rate-schedulers — StepLR etc., lr adjustments (L10); MultiStepLR experiment, warm-up and combined schedules (L22)
 - training-loop — the canonical loop, train/eval modes, accuracy, logging (L10, L11)
 - datasets-and-dataloaders — Dataset (__len__, __getitem__), TensorDataset, DataLoader, batch_size, shuffle, Subset/random_split, torchvision datasets, transforms (L11)
 - experimental-setup — train/validation/test splits, overfitting, what each split is for (L11)
 - gpu-training — devices, .to(device), cuda availability, moving model and data (L14)
+- underfitting-and-overfitting — reading training curves, the three cases and their remedies, saving the best checkpoint (L22)
+- tensorboard-and-logging — SummaryWriter, add_scalar, naming runs, comparing the lecture's six logged runs (L22)
 
 5-deep-networks/
 - multilayer-perceptrons — limits of logistic regression (two moons), hidden layers, universal approximation intuition, MLP in PyTorch (L14)
@@ -96,6 +99,9 @@ which lectures it covers).
 - multi-head-attention — heads, per-head dimensions, concatenation and W_O, parameter cost (L20)
 - positional-encoding — permutation equivariance, sinusoidal and learned encodings, ablation (L20)
 - layer-norm-and-feed-forward — position-wise FFN, residual Add & Norm, LayerNorm vs BatchNorm (L20)
+- pytorch-transformer-layers — nn.TransformerEncoderLayer / nn.TransformerDecoderLayer, nn.ModuleList, shapes, parameter counts (L21)
+- text-classification-with-transformers — encoder-only models, the <CLS> token, majority-class baseline (L21)
+- vision-transformer — patches as tokens, patch projection, nn.Unfold, ImageWoof, MLP vs CNN vs ViT (L21)
 - attention-is-all-you-need — the Vaswani et al. (2017) paper explained section by section, and how the course implementation differs
 
 8-diffusion-models/  (NOT from the lecture notebooks: sourced from the original papers via Exa; every page says so in its meta line)
@@ -109,6 +115,15 @@ which lectures it covers).
 
 6-midterm-1/  (see the exam agent's brief)
 - index, fall-2024, spring-2025, fall-2025, spring-2026, formula-sheet, true-false, practice-problems (+ others as needed)
+
+9-midterm-2/  (same shape as 6-midterm-1; scope: HW 4-6, Lectures 10-11 and 14-21)
+- index, fall-2024, spring-2025, fall-2025, spring-2026, review-sizes-and-parameters, review-pytorch-modules, review-recurrent-networks,
+  review-attention-and-transformers, review-training-and-activations, review-choosing-models, formula-sheet, true-false,
+  practice-problems, skipped-topics, errata
+- Parts on the course staff's skip list stay in their place on the exam pages, marked `**[skipped]**` after the part letter in the question and
+  in the solution (whole problems: in the callout title), with the full statement, the official answer and a one-line reason. A
+  `> [!note] Skipped parts` callout at the top of the page lists them. They are not used on the review pages or in the T/F bank.
+- Every number is recomputed in tools/verify_mt2.py (numpy) and tools/verify_mt2_torch.py (PyTorch).
 
 ## Page format
 

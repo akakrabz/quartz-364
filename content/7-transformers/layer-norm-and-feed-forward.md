@@ -173,6 +173,9 @@ From the [[7-transformers/transformer-architecture#results|saved Lecture 20 resu
 > > 2. FFN 2,099,712; two layer norms 2,048; with the attention block (1,050,624) the layer has 3,152,384 parameters, two-thirds of them in the FFN.
 > > 3. Layer norm: 7 means (one per token, over 128 features). Batch norm: 128 means (one per feature, over the 7 rows).
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2025#problem-1--true-or-false-30-pts|Fall 2025 1(f)]]: Add & Norm uses layer norm, not batch norm. [[9-midterm-2/spring-2026#problem-7--attention-is-all-you-need-15-pts|Spring 2026 Q7]]: write the feed-forward layer and place the two layer norms and skip connections of an encoder layer. Drill: [[9-midterm-2/review-attention-and-transformers#inside-a-layer|inside a layer]].
+
 ## PyTorch docs
 
 - [`torch.nn.LayerNorm`](https://docs.pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html) — `normalized_shape`, `eps` (default $10^{-5}$), `elementwise_affine`.

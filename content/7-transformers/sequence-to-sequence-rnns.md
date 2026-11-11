@@ -276,6 +276,9 @@ The lecture names three problems with S2S RNNs; each is the reason for a Transfo
 > > 3. The decoder generates left to right; reading the output backwards would require words it has not produced yet.
 > > 4. None. It stabilizes and speeds up training, but the decoder still runs step by step, still keeps everything in its hidden state, and still sees the source only through the context vector.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2025#problem-1--true-or-false-30-pts|Fall 2025 1(i)]]: in sequence transduction the input and output lengths need **not** match. BLEU is never computed by hand (said in class). Drill: [[9-midterm-2/review-recurrent-networks|recurrent networks]].
+
 ## PyTorch docs
 
 - [`torch.nn.GRU`](https://docs.pytorch.org/docs/stable/generated/torch.nn.GRU.html) — the encoder and decoder cells; `h_n` layout for `bidirectional=True`.

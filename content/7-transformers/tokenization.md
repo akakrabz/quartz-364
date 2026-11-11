@@ -194,6 +194,9 @@ Tokenization is not specific to text. In the upcoming transformer lectures an im
 > > 2. `["dont", "buy", "this", "!", "!"]`: each `!` is padded and split off, the apostrophe is deleted, and the empty strings from the double spaces are dropped.
 > > 3. A title survives only if every one of its words is frequent; each extra word is another chance to contain a rare one, so long titles are filtered out more often.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(l)]]: tokens can be letters, words or something in between (True). Vision Transformer tokens are counted in [[9-midterm-2/fall-2025#problem-5--mlp-cnn-or-vision-transformer-23-pts|Fall 2025 Q5(b)]]. Drill: [[9-midterm-2/true-false|T/F bank]].
+
 ## PyTorch docs
 
 - [`torch.nn.Embedding`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Embedding.html) — the vocabulary-sized lookup table; `padding_idx` reserves an index whose vector stays zero.

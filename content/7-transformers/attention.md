@@ -321,6 +321,9 @@ O3 = F.scaled_dot_product_attention(Q, K, V, is_causal=True)  # causal mask
 > > 3. Row 2 of $S/\sqrt2$ is $(0, 0.707, 0.707)$; masking the third entry leaves $\text{softmax}(0, 0.707) = (1, 2.028)/3.028 = (0.330, 0.670)$, and $o_2 = (0.330, 1.340)$.
 > > 4. Not in the one-layer Skinny decoder: the last row may attend to every position with or without the mask, and the other rows never feed into it. With two layers it would: layer 1's earlier rows become layer 2's keys and values, and without the mask they would have looked at later words — different from what the model saw in training. Applying the mask always keeps inference consistent with training.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2025#problem-4--attention-15-pts|Fall 2025 Q4]] (15 points): why a multiplicative mask fails, and $QK^\top$ by hand to find which token "dog" attends to. [[9-midterm-2/spring-2025#problem-7--attention-is-all-you-need-15-pts|Spring 2025 Q7]] (15 points): write a single-head attention module. True/false: [[9-midterm-2/spring-2025#problem-1--fact-or-cap-30-pts|Spring 2025 1(i), (l), (m)]], [[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(m), (n)]]. Drill: [[9-midterm-2/review-attention-and-transformers|attention and Transformers]].
+
 ## PyTorch docs
 
 - [`torch.nn.functional.scaled_dot_product_attention`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) — the whole formula; `attn_mask`, `is_causal`, `scale`.

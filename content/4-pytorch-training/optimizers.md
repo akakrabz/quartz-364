@@ -124,6 +124,9 @@ with bias-corrected $\hat m = m/(1-\beta_1^t)$, $\hat v = v/(1-\beta_2^t)$ and d
 > [!exam] On the exams
 > Midterm 1 tests gradient descent by hand ([[2-calculus-and-optimization/gradient-descent|gradient descent]]); the Spring exams added the momentum formula to the formula sheet and used `torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)` in code ([[6-midterm-1/spring-2025|Spring 2025]] Q7, [[6-midterm-1/spring-2026|Spring 2026]] Q8). Be able to run two momentum steps by hand like the table above.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2024#problem-2--datasets-dataloaders-and-sgd-20-pts|Fall 2024 Q2(c)]]: which of six quantities are required, optional or not used by `torch.optim.SGD`. [[9-midterm-2/fall-2025#problem-1--true-or-false-30-pts|Fall 2025 1(c)]]: momentum as a weighted combination of current and earlier gradients (True). [[9-midterm-2/spring-2026#problem-2--race-to-the-bottom-10-pts|Spring 2026 Q2]]: tell SGD from full gradient descent by the path of the parameters. Drill: [[9-midterm-2/review-training-and-activations#gradient-descent-sgd-epochs|gradient descent, SGD, epochs]].
+
 ## PyTorch docs
 
 - [`torch.optim`](https://docs.pytorch.org/docs/stable/optim.html) — how to construct an optimizer, per-parameter options, the [list of algorithms](https://docs.pytorch.org/docs/stable/optim.html#algorithms).

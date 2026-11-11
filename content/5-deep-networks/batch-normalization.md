@@ -147,6 +147,9 @@ def bn_cnn(use_bn):
 > - `nn.BatchNorm1d` in training mode on a batch of a single sample ($1\times C$) raises "Expected more than 1 value per channel when training"; there is nothing to average.
 > - Keeping `bias=True` on a convolution right before BN: harmless but wasted parameters.
 
+> [!exam] On the Midterm 2 practice exams
+> True/false only: batch norm does not normalize the colour channels of the input image ([[9-midterm-2/fall-2024#problem-1--true-or-false-30-pts|Fall 2024 1(g)]]); it is not switched off by `model.eval()` ([[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(f)]]); it was introduced against "internal covariate shift" ([[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(j)]]). Drill: [[9-midterm-2/true-false|T/F bank]].
+
 ## PyTorch docs
 
 - [`nn.BatchNorm2d`](https://docs.pytorch.org/docs/stable/generated/torch.nn.BatchNorm2d.html) — formula, `momentum`, `eps`, `affine`, `track_running_stats`.

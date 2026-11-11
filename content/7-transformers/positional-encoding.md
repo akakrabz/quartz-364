@@ -175,6 +175,9 @@ Lecture 20 trained the Full Transformer three ways (saved results, 1 million tra
 > > 2. Pair $j = 0$: $\omega_0 = 1$, wavelength $2\pi\approx6.3$. Pair $j = 255$: $\omega = 10000^{-510/512}$, wavelength $2\pi\cdot10000^{510/512}\approx 6.1\times10^4$ (just under $10000\cdot2\pi\approx6.3\times10^4$).
 > > 3. Each pair contributes $\sin(\omega a)\sin(\omega(a+k)) + \cos(\omega a)\cos(\omega(a+k)) = \cos(\omega k)$, so the dot product is $\sum_j\cos(\omega_j k)$.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2025#problem-1--true-or-false-30-pts|Fall 2025 1(g)]]: positional encoding tells the model the order and relative positions of tokens (True). The sinusoidal formula was printed on the [[9-midterm-2/fall-2025#the-formula-sheet-that-came-with-the-exam|Fall 2025 formula sheet]]. Drill: [[9-midterm-2/review-attention-and-transformers#positional-encoding|positional encoding review]].
+
 ## PyTorch docs
 
 - PyTorch has no built-in positional-encoding module; build it from [`torch.arange`](https://docs.pytorch.org/docs/stable/generated/torch.arange.html), [`torch.sin`](https://docs.pytorch.org/docs/stable/generated/torch.sin.html), [`torch.cos`](https://docs.pytorch.org/docs/stable/generated/torch.cos.html) and [`torch.pow`](https://docs.pytorch.org/docs/stable/generated/torch.pow.html).

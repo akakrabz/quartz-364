@@ -191,6 +191,9 @@ The Lecture 11 version builds its tensors from `dataset.data` instead — the ra
 >
 > Write `dtype=torch.float32` in both `torch.tensor` calls so it works with the float model and MSE in part (iii). [[6-midterm-1/spring-2025|Spring 2025]] Q7 needs a `train_loader` with batch size 8, e.g. `DataLoader(dataset, batch_size=8, shuffle=True)` (the official key writes `split_dataset(dataset)`, a helper the problem never defines). The Spring formula sheets list `batch_size`, `shuffle` and `sampler` with the Lecture 11 descriptions.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2024#problem-2--datasets-dataloaders-and-sgd-20-pts|Fall 2024 Q2(a)–(b)]]: name the three `Dataset` methods, and build training and validation loaders that each give four batches from 36 points (batch size 9, one `SubsetRandomSampler` each). [[9-midterm-2/fall-2025#problem-1--true-or-false-30-pts|Fall 2025 1(a)–(b)]]: true/false on the same facts. Drill: [[9-midterm-2/review-pytorch-modules#dataset-dataloader-optimizer|Dataset, DataLoader, optimizer]].
+
 ## PyTorch docs
 
 - [`torch.utils.data`](https://docs.pytorch.org/docs/stable/data.html) — the whole data-loading story: map-style datasets, samplers, batching, collate, workers.

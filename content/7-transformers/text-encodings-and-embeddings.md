@@ -241,6 +241,9 @@ for k in range(K):
 > > 2. The embedding RNN, by exactly the embedding table: $52\cdot52 = 2{,}704$ more. Both have $W_{ih}\in\mathbb R^{128\times52}$; the embedding version also has $E\in\mathbb R^{52\times52}$.
 > > 3. Rows 26 (`A`), 13 (`n`) and 0 (`a`); row 13 accumulates the gradients of both `n`s. With momentum, rows that received gradients in earlier steps keep moving too.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2025#problem-1--true-or-false-30-pts|Fall 2025 1(d)–(e)]]: a one-hot vector for a 64-word vocabulary has length 64, and the embedding dimension does not have to grow with the vocabulary. Drill: [[9-midterm-2/true-false|T/F bank]] · [[9-midterm-2/practice-problems#p10--embedding-or-one-hot|practice P10]].
+
 ## PyTorch docs
 
 - [`torch.nn.Embedding`](https://docs.pytorch.org/docs/stable/generated/torch.nn.Embedding.html) — `num_embeddings`, `embedding_dim`, `padding_idx`, `max_norm`; also `Embedding.from_pretrained` for loading fixed vectors.

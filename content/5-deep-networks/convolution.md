@@ -233,6 +233,9 @@ The CNN trained on 6,000 images beats the MLP trained on 20,000: the right assum
 > - **Index direction.** Convolution pairs $x[k]$ with $h[n-k]$ (opposite directions); cross-correlation pairs $x[n+k]$ with $h[k]$ (same direction).
 > - **Equivariance is not invariance.** Convolution moves features with the object; only global pooling discards *where*.
 
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/spring-2026#problem-3--lifes-a-pool-dive-in-10-pts|Spring 2026 Q3]]: a $3\times3$ convolution with stride 2 on a $5\times5$ input, by hand. [[9-midterm-2/spring-2025#problem-1--fact-or-cap-30-pts|Spring 2025 1(c), (j)]]: weight sharing as true/false. [[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(b)]]: scrambled pixels and an MLP. Drill: [[9-midterm-2/review-sizes-and-parameters#one-window-at-a-time|one window at a time]].
+
 ## PyTorch docs
 
 - [`torch.nn.functional.conv1d`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.conv1d.html) and [`torch.nn.functional.conv2d`](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.conv2d.html): the functional forms with explicit weight tensors, as used above.

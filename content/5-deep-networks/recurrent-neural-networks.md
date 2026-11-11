@@ -75,7 +75,7 @@ Left: the compact picture, a hidden unit with a loop back into itself. Right: th
 > A one-hot letter is the same object as the ground-truth distribution inside [[3-linear-models/multiclass-logistic-regression|cross-entropy]]. Class 3 of 5 is $(0, 0, 1, 0, 0)$, completely certain of one class. Encoding letters one-hot gives each symbol its own slot in the same way.
 
 > [!exam] Said in class
-> Homework 6 covers RNNs and the start of Transformers. A final homework prepares for Midterm 2, which covers Transformers plus a cumulative review of the deep-network models.
+> Homework 6 covers RNNs and the start of Transformers. Midterm 2 covers Homeworks 4–6: MLPs, CNNs, RNNs and Transformers (fixed in class on Nov 10, 2026; the final homework first planned as preparation was dropped). See [[9-midterm-2/review-recurrent-networks|the recurrent-networks review]].
 
 ## A basic RNN, built by hand
 
@@ -312,6 +312,9 @@ $$
 
 > [!solution]- Answer
 > $h_1 = \tanh(2\cdot 0.5 - 0) = \tanh(1) = 0.7616$; $h_2 = \tanh(1 - 0.7616) = \tanh(0.2384) = 0.2340$. Same input both times, different state: the negative recurrent weight pushes against the previous state.
+
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/fall-2025#problem-3--a-new-recurrent-layer-15-pts|Fall 2025 Q3]] (15 points): find the four sizes of a new recurrent layer, count its parameters ($dH + H^2$), and spot that the loop never updates `h`. True/false: RNNs are not feed-forward ([[9-midterm-2/fall-2024#problem-1--true-or-false-30-pts|Fall 2024 1(d)]]); they keep a hidden state across time steps ([[9-midterm-2/spring-2025#problem-1--fact-or-cap-30-pts|Spring 2025 1(g)]]). Drill: [[9-midterm-2/review-recurrent-networks|recurrent networks]].
 
 ## PyTorch docs
 

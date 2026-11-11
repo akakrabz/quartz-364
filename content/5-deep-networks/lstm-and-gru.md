@@ -234,6 +234,9 @@ Worked for the surname models ($d = 52$, $H = 64$, head `nn.Linear(128, 18)` $= 
 > [!solution]- Answer
 > $z_t = 1$: $h_t = h_{t-1}$ (state copied unchanged). $z_t = 0$: $h_t = n_t$ (state replaced by the candidate). In the LSTM, $f_t = 1$ with $i_t = 0$ gives $c_t = c_{t-1}$.
 
+> [!exam] On the Midterm 2 practice exams
+> True/false only: an LSTM's memory is a gated cell state, not skip connections between layers ([[9-midterm-2/fall-2024#problem-1--true-or-false-30-pts|Fall 2024 1(e)]]); LSTMs suffer less, not more, from vanishing gradients ([[9-midterm-2/spring-2025#problem-1--fact-or-cap-30-pts|Spring 2025 1(h)]]). The LSTM and GRU equations were printed on the [[9-midterm-2/fall-2025#the-formula-sheet-that-came-with-the-exam|Fall 2025 formula sheet]]. Drill: [[9-midterm-2/review-recurrent-networks#lstm-and-gru|LSTM and GRU review]].
+
 ## PyTorch docs
 
 - [`torch.nn.LSTM`](https://docs.pytorch.org/docs/stable/generated/torch.nn.LSTM.html) — the gate equations with biases, the `(h_0, c_0)` tuple, shapes, `weight_ih_l[k]` layout, `proj_size`.

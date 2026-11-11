@@ -61,7 +61,7 @@ The figure from the paper is the whole model. Left, the **encoder**: input embed
 > The S2S decoder gets the encoder's summary once, as its first hidden state, and rewrites it at every word, so the source context gets diluted as the translation goes on. The Transformer decoder rereads the whole encoded sentence through cross-attention at every word, so the context is, if anything, reinforced. The lecture's encoder–decoder GIF shows exactly this.
 
 > [!exam] Said in class
-> Midterm 2 is in class on the Tuesday before Thanksgiving break, after a lecture on model-training best practices and a review session. It covers the Transformer lectures plus a cumulative look at all the deep-network models, with weight on knowing which model is appropriate for a given task; Homework 7 is a summary comparison of the models meant as preparation. He described topics after the Transformers as additional material rather than something to be rigorous about.
+> Midterm 2 is in class on the Tuesday before Thanksgiving break, after a lecture on model-training best practices and a review session. It covers the Transformer lectures plus a cumulative look at all the deep-network models, with weight on knowing which model is appropriate for a given task. (He first planned a Homework 7 comparing the models as preparation. On Nov 10, 2026 he said there will be no homework before the exam and fixed the scope as Homeworks 4–6, Lectures 10–11 and 14–21: see [[9-midterm-2/index#scope|Midterm 2]].) He described topics after the Transformers as additional material rather than something to be rigorous about.
 
 ## Training: the whole target in one pass
 
@@ -232,6 +232,9 @@ PyTorch packages exactly this structure as [`nn.Transformer`](https://docs.pytor
 > > 2. Limitation 1: masking makes it legal to feed the whole target at once, so all positions are computed in parallel instead of step by step.
 > > 3. It scores **French** words (the decoder's vocabulary, 1,646 entries); 1,443 is the English vocabulary.
 > > 4. `Linear(128, 512)` + `Linear(512, 128)` = $66{,}048 + 65{,}664 = 131{,}712$ (was 65,920).
+
+> [!exam] On the Midterm 2 practice exams
+> [[9-midterm-2/spring-2026#problem-7--attention-is-all-you-need-15-pts|Spring 2026 Q7]] (15 points): write one encoder layer (attention, add, norm, feed-forward, add, norm). [[9-midterm-2/spring-2025#problem-1--fact-or-cap-30-pts|Spring 2025 1(m)]]: decoder-only models have no cross-attention. [[9-midterm-2/spring-2026#problem-1--fact-or-cap-30-pts|Spring 2026 1(n)]]: in cross-attention the queries come from the decoder. Drill: [[9-midterm-2/review-attention-and-transformers|attention and Transformers]].
 
 ## PyTorch docs
 
